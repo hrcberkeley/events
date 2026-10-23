@@ -354,6 +354,115 @@ td.nowrap{white-space:nowrap}
   .stat .v{font-size:22px}
   .bd-row{grid-template-columns:minmax(0,1fr)}
 }
+/* header: views and saving */
+#hdr-nav,#hdr-proj{display:flex;align-items:center;gap:8px}
+.save-st{font-size:13px;color:var(--muted);white-space:nowrap}
+.save-st.err{color:var(--crit);font-weight:600}
+@media (max-width:1100px){.save-st,.hdr-ds .badge{display:none}}
+@media (max-width:640px){#hdr-file,#hdr-new,body:not([data-screen="scr-import"]) .brand b{display:none}#hdr-nav{min-width:0;overflow-x:auto}#hdr-nav .seg button{padding:0 7px}}
+textarea{font:inherit;font-size:13px;line-height:1.45;border:1px solid var(--line-2);border-radius:6px;background:var(--surface);color:inherit;padding:6px 8px;resize:vertical;width:100%;min-width:0}
+.pj{display:flex;gap:2px;align-items:center;min-width:0}
+.pj .ds-row{flex:1;flex-wrap:wrap;gap:0 10px}
+.pj .ds-row .n{flex-basis:100%}
+.pj .btn{padding:0 6px}
+
+/* sheet */
+#scr-sheet{overflow:hidden}
+.sh{display:flex;flex-direction:column;height:100%}
+.sh-bar{flex:none;display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;padding:10px 16px;border-bottom:1px solid var(--line);background:var(--surface)}
+.sh-grp{display:flex;gap:6px;flex-wrap:wrap}
+.sh-sum{font-size:13.5px;color:var(--ink-2);display:inline-flex;gap:4px;align-items:center}
+.sh-msg{margin:0;padding:8px 16px;background:var(--accent-soft);font-size:13.5px}
+.sh-grid{flex:1;min-height:0;overflow:auto;scroll-padding-top:34px}
+.sh-grid:focus-visible{outline-offset:-2px}
+table.sheet{table-layout:fixed;font-size:13px}
+.sheet th{padding:0 8px;height:34px;background:var(--surface-2);border-right:1px solid var(--line);cursor:default}
+.sheet th.col{padding:0}
+.sheet td{height:31px;padding:0 8px;border-right:1px solid var(--line);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;vertical-align:middle;cursor:cell}
+.sheet tbody tr{cursor:default}
+.sheet tbody tr:hover td{background:none}
+.sheet .rn{text-align:right;color:var(--muted);font-variant-numeric:tabular-nums;background:var(--surface-2)}
+.sheet tr.cur td.rn{color:var(--ink);font-weight:700;box-shadow:inset 3px 0 0 var(--pri)}
+.sheet .stc,.sheet .inc{text-align:center;padding:0}
+.sheet td.sel{outline:2px solid var(--focus);outline-offset:-2px;background:color-mix(in srgb,var(--focus) 8%,var(--surface))}
+.sheet td.editing{padding:0;overflow:visible}
+.cell-ed{width:100%;height:31px!important;border-radius:0!important;border:2px solid var(--focus)!important}
+.sheet tr.pad td{padding:0;border:0}
+.colb{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;width:100%;height:34px;padding:0 8px;border:0;background:none;cursor:pointer;text-align:left;min-width:0}
+.colb:hover{background:var(--line)}
+.colb .cn{font-weight:650;color:var(--ink);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.colb .cr{font-size:11.5px;font-weight:600;color:var(--focus);line-height:1.1}
+.colb .cr.drop{color:var(--crit)}
+.rowst{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--warn);color:#111;font-weight:800;font-size:12px}
+.menu{position:fixed;z-index:3500;width:290px;padding:12px;border-radius:10px;border:1px solid var(--line-2);background:var(--surface);box-shadow:0 12px 36px rgba(0,0,0,.2);display:grid;gap:10px}
+.menu select,.menu input{width:100%}
+.menu-b{display:flex;flex-wrap:wrap;gap:6px}
+.ff{display:grid;gap:4px}
+.ff>span:first-child{white-space:normal;overflow-wrap:anywhere}
+.ff input[type=text]{width:100%}
+.ff em{font-style:normal;color:var(--focus);font-weight:600}
+.ff-b{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.ff-img{max-width:100%;max-height:220px;border-radius:6px;border:1px solid var(--line);justify-self:start}
+
+/* place picker */
+#place{width:min(1000px,calc(100vw - 32px));height:min(680px,calc(100dvh - 32px));padding:0;border:1px solid var(--line-2);border-radius:14px;background:var(--surface);color:var(--ink);box-shadow:0 24px 64px rgba(0,0,0,.3)}
+#place[open]{display:flex;flex-direction:column}
+#place::backdrop{background:rgba(8,17,31,.55)}
+#place h2{margin:4px 0 0;font-size:24px;line-height:1.05;font-weight:760;font-stretch:72%;overflow-wrap:anywhere}
+.pl-b{flex:1;min-height:0;display:grid;grid-template-columns:290px minmax(0,1fr)}
+.pl-side{padding:16px;display:grid;gap:10px;align-content:start;overflow:auto;border-right:1px solid var(--line)}
+.pl-side input{width:100%}
+#pmap{min-height:280px;background:var(--water)}
+.pl-res{display:grid;gap:2px;margin-inline:-6px}
+.pl-hit{display:flex;justify-content:space-between;gap:8px;padding:6px;border:0;border-radius:6px;background:none;cursor:pointer;text-align:left;font-size:13.5px}
+.pl-hit:hover{background:var(--surface-2)}
+.pl-at{font:13px var(--mono);color:var(--ink-2)}
+@media (max-width:700px){#place{width:100%;max-width:100%;height:100dvh;max-height:100dvh;margin:0;border-radius:0}.pl-b{grid-template-columns:1fr;grid-template-rows:auto minmax(260px,1fr)}.pl-side{border-right:0;border-bottom:1px solid var(--line)}}
+
+/* map timeline */
+#scr-story{overflow:hidden}
+.story{display:grid;grid-template-columns:320px minmax(0,1fr);height:100%;min-height:0}
+.story.viewer{grid-template-columns:minmax(0,1fr)}
+.story.viewer .st-design{display:none}
+.st-design{overflow:auto;border-right:1px solid var(--line);background:var(--surface);padding:0 16px 24px}
+.sd-sec{border-top:1px solid var(--line);padding-block:14px;display:grid;gap:10px}
+.sd-sec:first-child{border-top:0}
+.sd-sec p{margin:0;font-size:13.5px}
+.sd-sec input[type=text],.sd-sec select{width:100%}
+.sd-cols{display:grid;gap:4px;max-height:260px;overflow:auto}
+.sd-col{display:grid;grid-template-columns:minmax(0,1fr) 130px;gap:8px;align-items:center;font-size:13px}
+.sd-col .t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hint.warn{color:var(--warn);font-weight:600}
+.st-main{display:flex;flex-direction:column;min-width:0;min-height:0}
+.st-stage{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) min(420px,42%)}
+#smap{min-height:300px;background:var(--water)}
+.st-card{overflow:auto;padding:20px 22px 28px;border-left:1px solid var(--line);background:var(--surface);display:grid;gap:12px;align-content:start}
+.st-meta{display:flex;justify-content:space-between;gap:8px;align-items:center;font-size:13px}
+.st-date{margin:0;font-weight:650;color:var(--ink-2)}
+.st-h{margin:0;font-size:28px;line-height:1.05;font-weight:760;font-stretch:72%;overflow-wrap:anywhere}
+.st-x{margin:0;font-size:15px;line-height:1.55;color:var(--ink-2);white-space:pre-line}
+.st-loc{margin:0;font-size:13.5px}
+.st-fig{margin:0;display:grid;gap:6px}
+.st-fig img{max-width:100%;max-height:340px;object-fit:contain;border-radius:6px;justify-self:start;background:var(--surface-2)}
+.st-fig figcaption{font-size:13px;color:var(--ink-2)}
+.st-src{margin:0;padding-left:18px;display:grid;gap:4px;font-size:13.5px}
+.st-nav{flex:none;display:flex;gap:8px;align-items:center;padding:10px 16px;border-top:1px solid var(--line);background:var(--surface)}
+.st-tl{flex:none;background:var(--surface);border-top:1px solid var(--line);padding:0 0 4px}
+.st-tl svg{display:block;width:100%;height:auto;user-select:none}
+.st-tl .tk{font-size:12px;fill:var(--muted);font-variant-numeric:tabular-nums}
+.st-tl .axis{stroke:var(--line-2);stroke-width:1}
+.st-tl .grid{stroke:var(--line);stroke-width:1}
+.st-tl .mk{cursor:pointer}
+.st-tl .now{stroke:var(--sel);stroke-width:1.5}
+@media (max-width:980px){
+  #scr-story{overflow:visible}
+  .story{display:flex;flex-direction:column;height:auto}
+  .st-design{order:2;border-right:0;border-top:1px solid var(--line);overflow:visible}
+  .st-stage{grid-template-columns:minmax(0,1fr)}
+  #smap{height:50vh}
+  .st-card{border-left:0;border-top:1px solid var(--line);overflow:visible}
+}
+
 /* tutorial */
 #tour-spot{position:fixed;z-index:4000;pointer-events:none;border-radius:10px;outline:2px solid var(--focus);outline-offset:2px;box-shadow:0 0 0 9999px color-mix(in srgb,#08111f 45%,transparent);transition:all .2s}
 #tour{position:fixed;z-index:4001;width:min(340px,calc(100vw - 24px));padding:16px 16px 12px;border-radius:12px;border:1px solid var(--line-2);background:var(--surface);box-shadow:0 12px 36px rgba(0,0,0,.25);display:grid;gap:8px;transition:transform .2s}
@@ -376,7 +485,9 @@ td.nowrap{white-space:nowrap}
       <b>Investigations Lab</b><span>Event data explorer</span>
     </button>
     <div class="hdr-ds" id="hdr-ds"></div>
+    <div id="hdr-nav"></div>
     <div class="sp"></div>
+    <div id="hdr-proj"></div>
     <button class="btn" id="hdr-guide" type="button">Build a dataset</button>
     <button class="btn" id="hdr-tut" type="button" hidden>Tutorial</button>
     <button class="btn" id="hdr-new" type="button" hidden>New dataset</button>
@@ -387,13 +498,13 @@ td.nowrap{white-space:nowrap}
       <div>
         <p class="eyebrow">Investigations Lab · Event data explorer</p>
         <h1>Map and explore <em>event</em> data</h1>
-        <p class="lede">Load a UCDP, ACLED, GDELT, GTD or aid-worker security export, or your own spreadsheet of events with dates and places. The file is read in this browser and never uploaded. You check the columns, choose simple or advanced controls, then filter the events across a map, a timeline, rankings and a table.</p>
+        <p class="lede">Load a UCDP, ACLED, GDELT, GTD or aid-worker security export, or your own spreadsheet of events with dates and places. The file is read in this browser and never uploaded. You check the columns, then filter the events across a map, a timeline, rankings and a table, fix or add events in a sheet, and turn them into a map timeline you can share.</p>
         <div class="drop" id="drop">
           <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><path d="M8 4h12l6 6v20H8z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M20 4v6h6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M17 26V15m-4.5 4.5L17 15l4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
-          <strong>Drop a CSV file here</strong>
+          <strong>Drop a CSV or project file here</strong>
           <span class="muted">or</span>
-          <button class="btn" type="button" id="pick">Choose a file</button>
-          <input type="file" id="file" accept=".csv,.tsv,.txt,text/csv" hidden>
+          <span style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center"><button class="btn" type="button" id="pick">Choose a file</button><button class="btn" type="button" id="blank">Start a blank project</button></span>
+          <input type="file" id="file" accept=".csv,.tsv,.txt,.json,.html,text/csv,application/json,text/html" hidden>
         </div>
         <p id="imp-msg" class="imp-msg" role="status" hidden></p>
         <div class="g-cta"><p><strong>No data yet?</strong> Learn where to find event data, and how to build your own spreadsheet of events from web searches.</p><button class="btn" type="button" id="guide-open">Read the guide</button></div>
@@ -405,10 +516,18 @@ td.nowrap{white-space:nowrap}
           <div><dt>GTD and AWSD</dt><dd>Global Terrorism Database and Aid Worker Security Database exports</dd></div>
           <div><dt>HXL-tagged CSV</dt><dd>Humanitarian data from HDX with a <code>#hashtag</code> row, matched from its tags</dd></div>
           <div><dt>Anything else</dt><dd>Any CSV with a date and coordinates. You choose the columns.</dd></div>
+          <div><dt>Projects</dt><dd>Project files (<code>.json</code>) saved from this explorer, and maps or map timelines exported from it (<code>.html</code>)</dd></div>
         </dl></details>
       </div>
       <aside class="imp-side">
+        <div id="projects" class="loaded" style="margin:0 0 14px"></div>
         <h2 class="eyebrow">Or open a sample</h2>
+        <button class="sample" type="button" id="sample-story">
+          <span class="badge">Map timeline · Sample</span>
+          <strong>DR Congo, the deadliest week’s events</strong>
+          <span class="muted">The 15 deadliest events from the ACLED sample, to step through, edit and export</span>
+          <span class="go">Open sample →</span>
+        </button>
         <button class="sample" type="button" data-sample="sample-ucdp" data-name="gedevents_490_2025-2026.csv">
           <span class="badge">UCDP GED · Event level</span>
           <strong>DR Congo, 2025</strong>
@@ -471,7 +590,40 @@ td.nowrap{white-space:nowrap}
       </main>
     </div>
   </section>
+
+  <section class="screen" id="scr-sheet" hidden>
+    <div class="sh">
+      <div class="sh-bar" id="sh-bar"></div>
+      <p class="sh-msg" id="sh-msg" role="status" hidden></p>
+      <div class="sh-grid" id="sh-grid" tabindex="0" aria-label="Sheet. Arrow keys move between cells, Enter or typing edits, Escape cancels."></div>
+    </div>
+  </section>
+
+  <section class="screen" id="scr-story" hidden>
+    <div class="story">
+      <aside class="st-design" id="st-design" aria-label="Map timeline settings"></aside>
+      <div class="st-main">
+        <div class="st-stage"><div id="smap"></div><article class="st-card" id="st-card" aria-live="polite"></article></div>
+        <div class="st-nav" id="st-nav"></div>
+        <div class="st-tl" id="st-tl"></div>
+      </div>
+    </div>
+  </section>
 </div>
+<dialog id="place" aria-labelledby="pl-t">
+  <div class="g-h"><div><p class="eyebrow">Place on the map</p><h2 id="pl-t"></h2></div><button class="btn ghost sm" id="pl-x" type="button">Close ✕</button></div>
+  <div class="pl-b">
+    <div class="pl-side">
+      <label class="fld"><span>Find a town or city</span><input type="search" id="pl-q" autocomplete="off"></label>
+      <div class="pl-res" id="pl-res"></div>
+      <p class="hint">Or click the map where it happened. Villages are easier to find on the streets or satellite map.</p>
+      <div id="pl-base"></div>
+      <p class="pl-at" id="pl-at" role="status"></p>
+      <div class="ff-b"><button class="btn pri" type="button" id="pl-ok">Use this point</button><button class="btn" type="button" id="pl-no">Cancel</button></div>
+    </div>
+    <div id="pmap"></div>
+  </div>
+</dialog>
 <aside id="drawer" hidden aria-label="Details"><div class="dr-h"><span class="eyebrow" id="dr-k">Event</span><button class="btn ghost sm" id="dr-x" type="button">Close ✕</button></div><div class="dr-b" id="dr-b"></div></aside>
 <dialog id="guide" aria-labelledby="g-title">
   <div class="g-h"><div><p class="eyebrow">Guide</p><h2 id="g-title">Build your own event dataset</h2></div><button class="btn ghost sm" id="g-x" type="button">Close ✕</button></div>
@@ -486,6 +638,7 @@ td.nowrap{white-space:nowrap}
       <li><a href="#g7">Turn articles into events</a></li>
       <li><a href="#g8">Add coordinates</a></li>
       <li><a href="#g9">Check, export and load</a></li>
+      <li><a href="#g11">Tell the story with a map timeline</a></li>
       <li><a href="#g10">Stay safe and do no harm</a></li>
     </ol></nav>
 
@@ -527,6 +680,8 @@ td.nowrap{white-space:nowrap}
       <p>With these column names the explorer recognises your columns by itself, and the links in <code>source</code> become clickable in each event’s details. You can add any other column you need; it shows up in the details and can be used as a filter.</p>
       <div class="g-dl"><button class="btn pri" type="button" data-tpl="events">Download the event template (CSV)</button><button class="btn" type="button" data-tpl="log">Download the search log template (CSV)</button></div>
       <p class="hint">Open the templates in Google Sheets (File › Import) or Excel. Each has one example row to show the format: delete it before you start.</p>
+      <p><b>Or work right here.</b> A blank project has these columns, plus a headline and an image for map timelines, and you fill it in the explorer’s Sheet. A shared Google Sheet is still the better choice when several people collect events together.</p>
+      <div class="g-dl"><button class="btn" type="button" id="g-blank">Start a blank project</button></div>
     </section>
 
     <section id="g4"><h3><span class="n">4</span>Data that already exists</h3>
@@ -665,13 +820,44 @@ td.nowrap{white-space:nowrap}
       </ul>
       <p><b>Save it as CSV.</b> Google Sheets: File › Download › Comma-separated values. Excel: File › Save As › CSV UTF-8 (this keeps accents and non-Latin letters). LibreOffice: File › Save As › Text CSV, with character set UTF-8.</p>
       <p><b>Load it here.</b> Drop the CSV on the start page. The explorer shows which column it thinks is which; fix anything it got wrong and open the map. Dots in odd places usually point to a typo.</p>
+      <p><b>Fix mistakes in the Sheet.</b> Switch to the Sheet view to correct a date, place an event on the map or add a row, without going back to your spreadsheet. Rows marked <b>!</b> won’t show on the map, and the mark tells you why. Download the CSV to take your changes back to Google Sheets or Excel.</p>
       <div class="g-dl"><button class="btn pri" type="button" id="g-load">Load my file</button></div>
     </section>
 
-    <section id="g10"><h3><span class="n">10</span>Stay safe and do no harm</h3>
+    <section id="g11"><h3><span class="n">10</span>Tell the story with a map timeline</h3>
+      <p>A map timeline walks readers through your events one at a time: the map flies to each place while a card shows what happened, with a headline, an image and the sources. Open any dataset and choose <b>Map timeline</b> at the top of the screen.</p>
+      <h4 class="eyebrow">Choose and write</h4>
+      <ul>
+        <li><b>Pick the events that carry the story.</b> Ten to forty is plenty. Untick the rest in the Sheet’s “In story” column, or use the explorer’s filters and keep only the matching events.</li>
+        <li><b>Write a headline for each event:</b> a plain sentence saying who did what, where. “Armed men loot the health centre in Beni”, not “Tragedy strikes”.</li>
+        <li><b>In the text, say who claims what,</b> what is confirmed and what is still disputed. Keep the source links: readers and editors will check them.</li>
+        <li><b>Write an introduction</b> that says what the map shows, where the data comes from and what it leaves out.</li>
+      </ul>
+      <h4 class="eyebrow">Images</h4>
+      <ul>
+        <li>Only use images you have the right to use, and credit them in the image credit column.</li>
+        <li>Think before showing dead or injured people, and blur or leave out faces of victims, witnesses and bystanders who could be put at risk.</li>
+        <li>Uploaded images are made smaller and re-saved without their hidden data, such as the GPS location where a photo was taken. They are stored inside your project and the files you export.</li>
+        <li>An image link loads the picture from the other website each time someone opens your map, which tells that site who is looking, and the picture disappears if the site removes it. Upload a copy when you can.</li>
+      </ul>
+      <h4 class="eyebrow">Before you share it</h4>
+      <ul>
+        <li>Mark columns you must keep private, such as names of victims or sources, as <b>Don’t export</b>. Events left out of the map timeline never go in the exported file either.</li>
+        <li>Exact coordinates can lead people to someone’s home or a hiding place. Use the nearest town where that is a risk.</li>
+        <li>Open the exported file and read every card before you send it to anyone.</li>
+      </ul>
+      <h4 class="eyebrow">Keep your work</h4>
+      <ul>
+        <li>Your project saves itself in this browser as you work, and is listed on the start page. Browsers can clear what they store, so use <b>Save file</b> often to keep a copy on your computer.</li>
+        <li>A project file holds your rows, settings and images. Send it to a colleague, and open it by dropping it on the start page. Exported maps and map timelines can be dropped there too, to edit them again.</li>
+      </ul>
+    </section>
+
+    <section id="g10"><h3><span class="n">11</span>Stay safe and do no harm</h3>
       <ul>
         <li><b>Protect yourself.</b> Use a separate browser profile and separate accounts for research. Watch without interacting: don’t like, follow, comment or send messages, and remember that some sites show who viewed a profile.</li>
         <li><b>Protect others.</b> Only record the names of victims, witnesses or sources when you truly need them, and keep the spreadsheet private. Before you publish a map, ask whether it could put anyone in danger.</li>
+        <li><b>Check images before you publish.</b> Faces, uniforms, number plates and street signs can identify people. Photos from phones often carry the exact place they were taken: upload them here, which removes that data, rather than sharing the original files.</li>
         <li><b>Protect your wellbeing.</b> Violent images affect everyone. Turn off autoplay, view images small or in black and white, take breaks, and talk with colleagues about what you have seen.</li>
         <li><b>Be honest about gaps.</b> Your dataset shows what was reported and found, not everything that happened. Places without internet, journalists or free media look quieter than they are. Say so when you share your results.</li>
       </ul>
@@ -679,7 +865,7 @@ td.nowrap{white-space:nowrap}
   </div>
 </dialog>
 <div id="tip" hidden></div>
-<div id="dropov"><div>Drop the CSV to load it</div></div>
+<div id="dropov"><div>Drop the file to load it</div></div>
 
 <script>
 'use strict';
@@ -736,7 +922,8 @@ function parseDate(s){
 /* ---------- formats ---------- */
 const TOV={'1':'State-based','2':'Non-state','3':'One-sided'};
 const ACLED_ORDER=['Battles','Violence against civilians','Explosions/Remote violence','Riots','Protests','Strategic developments'];
-const ROLES=[['date','Date',1],['dateEnd','End date'],['year','Year (if no date column)'],['month','Month'],['day','Day'],['lat','Latitude',1],['lon','Longitude',1],['cat','Category'],['sub','Sub-category'],['fat','Fatalities'],['events','Event count'],['a1','Actor 1'],['a2','Actor 2'],['country','Country'],['adm1','Admin 1'],['adm2','Admin 2'],['place','Location name'],['prec','Location precision'],['notes','Notes'],['source','Sources'],['id','Event ID']];
+const ROLES=[['date','Date',1],['dateEnd','End date'],['year','Year (if no date column)'],['month','Month'],['day','Day'],['lat','Latitude',1],['lon','Longitude',1],['cat','Category'],['sub','Sub-category'],['fat','Fatalities'],['events','Event count'],['a1','Actor 1'],['a2','Actor 2'],['country','Country'],['adm1','Admin 1'],['adm2','Admin 2'],['place','Location name'],['prec','Location precision'],['notes','Notes'],['source','Sources'],['id','Event ID'],['title','Headline (map timeline)'],['media','Image (map timeline)'],['caption','Image caption'],['credit','Image credit']];
+const STORY_ROLES=['title','media','caption','credit'];
 const FORMATS={
   ucdp:{name:'UCDP GED',level:'Event level',test:c=>c.has('type_of_violence')&&c.has('date_start')&&c.has('best'),
     map:{id:'id',date:'date_start',dateEnd:'date_end',lat:'latitude',lon:'longitude',cat:'type_of_violence',sub:'conflict_name',fat:'best',a1:'side_a',a2:'side_b',country:'country',adm1:'adm_1',adm2:'adm_2',place:'where_coordinates',prec:'where_prec',source:'source_article'},
@@ -767,7 +954,8 @@ const FORMATS={
   generic:{name:'Custom CSV',level:'Columns mapped by you',test:()=>true,map:{},labels:{},
     note:'The format wasn’t recognised. Choose the columns that hold the date and the coordinates below; everything else is optional.'}
 };
-const GUESS={date:['event_date','date_start','date','week','day'],dateEnd:['date_end','end_date'],year:['year','iyear'],month:['month','imonth'],day:['day','iday'],lat:['latitude','lat','centroid_latitude','y'],lon:['longitude','lon','lng','long','centroid_longitude','x'],cat:['event_type','type_of_violence','category','type'],sub:['sub_event_type','subtype','sub_type'],fat:['fatalities','best','deaths','killed'],events:['events','event_count','count'],a1:['actor1','side_a','actor_1'],a2:['actor2','side_b','actor_2'],country:['country'],adm1:['admin1','adm_1','province'],adm2:['admin2','adm_2','district'],place:['location','where_coordinates','place','town','city'],prec:['geo_precision','where_prec'],notes:['notes','description'],source:['source','sources','source_article'],id:['event_id_cnty','event_id','id']};
+const GUESS={date:['event_date','date_start','date','week','day'],dateEnd:['date_end','end_date'],year:['year','iyear'],month:['month','imonth'],day:['day','iday'],lat:['latitude','lat','centroid_latitude','y'],lon:['longitude','lon','lng','long','centroid_longitude','x'],cat:['event_type','type_of_violence','category','type'],sub:['sub_event_type','subtype','sub_type'],fat:['fatalities','best','deaths','killed'],events:['events','event_count','count'],a1:['actor1','side_a','actor_1'],a2:['actor2','side_b','actor_2'],country:['country'],adm1:['admin1','adm_1','province'],adm2:['admin2','adm_2','district'],place:['location','where_coordinates','place','town','city'],prec:['geo_precision','where_prec'],notes:['notes','description','text'],source:['source','sources','source_article'],id:['event_id_cnty','event_id','id'],
+  title:['headline','title'],media:['image','media','image_url','photo'],caption:['image_caption','media caption','caption'],credit:['image_credit','media credit','credit']}; // the last four match TimelineJS sheets too
 const BASE_LABELS={cat:'Category',sub:'Sub-category',actor:'Actor (either side)',a1:'Actor 1',a2:'Actor 2',adm1:'Province / region',adm2:'District / territory',place:'Location',country:'Country',fat:'Fatalities',events:'Events'};
 const PREC={ucdp:{1:'Exact location',2:'Within about 25 km',3:'Second-order admin area',4:'First-order admin area',5:'Linear feature or wider area',6:'Country only',7:'International waters or airspace'},gdelt:{1:'City or landmark',2:'State or province',3:'Country (centre point)'},gtd:{1:'City or village',2:'Within the district',3:'District or city area',4:'Province',5:'Country or unknown'},acled:{1:'Town or village',2:'Near a town, or a small area',3:'Provincial capital or larger region'}};
 const lab=k=>k.startsWith('col:')?k.slice(4):(FORMATS[S.ds.kind].labels[k]||((S.ds.kind==='generic'||S.ds.kind==='hxl')&&S.ds.map[k]&&!['lat','lon','date'].includes(k)?S.ds.map[k]:null)||BASE_LABELS[k]||k);
@@ -802,6 +990,7 @@ function ingest(text,fileName){
   if(kind) map=Object.fromEntries(Object.entries(FORMATS[kind].map).filter(([,c])=>cs.has(c)));
   else if(tags){kind='hxl'; map=hxlMap(tags);}
   else {kind='generic'; map=guessMap(cols);}
+  const gm=guessMap(cols); for(const k of STORY_ROLES) if(gm[k]&&!map[k]) map[k]=gm[k];
   return {fileName,raw,cols,kind,map,tags,parseErrors:res.errors.length};
 }
 
@@ -823,14 +1012,14 @@ function parseSources(r,kind,map){
 }
 
 function normalize(raw,kind,map){
-  const rows=[],drop={coords:0,date:0},g=(r,k)=>map[k]?String(r[map[k]]??'').trim():'';
+  const rows=[],drop={coords:0,date:0,why:new Map()},g=(r,k)=>map[k]?String(r[map[k]]??'').trim():'';
   for(let i=0;i<raw.length;i++){
     const r=raw[i], lat=num(g(r,'lat')), lon=num(g(r,'lon'));
-    if(lat==null||lon==null||Math.abs(lat)>90||Math.abs(lon)>180||(lat===0&&lon===0)){drop.coords++;continue}
+    if(lat==null||lon==null||Math.abs(lat)>90||Math.abs(lon)>180||(lat===0&&lon===0)){drop.coords++;drop.why.set(r,'coords');continue}
     let date=parseDate(g(r,'date')), end=parseDate(g(r,'dateEnd'));
     if(date==null&&map.year){const y=num(g(r,'year')), mo=num(g(r,'month')), d=num(g(r,'day'));
       if(y){const m0=mo>=1&&mo<=12?mo-1:null, d0=m0!=null&&d>=1&&d<=31?d:null; date=Date.UTC(y,m0??0,d0??1); if(end==null) end=d0!=null?date:m0!=null?Date.UTC(y,m0+1,0):Date.UTC(y,11,31);}}
-    if(date==null){drop.date++;continue}
+    if(date==null){drop.date++;drop.why.set(r,'date');continue}
     let cat=g(r,'cat'), sub=g(r,'sub'), prec=num(g(r,'prec'));
     if(kind==='ucdp') cat=TOV[cat]||cat;
     if(kind==='gdelt'){cat=CAMEO[cat.padStart(2,'0')]||cat; sub=QUAD[sub]||sub; prec=prec==null?null:prec===1?3:prec===2||prec===5?2:1;}
@@ -840,7 +1029,7 @@ function normalize(raw,kind,map){
       adm1:g(r,'adm1'),adm2:g(r,'adm2'),place:g(r,'place'),prec,notes:g(r,'notes'),raw:r};
     if(kind==='ucdp'){e.lo=num(r.low)??fat; e.hi=num(r.high)??fat;}
     e.src=parseSources(r,kind,map);
-    e.text=[e.id,e.cat,e.sub,e.a1,e.a2,e.country,e.adm1,e.adm2,e.place,e.notes,...e.src.map(s=>s.name+' '+s.headline)].join(' | ').toLowerCase();
+    e.text=[e.id,g(r,'title'),e.cat,e.sub,e.a1,e.a2,e.country,e.adm1,e.adm2,e.place,e.notes,...e.src.map(s=>s.name+' '+s.headline)].join(' | ').toLowerCase();
     rows.push(e);
   }
   return {rows,drop};
@@ -867,7 +1056,7 @@ function profile(raw,cols){
 }
 
 function buildDataset(p){
-  const rows=p.norm.rows, ds={name:p.fileName,kind:p.kind,map:{...p.map},cols:p.cols,rows,drop:p.norm.drop,ord:{},min:Infinity,max:-Infinity,totEv:0,totFat:0};
+  const rows=p.norm.rows, ds={name:p.fileName,kind:p.kind,map:{...p.map},cols:p.cols,raw:p.raw,why:p.norm.drop.why,rows,drop:p.norm.drop,ord:{},min:Infinity,max:-Infinity,totEv:0,totFat:0};
   for(const e of rows){ if(e.date<ds.min)ds.min=e.date; if(e.date>ds.max)ds.max=e.date; ds.totEv+=e.events; ds.totFat+=e.fat; }
   ds.has={actors:rows.some(e=>e.a1||e.a2),a2:rows.some(e=>e.a2),src:rows.some(e=>e.src.length),prec:rows.some(e=>e.prec!=null)};
   ds.fields=['cat','sub','actor','a1','a2','adm1','adm2','place','country'].filter(k=>{
@@ -892,15 +1081,23 @@ const cmpRows=c=>c.rows.filter(e=>(S.F.from==null||e.date>=S.F.from)&&(S.F.to==n
 const metric=e=>S.V.measure==='fat'?e.fat:e.events;
 const measureWord=()=>S.V.measure==='fat'?'deaths':'events';
 
-function show(id){ tourEnd();
+const VIEWS=['scr-explore','scr-sheet','scr-story'];
+function show(id){ tourEnd(); closeMenu(); stopPlay();
   for(const s of document.querySelectorAll('.screen')) s.hidden=s.id!==id;
-  document.body.dataset.screen=id; document.body.classList.remove('side-open'); hideTip(); renderHeader();
+  document.body.dataset.screen=id; document.body.classList.remove('side-open'); hideTip(); if(S.ds&&VIEWS.includes(id)) S.ds.lastView=id; renderHeader();
 }
 function renderHeader(){
-  const ex=document.body.dataset.screen==='scr-explore'&&S.ds, d=$('#hdr-ds'); put(d,);
-  if(ex){ const f=FORMATS[S.ds.kind]; d.append(h('span',{class:'badge'},f.name+' · '+f.level));
-    d.append(S.datasets.length>1?selectEl('ds-sel',S.datasets.map((x,i)=>[String(i),x.name]),String(S.datasets.indexOf(S.ds)),v=>openDataset(S.datasets[+v])):h('span',{class:'ds-name',title:S.ds.name},S.ds.name)); }
-  $('#hdr-new').hidden=!ex; $('#hdr-tut').hidden=!ex;
+  const scr=document.body.dataset.screen, ds=S.ds, ex=VIEWS.includes(scr)&&ds, d=$('#hdr-ds'); put(d,);
+  if(ex){ const f=FORMATS[ds.kind]; d.append(h('span',{class:'badge'},f.name+' · '+f.level));
+    d.append(S.datasets.length>1?selectEl('ds-sel',S.datasets.map((x,i)=>[String(i),x.name]),String(S.datasets.indexOf(ds)),v=>openView(S.datasets[+v],scr)):h('span',{class:'ds-name',title:ds.name},ds.name)); }
+  const views=[['scr-explore','Explore'],...(S.viewer?[]:[['scr-sheet','Sheet']]),...(!S.viewer||S.storyX?[['scr-story','Map timeline']]:[])];
+  put($('#hdr-nav'),ex&&views.length>1?seg(views,scr,v=>openView(ds,v),'View'):null);
+  $('#hdr-new').hidden=!ex; $('#hdr-tut').hidden=!ex; renderSave();
+}
+// Explore and Map timeline need at least one row with a date and coordinates; the Sheet works with none.
+function openView(ds,v){
+  if(v!=='scr-sheet'&&!ds.rows.length){ openSheet(ds); shMsg(`Add at least one row with a date and coordinates to open the ${v==='scr-story'?'map timeline':'explorer'}.`); return; }
+  v==='scr-sheet'?openSheet(ds):v==='scr-story'?openStory(ds):openDataset(ds);
 }
 
 /* ---------- import ---------- */
@@ -908,12 +1105,33 @@ function importMsg(t,err){const m=$('#imp-msg'); m.hidden=!t; m.textContent=t||'
 async function loadFile(file){
   if(/\.(xlsx?|ods|numbers)$/i.test(file.name)){ show('scr-import'); importMsg(`${file.name} is a spreadsheet file. Export it as CSV first, then load the CSV.`,true); return; }
   importMsg('Reading '+file.name+'…');
-  try{ const text=await file.text(); startReview(ingest(text,file.name)); importMsg(''); }
+  try{ const text=await file.text();
+    if(/\.(json|html?)$/i.test(file.name)){ // a project file, or a map exported from this explorer
+      let x=null; if(/\.json$/i.test(file.name)) x=JSON.parse(text); else x=exportedData(text);
+      if(!x||!Array.isArray(x.rows)||!Array.isArray(x.cols)) throw new Error('It isn’t a project file or a map exported from this explorer.');
+      const ds=openProject(x,true); ensureProject(ds); saveProject(ds); openView(ds,x.mode==='story'?'scr-story':x.view);
+    } else startReview(ingest(text,file.name));
+    importMsg(''); }
   catch(err){ show('scr-import'); importMsg(`${file.name} couldn’t be read. ${err.message||''}`,true); }
 }
 function renderImport(){
   const box=$('#loaded'); put(box,);
-  if(S.datasets.length) box.append(h('h2',{class:'eyebrow'},'Loaded this session'),...S.datasets.map(d=>h('button',{type:'button',class:'ds-row',onclick:()=>openDataset(d)},h('span',{class:'badge'},FORMATS[d.kind].name),h('span',{class:'n',title:d.name},d.name),h('span',{class:'muted'},fN(d.rows.length)+' rows'))));
+  if(S.datasets.length) box.append(h('h2',{class:'eyebrow'},'Loaded this session'),...S.datasets.map(d=>h('button',{type:'button',class:'ds-row',onclick:()=>openView(d,d.lastView)},h('span',{class:'badge'},FORMATS[d.kind].name),h('span',{class:'n',title:d.name},d.name),h('span',{class:'muted'},fN(d.raw.length)+' rows'))));
+  renderProjects();
+}
+function renderProjects(){
+  const box=$('#projects'); if(S.viewer||!window.indexedDB){put(box,); return;}
+  DB.list().then(list=>{ if(S.viewer) return put(box,); list.sort((a,b)=>b.updated-a.updated);
+    put(box,list.length?[h('h2',{class:'eyebrow'},'Your projects in this browser'),
+      ...list.map(m=>h('div',{class:'pj'},
+        h('button',{type:'button',class:'ds-row',onclick:()=>openStored(m.id)},h('span',{class:'n',title:m.name},m.name),h('span',{class:'muted'},`${fN(m.n)} rows · ${fD(m.updated)}`)),
+        h('button',{type:'button',class:'btn ghost sm','aria-label':'Download '+m.name,onclick:()=>DB.get(m.id).then(downloadProject)},'Download'),
+        h('button',{type:'button',class:'btn ghost sm','aria-label':'Delete '+m.name,onclick:()=>{
+          if(!confirm(`Delete “${m.name}” from this browser? This can’t be undone. Download it first if you may need it again.`)) return;
+          for(const d of S.datasets) if(d.pid===m.id) d.pid=null;
+          DB.del(m.id).then(renderProjects);}},'Delete'))),
+      h('p',{class:'hint'},'Browsers can clear this storage. Download a project to keep a copy.')]:[]);
+  }).catch(()=>put(box,h('p',{class:'hint'},'This browser won’t let the explorer save projects here. Use Save file to keep your work.')));
 }
 
 /* ---------- review ---------- */
@@ -958,6 +1176,7 @@ function renderReview(){
 
 /* ---------- explore ---------- */
 function openDataset(ds){
+  if(!ds.rows.length) return openView(ds,'scr-explore');
   S.ds=ds; ds.F=ds.F||defaultF(ds); ds.V=ds.V||defaultV(ds); S.F=ds.F; S.V=ds.V; S.sel=S.group=null; S.sizeKey=null;
   closeDrawer(); show('scr-explore'); ensureMap(); readPal(); makeCS(); buildControls(); applyBasemap(); update(); fitData();
 }
@@ -1055,7 +1274,7 @@ function compute(){
     if(!nf){tl.push(e); if(inDate) view.push(e);}
     if(inDate&&nf<=1) for(const k of fk){ if(nf&&k!==failed) continue; const m=facets[k]; for(const v of vals(k,e)) m.set(v,(m.get(v)||0)+e.events); }
   }
-  S.view=view; S.tl=tl; S.facets=facets;
+  S.view=view; S.viewFor=S.ds; S.tl=tl; S.facets=facets;
 }
 function update(){
   compute(); renderChips(); renderStats(); renderMap(); renderTimeline(); renderBreakdown(); renderTable();
@@ -1102,7 +1321,8 @@ function readPal(){const cs=getComputedStyle(document.documentElement), t=n=>cs.
 function makeCS(){const all=ordered(S.V.colorBy), pin=S.ds.pin?.[S.V.colorBy]; // exported maps keep the colours they were exported with
   const idx=new Map(pin?pin.map((v,i)=>[v,i]).filter(([v])=>all.includes(v)):all.filter(v=>v!==BLANK).slice(0,8).map((v,i)=>[v,i])), top=[...idx.keys()];
   CS={top,idx,rest:all.filter(v=>!idx.has(v)),col:v=>{const i=idx.get(v);return i==null?PAL.other:PAL.s[i]},shape:v=>SH[(idx.get(v)??0)%4],sh:v=>'sh-'+((idx.get(v)??0)%4),bucket:v=>idx.has(v)?v:OTHER};}
-function onTheme(){ readPal(); if(!M||!S.ds) return; M.countries.setStyle(baseStyle()); M.lakes.setStyle(lakeStyle()); update(); }
+function onTheme(){ readPal(); for(const B of MAPS){B.countries.setStyle(baseStyle()); B.lakes.setStyle(lakeStyle());}
+  const scr=document.body.dataset.screen; if(!S.ds) return; if(scr==='scr-explore') update(); else if(scr==='scr-story') renderStory(); }
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change',onTheme);
 new MutationObserver(onTheme).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
 
@@ -1123,40 +1343,51 @@ const ShapeMarker=L.CircleMarker.extend({_updatePath(){
 const baseStyle=()=>({fillColor:PAL.land,fillOpacity:1,color:PAL.border,weight:.8,opacity:1});
 const lakeStyle=()=>({fillColor:PAL.water,fillOpacity:1,color:PAL.border,weight:.4,opacity:.7});
 const TILES={gray:['Canvas/World_Light_Gray_Base','Esri, HERE, Garmin'],streets:['World_Street_Map','Esri, HERE, Garmin, OpenStreetMap contributors'],topo:['World_Topo_Map','Esri, HERE, Garmin, OpenStreetMap contributors'],sat:['World_Imagery','Esri, Maxar, Earthstar Geographics']};
-function ensureMap(){
-  if(M){requestAnimationFrame(()=>M.map.invalidateSize()); return;}
-  readPal();
-  const map=L.map('map',{scrollWheelZoom:false,preferCanvas:true,minZoom:1,maxZoom:18,zoomSnap:.5,worldCopyJump:true}).setView([0,20],3);
+// The built-in basemap is parsed once and shared by every map: the explorer, the map timeline and the place picker.
+let GEO=null; const MAPS=[];
+const geoData=()=>GEO||(GEO=(t=>({countries:topojson.feature(t,t.objects.countries),lakes:JSON.parse($('#geo-lakes').textContent),places:JSON.parse($('#geo-places').textContent)}))(JSON.parse($('#geo-countries').textContent)));
+function baseMap(el){
+  const map=L.map(el,{scrollWheelZoom:false,preferCanvas:true,minZoom:1,maxZoom:18,zoomSnap:.5,worldCopyJump:true}).setView([0,20],3);
   map.createPane('base').style.zIndex=150; const lp=map.createPane('lab'); lp.style.zIndex=450; lp.style.pointerEvents='none'; map.createPane('hi').style.zIndex=460;
-  const baseR=L.canvas({pane:'base',padding:.5}), topo=JSON.parse($('#geo-countries').textContent);
-  M={map,dataR:L.canvas({tolerance:6,padding:.3}),places:JSON.parse($('#geo-places').textContent),heat:null,heatPts:[],tiles:null};
-  M.countries=L.geoJSON(topojson.feature(topo,topo.objects.countries),{renderer:baseR,interactive:false,style:baseStyle}).addTo(map);
-  M.lakes=L.geoJSON(JSON.parse($('#geo-lakes').textContent),{renderer:baseR,interactive:false,style:lakeStyle}).addTo(map);
-  M.labels=L.layerGroup().addTo(map); M.data=L.featureGroup().addTo(map); M.hi=L.layerGroup().addTo(map);
+  const R=L.canvas({pane:'base',padding:.5}), G=geoData();
+  const B={map,tiles:null,base:null,
+    countries:L.geoJSON(G.countries,{renderer:R,interactive:false,style:baseStyle}).addTo(map),
+    lakes:L.geoJSON(G.lakes,{renderer:R,interactive:false,style:lakeStyle}).addTo(map),
+    labels:L.layerGroup().addTo(map)};
   map.attributionControl.setPrefix(false); map.attributionControl.addAttribution('Basemap: Natural Earth');
   // wheel zooms only after the user engages the map, so page scrolling never gets hijacked
   map.on('click focus',()=>map.scrollWheelZoom.enable()); map.on('mouseout blur',()=>map.scrollWheelZoom.disable());
-  map.on('moveend',drawLabels);
+  map.on('moveend',()=>drawLabels(B));
+  new ResizeObserver(()=>map.invalidateSize()).observe(el);
+  MAPS.push(B); return B;
+}
+function ensureMap(){
+  if(M){requestAnimationFrame(()=>M.map.invalidateSize()); return;}
+  readPal();
+  M=baseMap($('#map')); const map=M.map;
+  Object.assign(M,{dataR:L.canvas({tolerance:6,padding:.3}),heat:null,heatPts:[]});
+  M.data=L.featureGroup().addTo(map); M.hi=L.layerGroup().addTo(map);
   map.on('zoomend',()=>{if(M.heat) M.heat.setOptions(heatOpts());});
   M.data.on('mouseover',ev=>tipFor(ev.propagatedFrom||ev.layer,ev.originalEvent)).on('mousemove',ev=>moveTip(ev.originalEvent)).on('mouseout',hideTip)
     .on('click',ev=>{const l=ev.propagatedFrom||ev.layer; hideTip(); if(l.e) select(l.e,true); else if(l.g) selectGroup(l.g);});
-  new ResizeObserver(()=>map.invalidateSize()).observe($('#map'));
 }
-function applyBasemap(){
-  const b=S.V.basemap, outline=b==='outline';
-  if(M.tiles){M.map.removeLayer(M.tiles); M.tiles=null;}
-  for(const l of [M.countries,M.lakes]) outline?l.addTo(M.map):M.map.removeLayer(l);
+const BASEMAPS=[['outline','Outline (built in)'],['gray','Esri light grey'],['streets','Esri streets'],['topo','Esri topographic'],['sat','Esri satellite']];
+function applyBasemap(B=M,b=S.V.basemap){
+  B.base=b; const outline=b==='outline';
+  if(B.tiles){B.map.removeLayer(B.tiles); B.tiles=null;}
+  for(const l of [B.countries,B.lakes]) outline?l.addTo(B.map):B.map.removeLayer(l);
   if(!outline){ const [p,a]=TILES[b]; let failed=false;
-    M.tiles=L.tileLayer(`https://server.arcgisonline.com/ArcGIS/rest/services/${p}/MapServer/tile/{z}/{y}/{x}`,{maxZoom:18,attribution:'Tiles © '+a})
-      .on('tileerror',()=>{ if(failed) return; failed=true; S.V.basemap='outline'; applyBasemap(); buildMapControls(); mapNote('Tile basemaps can’t load here, so the built-in outline map is back. Tiles work when you open index.html straight from your computer.'); }).addTo(M.map); }
-  drawLabels();
+    B.tiles=L.tileLayer(`https://server.arcgisonline.com/ArcGIS/rest/services/${p}/MapServer/tile/{z}/{y}/{x}`,{maxZoom:18,attribution:'Tiles © '+a})
+      .on('tileerror',()=>{ if(failed) return; failed=true; applyBasemap(B,'outline');
+        if(B===M){ S.V.basemap='outline'; buildMapControls(); mapNote('Tile basemaps can’t load here, so the built-in outline map is back. Tiles work when you open index.html straight from your computer.'); } }).addTo(B.map); }
+  drawLabels(B);
 }
 function mapNote(t){const n=$('#map-note'); n.textContent=t; n.hidden=false; clearTimeout(mapNote.t); mapNote.t=setTimeout(()=>{n.hidden=true},9000);}
-function drawLabels(){
-  M.labels.clearLayers(); if(!S.V||!S.V.labels||S.V.basemap!=='outline') return;
-  const z=M.map.getZoom(), b=M.map.getBounds().pad(.05); let n=0;
-  for(const p of M.places){ if(p[3]>z+.1) break; if(!b.contains([p[1],p[2]])) continue;
-    M.labels.addLayer(L.marker([p[1],p[2]],{pane:'lab',interactive:false,keyboard:false,icon:L.divIcon({className:'plc'+(p[4]?' cap':''),iconSize:[0,0],html:h('span',null,p[0])})}));
+function drawLabels(B=M){
+  B.labels.clearLayers(); if(B.base!=='outline'||(B===M&&!S.V?.labels)) return;
+  const z=B.map.getZoom(), b=B.map.getBounds().pad(.05); let n=0;
+  for(const p of geoData().places){ if(p[3]>z+.1) break; if(!b.contains([p[1],p[2]])) continue;
+    B.labels.addLayer(L.marker([p[1],p[2]],{pane:'lab',interactive:false,keyboard:false,icon:L.divIcon({className:'plc'+(p[4]?' cap':''),iconSize:[0,0],html:h('span',null,p[0])})}));
     if(++n>=120) break; }
 }
 function sizeVal(e){const k=S.V.sizeBy; return k==='fat'?e.fat:k==='events'?e.events:k==='none'?1:Math.max(0,num(e.raw[k.slice(4)])??0);}
@@ -1403,7 +1634,8 @@ function buildMapControls(){
   put($('#map-ctl'),
     S.datasets.length>1?selectF('m-cmp','Compare with',[['','Nothing'],...S.datasets.map((d,i)=>[String(i),d.name]).filter(([i])=>S.datasets[+i]!==S.ds)],V.cmp,v=>{V.cmp=v; update();}):null,
     h('button',{type:'button',class:'btn',title:'Zoom to the filtered events',onclick:fitData},'Reset view'),
-    h('button',{type:'button',class:'btn',title:'Save this map as a web page anyone can open in a browser. Only the rows that match your filters go in it.',onclick:exportMap},'Export map'));
+    h('button',{type:'button',class:'btn',title:'Save this map as a web page anyone can open in a browser. Only the rows that match your filters go in it.',onclick:exportMap},'Export map'),
+    S.viewer?null:h('button',{type:'button',class:'btn',id:'to-story',title:'Turn the events that match your filters into a map timeline you can step through and export',onclick:toStory},'Make a map timeline'));
   const rerender=()=>renderMap();
   put($('#map-ctl2'),
     heat?null:selectF('m-color','Colour by',fieldOptions('color'),V.colorBy,v=>{V.colorBy=v; makeCS(); update();}),
@@ -1415,7 +1647,7 @@ function buildMapControls(){
     heat?null:rangeF('m-op','Opacity',.2,1,.05,V.opacity,v=>Math.round(v*100)+'%',v=>{V.opacity=v; rerender();}),
     heat?rangeF('m-hr','Heat radius',8,60,1,V.heatR,v=>v+' px',v=>{V.heatR=v; rerender();}):null,
     heat?selectF('m-hi','Intensity',[['0.5','Low'],['1','Normal'],['2','High'],['4','Very high']],String(V.heatInt),v=>{V.heatInt=+v; rerender();}):null,
-    selectF('m-base','Basemap',[['outline','Outline (built in)'],['gray','Esri light grey'],['streets','Esri streets'],['topo','Esri topographic'],['sat','Esri satellite']],V.basemap,v=>{V.basemap=v; applyBasemap(); buildMapControls();}),
+    selectF('m-base','Basemap',BASEMAPS,V.basemap,v=>{V.basemap=v; applyBasemap(); buildMapControls();}),
     V.basemap==='outline'?checkF('m-lab','Place names',V.labels,v=>{V.labels=v; drawLabels();}):null);
 }
 function buildTlControls(){
@@ -1441,7 +1673,7 @@ function sourceQuery(s,e){ if(s.headline) return `${s.headline} ${siteOf(s.name)
 function eventQuery(e){ const who=[e.a1,e.a2].filter(Boolean).map(a=>a.replace(/\s*\(.*?\)\s*/g,' ')).join(' '); return `${who} ${uniq([e.place,e.adm1]).join(' ')} ${e.country} ${who?'':e.sub||e.cat} ${win(e)}`; }
 const ext=(href,t)=>h('a',{class:'ext',href,target:'_blank',rel:'noopener noreferrer'},t);
 function openDrawer(kind){ if($('#drawer').hidden) S.ret=document.activeElement; $('#dr-k').textContent=kind; $('#drawer').hidden=false; $('#dr-x').focus({preventScroll:true}); }
-function closeDrawer(){const was=!$('#drawer').hidden; $('#drawer').hidden=true; if(was&&S.ret&&document.contains(S.ret)) S.ret.focus({preventScroll:true}); S.ret=null; S.sel=S.group=null; if(M&&S.ds){drawHi(); markTableSel();}}
+function closeDrawer(){const was=!$('#drawer').hidden; $('#drawer').hidden=true; if(was&&S.ret&&document.contains(S.ret)) S.ret.focus({preventScroll:true}); S.ret=null; S.sel=S.group=S.form=null; if(M&&S.ds&&S.ds.rows.length){drawHi(); markTableSel();}}
 function select(e,pan){ S.sel=e; S.group=null; renderDetail(e,S.group); drawHi(); markTableSel(); if(pan) M.map.panInside([e.lat,e.lon],{paddingTopLeft:[40,40],paddingBottomRight:[innerWidth>640?450:40,40]}); }
 function selectGroup(g){ if(g.items.length===1){S.group=null; return select(g.items[0]);} S.group=g; S.sel=null; renderGroup(g); drawHi(); markTableSel(); }
 function renderGroup(g){
@@ -1455,10 +1687,14 @@ function renderGroup(g){
     items.length>300?h('p',{class:'hint'},`Showing the latest 300. Zoom in or use Grouped with a smaller radius to split them.`):null);
   openDrawer('Location'); $('#dr-b').scrollTop=0;
 }
+const cell=(e,k,ds=S.ds)=>ds.map[k]?String(e.raw[ds.map[k]]??'').trim():'';
+const titleOf=e=>cell(e,'title')||(e.a1?(e.a2?`${e.a1} vs ${e.a2}`:e.a1):(uniq([e.place,e.adm1]).join(', ')||'Unnamed location'));
+const dateText=e=>S.ds.kind==='acledAgg'?`Week of ${fD(e.date)}`:e.end>e.date?`${fD(e.date)} – ${fD(e.end)}`:fD(e.date);
+function figure(e){ const src=mediaSrc(cell(e,'media')); if(!src) return null; const cap=cell(e,'caption'), cr=cell(e,'credit');
+  return h('figure',{class:'st-fig'},h('img',{src,alt:cap,loading:'lazy'}),cap||cr?h('figcaption',null,cap,cr?h('span',{class:'muted'},(cap?' · ':'')+cr):null):null); }
 function renderDetail(e,back){
   const ds=S.ds, kind=ds.kind, r=e.raw, kv=[], add=(k,v)=>{if(v!==''&&v!=null) kv.push(h('dt',null,k),h('dd',null,v));};
-  const title=e.a1?(e.a2?`${e.a1} vs ${e.a2}`:e.a1):(uniq([e.place,e.adm1]).join(', ')||'Unnamed location');
-  const dateTxt=kind==='acledAgg'?`Week of ${fD(e.date)}`:e.end>e.date?`${fD(e.date)} – ${fD(e.end)}`:fD(e.date);
+  const title=titleOf(e), dateTxt=dateText(e);
   if(kind==='ucdp'){ add('Fatalities',`${fN(e.fat)} best estimate · low ${fN(e.lo)} · high ${fN(e.hi)}`);
     add('By party',[['Side A',r.deaths_a],['Side B',r.deaths_b],['Civilians',r.deaths_civilians],['Unknown',r.deaths_unknown]].filter(x=>x[1]!==''&&x[1]!=null).map(x=>`${x[0]} ${x[1]}`).join(' · '));
     add('Conflict',e.sub); add('Dyad',r.dyad_name); }
@@ -1479,12 +1715,14 @@ function renderDetail(e,back){
     back?h('button',{type:'button',class:'lnk',onclick:()=>{S.sel=null; renderGroup(back); drawHi(); markTableSel();}},`← All ${fN(back.items.length)} rows at this location`):null,
     h('div',null,h('div',{class:'d-tag'},S.V.colorBy==='cat'?h('i',{class:'dot '+CS.sh(val1('cat',e)),style:'background:'+CS.col(val1('cat',e))}):null,h('span',null,dispV(val1('cat',e)))),
       h('h2',{class:'d-title',style:'margin-top:6px'},title),h('p',{class:'d-date'},dateTxt)),
+    figure(e),
     e.notes?h('p',{class:'d-notes'},e.notes):null,
     h('dl',{class:'kv'},kv),
     h('div',{class:'d-sec'},h('h3',{class:'eyebrow'},e.src.length?`Sources (${e.src.length})`:'Sources'),srcs,
       kind==='ucdp'&&r.source_original?h('p',{class:'hint'},'Original source: '+r.source_original):null,
       ext(gq(eventQuery(e)),kind==='acledAgg'?'Search news for this week and region ↗':'Search the web for this event ↗')),
-    h('div',{style:'display:flex;gap:8px;flex-wrap:wrap'},h('button',{type:'button',class:'btn sm',onclick:()=>M.map.setView([e.lat,e.lon],Math.max(M.map.getZoom(),kind==='acledAgg'?7:10))},'Zoom to it')),
+    h('div',{style:'display:flex;gap:8px;flex-wrap:wrap'},h('button',{type:'button',class:'btn sm',onclick:()=>M.map.setView([e.lat,e.lon],Math.max(M.map.getZoom(),kind==='acledAgg'?7:10))},'Zoom to it'),
+      S.viewer?null:h('button',{type:'button',class:'btn sm',onclick:()=>{ensureProject(ds); openForm(e.raw);}},'Edit this row')),
     h('details',{class:'raw'},h('summary',null,`All ${ds.cols.length} fields from the file`),
       h('div',{class:'rawtab'},ds.cols.flatMap(k=>{const v=String(r[k]??''); return [h('div',{class:'rk'},k),h('div',{class:'rv'+(v?'':' muted')},v||'—')];}))));
   openDrawer(kind==='acledAgg'?'Weekly row':'Event'); $('#dr-b').scrollTop=0;
@@ -1493,25 +1731,443 @@ function renderDetail(e,back){
 /* ---------- export ---------- */
 function saveFile(name,text,type){const a=h('a',{href:URL.createObjectURL(new Blob([text],{type})),download:name}); a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1000);}
 // An exported map is this app plus the basemap and only the rows that pass the filters, so hidden rows never leave the computer.
-function exportMap(){
-  const ds=S.ds, b=M.map.getBounds(), x={name:ds.name,kind:ds.kind,map:ds.map,cols:ds.cols,rows:S.view.map(e=>ds.cols.map(c=>e.raw[c]??'')),
-    V:{...S.V,cmp:''},more:S.more,pin:{[S.V.colorBy]:CS.top},bounds:[[b.getSouth(),b.getWest()],[b.getNorth(),b.getEast()]],
-    applied:[...(ds.applied||[]),...[...document.querySelectorAll('#chips .chip>span')].map(s=>s.textContent)]};
-  const geo=[...document.querySelectorAll('script[id^="geo-"]')].map(s=>s.outerHTML).join('\n');
-  saveFile(ds.name.replace(/\.\w+$/,'')+' map.html','<!doctype html>\n'+SRC.slice(0,SRC.lastIndexOf('</body>'))+geo+
+const exportCols=ds=>ds.cols.filter(c=>ds.colMeta?.[c]!=='drop'); // columns marked “Don’t export” never leave the computer
+function writeExport(x,name){
+  delete x.id; const geo=[...document.querySelectorAll('script[id^="geo-"]')].map(s=>s.outerHTML).join('\n');
+  saveFile(name,'<!doctype html>\n'+SRC.slice(0,SRC.lastIndexOf('</body>'))+geo+
     '\n<script type="application/json" id="export">'+JSON.stringify(x).replace(/</g,'\\u003c')+'<\/script>\n</body></html>','text/html');
 }
+// The exporter's own source mentions the tag too, so the data is the last one in the file.
+function exportedData(html){ const tag='<script type="application/json" id="export">', i=html.lastIndexOf(tag); if(i<0) return null; const j=html.indexOf('<\/script>',i); return j<0?null:JSON.parse(html.slice(i+tag.length,j)); }
+function exportMap(){
+  const ds=S.ds, b=M.map.getBounds();
+  writeExport({...projectOf(ds,{rows:S.view.map(e=>e.raw),cols:exportCols(ds)}),out:[],more:S.more,pin:{[S.V.colorBy]:CS.top},bounds:[[b.getSouth(),b.getWest()],[b.getNorth(),b.getEast()]],
+    applied:[...(ds.applied||[]),...[...document.querySelectorAll('#chips .chip>span')].map(s=>s.textContent)]},ds.name.replace(/\.\w+$/,'')+' map.html');
+}
+function exportStory(){
+  const ds=S.ds; writeExport({...projectOf(ds,{rows:storyItems(ds).map(e=>e.raw),cols:exportCols(ds)}),out:[],mode:'story',pin:{[S.V.colorBy]:CS.top}},ds.name+' map timeline.html');
+}
 function openExport(x){
-  const raw=x.rows.map(a=>Object.fromEntries(x.cols.map((c,i)=>[c,a[i]]))), p={fileName:x.name,raw,cols:x.cols,kind:x.kind,map:x.map};
-  p.norm=normalize(raw,p.kind,p.map); const ds=buildDataset(p);
-  Object.assign(ds,{F:{...defaultF(ds),ex:{}},V:x.V,pin:x.pin,applied:x.applied});
   for(const el of document.querySelectorAll('.sample,.imp-side>h2')) el.remove(); // the samples aren't bundled
-  S.datasets.push(ds); S.more=x.more; openDataset(ds); M.map.fitBounds(x.bounds);
+  S.viewer=true; S.storyX=x.mode==='story'; S.more=x.more||{};
+  const ds=openProject(x,true); Object.assign(ds,{pin:x.pin,applied:x.applied}); ds.F.ex={}; // rows were already filtered on export
+  if(S.storyX) openStory(ds); else {openDataset(ds); M.map.fitBounds(x.bounds);}
+}
+
+/* ---------- projects ---------- */
+// A project is a dataset you can edit. It autosaves to IndexedDB (localStorage is too small for images) and downloads as a .json file.
+// Rows stay plain objects keyed by column name, as read from the CSV; `__out` marks rows left out of the map timeline.
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,8);
+const DB=(()=>{ let p;
+  const open=()=>p||(p=new Promise((res,rej)=>{const q=indexedDB.open('event-explorer',1);
+    q.onupgradeneeded=()=>{q.result.createObjectStore('meta',{keyPath:'id'}); q.result.createObjectStore('projects',{keyPath:'id'});};
+    q.onsuccess=()=>res(q.result); q.onerror=()=>{p=null; rej(q.error);};}));
+  const run=(st,mode,f)=>open().then(db=>new Promise((res,rej)=>{const t=db.transaction(st,mode), q=f(t); t.oncomplete=()=>res(q&&q.result); t.onerror=t.onabort=()=>rej(t.error);}));
+  return {list:()=>run('meta','readonly',t=>t.objectStore('meta').getAll()),
+    get:id=>run('projects','readonly',t=>t.objectStore('projects').get(id)),
+    put:x=>run(['meta','projects'],'readwrite',t=>{t.objectStore('projects').put(x); t.objectStore('meta').put({id:x.id,name:x.name,updated:x.updated,n:x.rows.length});}),
+    del:id=>run(['meta','projects'],'readwrite',t=>{t.objectStore('meta').delete(id); t.objectStore('projects').delete(id);})};
+})();
+const mediaSrc=(v,ds=S.ds)=>{v=String(v||'').trim(); return v.startsWith('media:')?ds.media?.[v.slice(6)]||null:/^https?:\/\/\S+$/i.test(v)||/^data:image\//.test(v)?v:null;};
+function projectOf(ds,{rows=ds.raw,cols=ds.cols}={}){
+  const media={}; if(ds.media&&Object.keys(ds.media).length) for(const r of rows) for(const c of cols){const v=r[c]; if(typeof v==='string'&&v.startsWith('media:')&&ds.media[v.slice(6)]) media[v.slice(6)]=ds.media[v.slice(6)];}
+  return {app:'event-explorer-project',v:1,id:ds.pid,name:ds.name,updated:Date.now(),kind:ds.kind,view:ds.lastView,cols:[...cols],
+    map:Object.fromEntries(Object.entries(ds.map).filter(([,c])=>cols.includes(c))),rows:rows.map(r=>cols.map(c=>r[c]??'')),out:rows.flatMap((r,i)=>r.__out?[i]:[]),
+    colMeta:Object.fromEntries(Object.entries(ds.colMeta||{}).filter(([c])=>cols.includes(c))),story:ds.story||{},V:ds.V?{...ds.V,cmp:''}:null,media};
+}
+function openProject(x,fresh){
+  const raw=x.rows.map(a=>Object.fromEntries(x.cols.map((c,i)=>[c,a[i]??''])));
+  for(const i of x.out||[]) if(raw[i]) raw[i].__out='1';
+  const p={fileName:x.name||'Untitled',raw,cols:[...x.cols],kind:FORMATS[x.kind]?x.kind:'generic',map:x.map||{}}; p.norm=normalize(raw,p.kind,p.map);
+  const ds=buildDataset(p);
+  Object.assign(ds,{pid:fresh?null:x.id,media:x.media||{},colMeta:x.colMeta||{},story:x.story||{},F:defaultF(ds),lastView:x.view});
+  if(x.V) ds.V={...defaultV(ds),...x.V};
+  S.datasets.push(ds); return ds;
+}
+function ensureProject(ds){
+  if(ds.pid||S.viewer) return; ds.pid=uid(); ds.name=ds.name.replace(/\.(csv|tsv|txt)$/i,''); ds.media??={}; ds.colMeta??={}; ds.story??={};
+  navigator.storage?.persist?.().catch(()=>{}); renderHeader();
+}
+function saveProject(ds){ if(!ds.pid||S.viewer) return; ds.saveState='saving'; renderSave();
+  DB.put(projectOf(ds)).then(()=>{ds.saveState='saved';},err=>{ds.saveState='error'; ds.saveErr=err?.message||'';}).finally(renderSave); }
+const saveSoon=debounce(saveProject,600);
+const downloadProject=x=>saveFile((x.name||'project').replace(/[\\/:*?"<>|]+/g,'-')+'.project.json',JSON.stringify(x),'application/json');
+function openStored(id){
+  const have=S.datasets.find(d=>d.pid===id); if(have) return openView(have,have.lastView);
+  DB.get(id).then(x=>{ if(!x) return renderProjects(); const ds=openProject(x,false); openView(ds,x.view); },()=>importMsg('That project couldn’t be opened.',true));
+}
+function renderSave(){
+  const box=$('#hdr-proj'), ds=S.ds; if(!ds||S.viewer||!VIEWS.includes(document.body.dataset.screen)){put(box,); return;}
+  const st=ds.saveState, t=!ds.pid?'':st==='error'?'Not saved in this browser':st==='saved'?'Saved in this browser':st?'Saving…':'';
+  put(box,t?h('span',{class:'save-st'+(st==='error'?' err':''),role:'status',title:st==='error'?`${ds.saveErr||''} Use Save file to keep your work.`:''},t):null,
+    h('button',{type:'button',class:'btn',id:'hdr-file',title:'Download this project, with its images, as a file you can open here again or send to a colleague',onclick:()=>downloadProject(projectOf(ds))},'Save file'));
+}
+function newProject(){
+  const cols=['date','date_end','location','admin1','country','latitude','longitude','event_type','headline','notes','image','image_caption','image_credit','source'];
+  const raw=[{}], p={fileName:'Untitled project',raw,cols,kind:'generic',map:guessMap(cols)}; p.norm=normalize(raw,p.kind,p.map);
+  const ds=buildDataset(p); S.datasets.push(ds); ensureProject(ds); openSheet(ds);
+}
+
+/* edits: every change goes through act(), so it can be undone, re-renders the current view and autosaves */
+function rebuild(ds){
+  const p={fileName:ds.name,raw:ds.raw,cols:ds.cols,kind:ds.kind,map:ds.map}; p.norm=normalize(p.raw,p.kind,p.map);
+  const nd=buildDataset(p); delete nd.name; delete nd.map; Object.assign(ds,nd);
+  if(S.ds===ds){ S.sizeKey=null; S.group=null; if(S.sel) S.sel=ds.rows.find(e=>e.raw===S.sel.raw)||null; if(PAL&&ds.rows.length) makeCS(); }
+}
+function changed(){
+  const ds=S.ds, scr=document.body.dataset.screen; rebuild(ds); ds.saveState='pending'; saveSoon(ds);
+  if(scr==='scr-sheet') renderSheet(); else if(scr==='scr-story') renderStory();
+  else if(scr==='scr-explore'){ if(ds.rows.length){buildControls(); update();} else openSheet(ds); }
+  if(S.form&&!$('#drawer').hidden&&!$('#drawer').contains(document.activeElement)) openForm(S.form);
+  renderSave();
+}
+function act(f,u){ const ds=S.ds; ensureProject(ds); const sh=ds.sh??={r:0,c:0,undo:[],redo:[]}; f(); sh.undo.push([f,u]); if(sh.undo.length>300) sh.undo.shift(); sh.redo=[]; changed(); }
+function undo(){ const sh=S.ds?.sh, a=sh?.undo.pop(); if(!a) return; a[1](); sh.redo.push(a); changed(); }
+function redo(){ const sh=S.ds?.sh, a=sh?.redo.pop(); if(!a) return; a[0](); sh.undo.push(a); changed(); }
+// sets: [[row,col,value]]; news: new rows inserted at `at`
+function edit(sets,news=[],at=S.ds.raw.length){
+  const ds=S.ds, old=sets.map(([r,c])=>r[c]);
+  act(()=>{ ds.raw.splice(at,0,...news); for(const [r,c,v] of sets) r[c]=v; }, // ponytail: spread caps a single paste at ~100k rows
+    ()=>{ for(let i=sets.length;i--;){const [r,c]=sets[i]; if(old[i]===undefined) delete r[c]; else r[c]=old[i];} if(news.length) ds.raw.splice(ds.raw.indexOf(news[0]),news.length); });
+}
+function setOut(rows,out){ // out: true, false, or a function of the row
+  const old=rows.map(r=>r.__out), want=rows.map(r=>typeof out==='function'?out(r):out);
+  act(()=>rows.forEach((r,i)=>want[i]?r.__out='1':delete r.__out), ()=>rows.forEach((r,i)=>old[i]?r.__out=old[i]:delete r.__out));
+}
+function setMap(fn){ const ds=S.ds, before={...ds.map}; let after=null, put2=m=>{for(const k in ds.map) delete ds.map[k]; Object.assign(ds.map,m);};
+  act(()=>{ if(after) put2(after); else {fn(ds.map); after={...ds.map};} }, ()=>put2(before)); }
+function setMeta(c,v){ const ds=S.ds, old=ds.colMeta[c]; act(()=>{ds.colMeta[c]=v;},()=>{ if(old) ds.colMeta[c]=old; else delete ds.colMeta[c]; }); }
+function setStory(k,v){ const ds=S.ds, isName=k==='name', old=isName?ds.name:ds.story[k]; if(old===v) return;
+  act(()=>{ if(isName) ds.name=v; else ds.story[k]=v; },()=>{ if(isName) ds.name=old; else ds.story[k]=old; }); renderHeader(); }
+
+/* ---------- sheet ---------- */
+const SH_RH=31;
+function shMsg(t){ const m=$('#sh-msg'); m.textContent=t; m.hidden=!t; clearTimeout(shMsg.t); if(t) shMsg.t=setTimeout(()=>{m.hidden=true;},8000); }
+function openSheet(ds){
+  if(S.ds!==ds){ S.ds=ds; ds.F??=defaultF(ds); ds.V??=defaultV(ds); S.F=ds.F; S.V=ds.V; }
+  ensureProject(ds); ds.sh??={r:0,c:0,undo:[],redo:[]}; closeDrawer(); show('scr-sheet'); renderSheet(); $('#sh-grid').focus({preventScroll:true});
+}
+const shCur=()=>S.ds.sh.vis[S.ds.sh.r];
+function renderSheet(){
+  const ds=S.ds, sh=ds.sh, bad=ds.why.size; if(!bad) sh.bad=false;
+  sh.vis=sh.bad?ds.raw.filter(r=>ds.why.has(r)):ds.raw;
+  sh.r=Math.max(0,Math.min(sh.r,sh.vis.length-1)); sh.c=Math.max(0,Math.min(sh.c,ds.cols.length-1));
+  const cur=shCur(), b=(id,t,on,dis,title)=>h('button',{type:'button',class:'btn sm',id,onclick:on,disabled:!!dis,title},t);
+  put($('#sh-bar'),
+    h('div',{class:'sh-grp'},b('sh-add','+ Row',()=>addRow(cur?ds.raw.indexOf(cur)+1:ds.raw.length),0,'Add a row below the selected one'),b(null,'+ Column',()=>addCol(ds.cols.length)),b('sh-del','Delete row',delRow,!cur)),
+    h('div',{class:'sh-grp'},b('sh-form','Edit in a form',()=>openForm(cur),!cur),b('sh-place','Place on map',()=>openPlace(cur),!cur)),
+    h('div',{class:'sh-grp'},b('sh-undo','Undo',undo,!sh.undo.length,'Undo (⌘Z or Ctrl+Z)'),b(null,'Redo',redo,!sh.redo.length,'Redo (⇧⌘Z or Ctrl+Y)')),
+    h('span',{class:'sp'}),
+    h('span',{class:'sh-sum'},`${fN(ds.raw.length)} row${ds.raw.length===1?'':'s'} · `,bad?h('button',{type:'button',class:'lnk',onclick:()=>{sh.bad=!sh.bad; sh.r=0; $('#sh-grid').scrollTop=0; renderSheet();}},sh.bad?'Show all rows':`${fN(bad)} won’t show on the map`):'all show on the map'),
+    b(null,'Download CSV',downloadCsv,0,'Download the sheet as a CSV for Google Sheets or Excel. Uploaded images aren’t included.'));
+  drawGrid();
+}
+function drawGrid(){
+  const ds=S.ds, sh=ds?.sh, g=$('#sh-grid'); if(!sh||document.body.dataset.screen!=='scr-sheet') return;
+  const n=sh.vis.length, a=Math.max(0,Math.floor(g.scrollTop/SH_RH)-8), b=Math.min(n,a+Math.ceil((g.clientHeight||600)/SH_RH)+16), span=ds.cols.length+3;
+  const RL=Object.fromEntries(ROLES.map(r=>[r[0],r[1].replace(/ \(map timeline\)$/,'')])), roleOf=c=>Object.keys(ds.map).find(k=>ds.map[k]===c);
+  const head=h('tr',null,h('th',{class:'rn',scope:'col'},'#'),h('th',{class:'stc',scope:'col',title:'Shows on the map?'},h('span',{class:'sr'},'Shows on the map')),h('th',{class:'inc',scope:'col'},'In story'),
+    ds.cols.map((c,j)=>{const k=roleOf(c); return h('th',{class:'col',scope:'col'},h('button',{type:'button',class:'colb','aria-haspopup':'dialog',title:'Column settings',onclick:ev=>colMenu(j,ev.currentTarget)},
+      h('span',{class:'cn'},c),k?h('span',{class:'cr'},RL[k]):ds.colMeta[c]==='drop'?h('span',{class:'cr drop'},'Not exported'):null));}));
+  const body=[]; if(a) body.push(h('tr',{class:'pad'},h('td',{colSpan:span,style:`height:${a*SH_RH}px`})));
+  for(let i=a;i<b;i++){ const r=sh.vis[i], why=ds.why.get(r);
+    body.push(h('tr',{class:i===sh.r?'cur':''},
+      h('td',{class:'rn'},String(sh.bad?ds.raw.indexOf(r)+1:i+1)),
+      h('td',{class:'stc'},why?h('span',{class:'rowst',title:why==='coords'?'No usable latitude and longitude: won’t show on the map':'No readable date: won’t show on the map'},'!'):null),
+      h('td',{class:'inc'},h('input',{type:'checkbox','aria-label':`Row ${i+1} in the map timeline`,checked:!r.__out,onchange:ev=>setOut([r],!ev.target.checked)})),
+      ds.cols.map((c,j)=>{const v=String(r[c]??''); return h('td',{class:'c'+(i===sh.r&&j===sh.c?' sel':''),'data-i':i,'data-j':j,title:v.length>30&&!v.startsWith('media:')?v:null},v.startsWith('media:')?h('i',{class:'muted'},'Uploaded image'):v);})));}
+  if(b<n) body.push(h('tr',{class:'pad'},h('td',{colSpan:span,style:`height:${(n-b)*SH_RH}px`})));
+  const widths=[52,32,64,...ds.cols.map(()=>180)];
+  put(g,h('table',{class:'sheet',style:`width:${widths.reduce((s,w)=>s+w,0)}px`},h('colgroup',null,widths.map(w=>h('col',{style:`width:${w}px`}))),h('thead',null,head),h('tbody',null,body)),
+    !n?h('p',{class:'empty'},sh.bad?'No rows with problems.':'No rows yet. Add one with “+ Row”, or click here and paste rows copied from a spreadsheet.'):null);
+}
+function shMove(i,j){
+  const ds=S.ds, sh=ds.sh, g=$('#sh-grid'); if(!sh.vis.length) return;
+  sh.r=Math.max(0,Math.min(sh.vis.length-1,i)); sh.c=Math.max(0,Math.min(ds.cols.length-1,j));
+  const y=sh.r*SH_RH, vh=g.clientHeight-34; if(y<g.scrollTop) g.scrollTop=y; else if(y+SH_RH>g.scrollTop+vh) g.scrollTop=y+SH_RH-vh;
+  drawGrid(); g.querySelector('td.sel')?.scrollIntoView({block:'nearest',inline:'nearest'});
+}
+function startEdit(init){
+  const ds=S.ds, sh=ds.sh, r=shCur(), c=ds.cols[sh.c], td=$('#sh-grid td.sel'); if(!r||!td) return;
+  const v=String(r[c]??''); if(v.startsWith('media:')) return openForm(r);
+  const inp=h('input',{type:'text',class:'cell-ed',value:init??v,'aria-label':`${c}, row ${sh.r+1}`});
+  sh.edit={r,c,inp}; td.classList.add('editing'); td.replaceChildren(inp); inp.focus();
+  if(init==null) inp.select(); else inp.setSelectionRange(inp.value.length,inp.value.length);
+  inp.onkeydown=ev=>{ ev.stopPropagation(); const k=ev.key;
+    if(k==='Enter'||k==='Tab'){ev.preventDefault(); const i=sh.r, j=sh.c; endEdit(true); shMove(k==='Enter'?i+(ev.shiftKey?-1:1):i,k==='Tab'?j+(ev.shiftKey?-1:1):j); $('#sh-grid').focus({preventScroll:true});}
+    else if(k==='Escape'){ev.preventDefault(); endEdit(false); $('#sh-grid').focus({preventScroll:true});}};
+  inp.onblur=()=>endEdit(true);
+}
+function endEdit(keep){ const sh=S.ds?.sh, e=sh?.edit; if(!e) return; sh.edit=null;
+  if(keep&&e.inp.value!==String(e.r[e.c]??'')) edit([[e.r,e.c,e.inp.value]]); else drawGrid(); }
+function shKey(ev){
+  const ds=S.ds, sh=ds.sh; if(sh.edit||ev.target!==ev.currentTarget) return;
+  const k=ev.key, mod=ev.metaKey||ev.ctrlKey; if(!sh.vis.length) return;
+  const mv={ArrowUp:[-1,0],ArrowDown:[1,0],ArrowLeft:[0,-1],ArrowRight:[0,1],PageDown:[20,0],PageUp:[-20,0],Home:[0,-1e9],End:[0,1e9]}[k];
+  if(mv&&!mod){ev.preventDefault(); shMove(sh.r+mv[0],sh.c+mv[1]);}
+  else if(k==='Enter'||k==='F2'){ev.preventDefault(); startEdit();}
+  else if((k==='Delete'||k==='Backspace')&&!mod){ev.preventDefault(); const r=shCur(), c=ds.cols[sh.c]; if(String(r[c]??'')) edit([[r,c,'']]);}
+  else if(k.length===1&&!mod&&!ev.altKey){ev.preventDefault(); startEdit(k);}
+}
+function pasteBlock(t){
+  const ds=S.ds, sh=ds.sh, data=Papa.parse(t.replace(/\r?\n$/,''),{delimiter:'\t'}).data, sets=[], news=[]; let cut=0;
+  if(!ds.cols.length) return shMsg('Add a column first.');
+  data.forEach((row,i)=>{ let r=sh.vis[sh.r+i]; if(!r||!sh.vis.length&&!i){r={}; news.push(r);} row.forEach((v,j)=>{const c=ds.cols[sh.c+j]; if(c) sets.push([r,c,v]); else cut++;}); });
+  edit(sets,news); if(cut) shMsg(`${fN(cut)} pasted values didn’t fit: add columns on the right first.`);
+}
+function addRow(at){ const r={}; edit([],[r],at); shMove(S.ds.sh.vis.indexOf(r),0); }
+function delRow(){ const ds=S.ds, r=shCur(); if(!r) return; const i=ds.raw.indexOf(r); act(()=>ds.raw.splice(ds.raw.indexOf(r),1),()=>ds.raw.splice(i,0,r)); }
+function addCol(j){
+  const ds=S.ds; let c='New column', k=2; while(ds.cols.includes(c)) c='New column '+k++;
+  act(()=>ds.cols.splice(j,0,c),()=>ds.cols.splice(ds.cols.indexOf(c),1)); ds.sh.c=j; drawGrid();
+  const th=$$('#sh-grid th.col')[j]; th?.scrollIntoView({inline:'nearest',block:'nearest'}); if(th) colMenu(j,th.firstChild);
+}
+function delCol(j){
+  const ds=S.ds, c=ds.cols[j], vals=ds.raw.map(r=>[r,r[c]]), roles=Object.keys(ds.map).filter(k=>ds.map[k]===c), meta=ds.colMeta[c];
+  act(()=>{ ds.cols.splice(ds.cols.indexOf(c),1); for(const r of ds.raw) delete r[c]; for(const k of roles) delete ds.map[k]; delete ds.colMeta[c]; },
+    ()=>{ ds.cols.splice(j,0,c); for(const [r,v] of vals) if(v!==undefined) r[c]=v; for(const k of roles) ds.map[k]=c; if(meta) ds.colMeta[c]=meta; });
+}
+function renameCol(j,name){
+  const ds=S.ds, old=ds.cols[j]; name=String(name||'').trim(); if(!name||name===old) return;
+  if(ds.cols.includes(name)) return shMsg(`There’s already a column called “${name}”.`);
+  const ren=(a,b)=>{ ds.cols[ds.cols.indexOf(a)]=b; for(const r of ds.raw) if(a in r){r[b]=r[a]; delete r[a];}
+    for(const k in ds.map) if(ds.map[k]===a) ds.map[k]=b; if(a in ds.colMeta){ds.colMeta[b]=ds.colMeta[a]; delete ds.colMeta[a];}
+    for(const k of ['colorBy','sizeBy','bdField']) if(ds.V?.[k]==='col:'+a) ds.V[k]='col:'+b; };
+  act(()=>ren(old,name),()=>ren(name,old));
+}
+function moveCol(j,d){ const ds=S.ds, sw=()=>{const t=ds.cols[j]; ds.cols[j]=ds.cols[j+d]; ds.cols[j+d]=t;}; act(sw,sw); ds.sh.c=j+d; }
+function sortBy(j,dir){
+  const ds=S.ds, c=ds.cols[j], old=ds.raw.slice(), cmp=(a,b)=>{const x=String(a[c]??'').trim(), y=String(b[c]??'').trim(); if(!x||!y) return !x-!y; const p=num(x), q=num(y); return dir*(p!=null&&q!=null?p-q:x.localeCompare(y,undefined,{numeric:true}));};
+  act(()=>ds.raw.sort(cmp),()=>{for(let i=0;i<old.length;i++) ds.raw[i]=old[i];});
+}
+function downloadCsv(){ const ds=S.ds; saveFile(ds.name.replace(/\.\w+$/,'')+'.csv','﻿'+Papa.unparse({fields:ds.cols,data:ds.raw.map(r=>ds.cols.map(c=>r[c]??''))}),'text/csv'); }
+const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+function colMenu(j,anchor){
+  closeMenu(); const ds=S.ds, c=ds.cols[j], role=Object.keys(ds.map).find(k=>ds.map[k]===c)||'', need=['date','year','month','day','lat','lon'].includes(role);
+  const name=h('input',{type:'text',value:c,'aria-label':'Column name',onkeydown:ev=>{if(ev.key==='Enter'){ev.preventDefault(); closeMenu(true);}}});
+  const go=f=>()=>{closeMenu(); f(); $('#sh-grid').focus({preventScroll:true});}, mb=(t,f,dis)=>h('button',{type:'button',class:'btn sm',disabled:!!dis,onclick:go(f)},t);
+  const m=h('div',{class:'menu',id:'colmenu',role:'dialog','aria-label':'Column settings: '+c,onkeydown:ev=>{if(ev.key==='Escape'){ev.stopPropagation(); closeMenu(false); $('#sh-grid').focus({preventScroll:true});}}},
+    h('label',{class:'fld'},h('span',null,'Name'),name),
+    h('label',{class:'fld'},h('span',null,'What it holds'),selectEl(null,[['','Nothing in particular'],...ROLES.map(([k,l])=>[k,l])],role,v=>setMap(mp=>{for(const k in mp) if(mp[k]===c) delete mp[k]; if(v) mp[v]=c;}))),
+    h('label',{class:'fld'},h('span',null,'In the map timeline and exports'),selectEl(null,[['hidden','Not on the card'],['card','Show on the card'],...(need?[]:[['drop','Don’t export at all']])],ds.colMeta[c]||'hidden',v=>setMeta(c,v))),
+    h('div',{class:'menu-b'},mb('Sort A → Z',()=>sortBy(j,1)),mb('Sort Z → A',()=>sortBy(j,-1)),mb('← Move',()=>moveCol(j,-1),j===0),mb('Move →',()=>moveCol(j,1),j===ds.cols.length-1),
+      mb('Insert column',()=>addCol(j+1)),mb('Delete column',()=>delCol(j))));
+  m.commit=()=>renameCol(j,name.value);
+  document.body.append(m); const r=anchor.getBoundingClientRect();
+  m.style.left=Math.max(8,Math.min(r.left,innerWidth-m.offsetWidth-8))+'px'; m.style.top=Math.max(8,Math.min(r.bottom+4,innerHeight-m.offsetHeight-8))+'px';
+  name.focus(); name.select(); setTimeout(()=>addEventListener('pointerdown',menuOut,true));
+}
+function menuOut(ev){ if(!ev.target.closest('#colmenu')) closeMenu(true); }
+function closeMenu(commit){ const m=$('#colmenu'); if(!m) return; m.remove(); removeEventListener('pointerdown',menuOut,true); if(commit!==false) m.commit(); }
+
+/* ---------- one row as a form, with images ---------- */
+async function shrink(file){ // re-encoding drops EXIF, including GPS location
+  const b=await createImageBitmap(file), k=Math.min(1,1600/Math.max(b.width,b.height)), c=h('canvas',{width:Math.round(b.width*k),height:Math.round(b.height*k)}), x=c.getContext('2d');
+  x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height); x.drawImage(b,0,0,c.width,c.height); b.close?.(); return c.toDataURL('image/jpeg',.82);
+}
+function openForm(r){
+  const ds=S.ds; if(!r) return; S.form=r; const RL=Object.fromEntries(ROLES.map(x=>[x[0],x[1]]));
+  const fld=c=>{ const v=String(r[c]??''), role=Object.keys(ds.map).find(k=>ds.map[k]===c), set=val=>{ if(val!==String(r[c]??'')) edit([[r,c,val]]); };
+    const lbl=h('span',null,c,role?h('em',null,' · '+RL[role].replace(/ \(map timeline\)$/,'')):null);
+    if(role==='media'){ const src=mediaSrc(v), file=h('input',{type:'file',accept:'image/*',hidden:true,onchange:async ev=>{const f=ev.target.files[0]; if(!f) return;
+        try{ const id=uid(); ds.media[id]=await shrink(f); set('media:'+id); openForm(r); }catch{ alert('That image couldn’t be read. Try a JPEG or PNG file.'); }}});
+      return h('div',{class:'ff'},lbl,src?h('img',{class:'ff-img',src,alt:''}):null,
+        h('div',{class:'ff-b'},h('button',{type:'button',class:'btn sm',onclick:()=>file.click()},v.startsWith('media:')?'Replace image':'Upload an image'),file,v?h('button',{type:'button',class:'btn ghost sm',onclick:()=>{set(''); openForm(r);}},'Remove'):null),
+        h('input',{type:'text',placeholder:'…or paste an image link (https://…)','aria-label':c+' link',value:v.startsWith('media:')?'':v,onchange:ev=>{set(ev.target.value.trim()); openForm(r);}}),
+        h('p',{class:'hint'},'Uploads are resized and saved without hidden data such as the GPS location. A linked image loads from the other website each time someone opens the map.')); }
+    const long=role==='notes'||v.length>70;
+    return h('label',{class:'fld ff'},lbl,long?h('textarea',{rows:5,value:v,onchange:ev=>set(ev.target.value)}):h('input',{type:'text',value:v,onchange:ev=>set(ev.target.value)}));
+  };
+  const why=ds.why.get(r);
+  put($('#dr-b'),
+    h('div',null,h('h2',{class:'d-title'},'Row '+(ds.raw.indexOf(r)+1)),h('p',{class:'d-date'},why?(why==='coords'?'No usable coordinates yet, so it won’t show on the map.':'No readable date yet, so it won’t show on the map.'):'Changes are kept when you leave a field, and can be undone.')),
+    h('div',{class:'ff-b'},h('button',{type:'button',class:'btn sm',onclick:()=>openPlace(r)},'Place on map'),h('label',{class:'chk',style:'height:auto'},h('input',{type:'checkbox',checked:!r.__out,onchange:ev=>setOut([r],!ev.target.checked)}),'In the map timeline')),
+    ...ds.cols.map(fld));
+  openDrawer('Edit');
+}
+
+/* ---------- place picker ---------- */
+let PM=null;
+function openPlace(r){
+  const ds=S.ds; if(!r) return;
+  if(!ds.map.lat||!ds.map.lon) return shMsg('First choose which columns hold the latitude and the longitude: click a column title, then “What it holds”.');
+  $('#place').showModal(); readPal();
+  if(!PM){ PM=baseMap($('#pmap')); PM.map.on('click',ev=>plSet(ev.latlng.lat,ev.latlng.lng)); applyBasemap(PM,'outline'); }
+  put($('#pl-base'),segF('Map',[['outline','Outline'],['streets','Streets'],['sat','Satellite']],PM.base,function pick(v){applyBasemap(PM,v); put($('#pl-base'),segF('Map',[['outline','Outline'],['streets','Streets'],['sat','Satellite']],v,pick));}));
+  PM.r=r; const lat=num(r[ds.map.lat]), lon=num(r[ds.map.lon]);
+  $('#pl-t').textContent=String(r[ds.map.title]||r[ds.map.place]||'').trim()||'Row '+(ds.raw.indexOf(r)+1);
+  $('#pl-q').value=''; put($('#pl-res'),);
+  requestAnimationFrame(()=>{ PM.map.invalidateSize(); const ok=lat!=null&&lon!=null&&Math.abs(lat)<=90&&Math.abs(lon)<=180;
+    plSet(ok?lat:null,lon); if(ok) PM.map.setView([lat,lon],9); else if(ds.rows.length) PM.map.fitBounds(L.latLngBounds(ds.rows.map(e=>[e.lat,e.lon])),{maxZoom:7,padding:[20,20]}); else PM.map.setView([0,20],2);
+    $('#pl-q').focus(); });
+}
+function plSet(lat,lon,name=''){
+  if(PM.pt){PM.map.removeLayer(PM.pt); PM.pt=null;}
+  PM.at=lat==null?null:[+(+lat).toFixed(5),+L.latLng(lat,lon).wrap().lng.toFixed(5)]; PM.name=name;
+  if(PM.at) PM.pt=L.circleMarker(PM.at,{radius:8,color:PAL.sel,weight:2.5,fillColor:PAL.s[0],fillOpacity:.9}).addTo(PM.map);
+  $('#pl-at').textContent=PM.at?`${PM.at[0]}, ${PM.at[1]}${name?' · '+name:''}`:'No point chosen yet.'; $('#pl-ok').disabled=!PM.at;
+}
+function plFind(){
+  const q=$('#pl-q').value.trim().toLowerCase(), box=$('#pl-res'); if(q.length<2) return put(box,);
+  const hits=geoData().places.filter(p=>p[0].toLowerCase().startsWith(q)).slice(0,8);
+  put(box,hits.map(p=>h('button',{type:'button',class:'pl-hit',onclick:()=>{plSet(p[1],p[2],p[0]); PM.map.setView([p[1],p[2]],9);}},h('span',null,p[0]),h('span',{class:'muted'},`${p[1].toFixed(2)}, ${p[2].toFixed(2)}`))),
+    hits.length?null:h('p',{class:'hint'},'Not in the built-in list of towns. Click the map instead.'));
+}
+function plOk(){
+  const ds=S.ds, r=PM.r, at=PM.at; if(!at) return; $('#place').close();
+  edit([[r,ds.map.lat,String(at[0])],[r,ds.map.lon,String(at[1])],...(PM.name&&ds.map.place&&!String(r[ds.map.place]??'').trim()?[[r,ds.map.place,PM.name]]:[])]);
+}
+
+/* ---------- map timeline ---------- */
+let SM=null;
+const storyItems=(ds=S.ds)=>ds.rows.filter(e=>!e.raw.__out).sort((a,b)=>a.date-b.date||a.i-b.i);
+function openStory(ds){
+  if(S.ds!==ds){ S.ds=ds; ds.F??=defaultF(ds); ds.V??=defaultV(ds); S.F=ds.F; S.V=ds.V; }
+  ensureProject(ds); ds.story??={}; closeDrawer(); show('scr-story'); readPal(); makeCS();
+  if(!SM){ SM=baseMap($('#smap')); SM.dataR=L.canvas({tolerance:6,padding:.3}); SM.data=L.featureGroup().addTo(SM.map);
+    SM.data.on('click',ev=>{const l=ev.propagatedFrom||ev.layer; hideTip(); if(l.k!=null) stGo(l.k);})
+      .on('mouseover',ev=>{const l=ev.propagatedFrom||ev.layer; if(l.e) showTip([h('div',{class:'m'},dateText(l.e)),h('div',{class:'v'},titleOf(l.e))],ev.originalEvent);})
+      .on('mousemove',ev=>moveTip(ev.originalEvent)).on('mouseout',hideTip); }
+  const m=/^#event-(\d+)$/.exec(location.hash); S.st={i:m?+m[1]-1:-1,items:[]};
+  renderStory(true);
+}
+function stopPlay(){ if(S.play){clearInterval(S.play); S.play=null;} }
+function togglePlay(){
+  if(S.play) stopPlay();
+  else { if(S.st.i>=S.st.items.length-1) S.st.i=-1; S.play=setInterval(()=>{ if(S.st.i>=S.st.items.length-1){stopPlay(); renderStNav();} else stGo(S.st.i+1); },4500); stGo(S.st.i+1); }
+  renderStNav();
+}
+function stGo(k){ if(!S.st) return; S.st.i=Math.max(-1,Math.min(S.st.items.length-1,k)); renderStory(true); }
+function renderStory(fly){
+  const ds=S.ds, st=S.st; if(!st||!SM) return;
+  st.items=storyItems(ds); if(st.i>=st.items.length) st.i=st.items.length-1;
+  $('.story').classList.toggle('viewer',!!S.viewer);
+  if(SM.base!==(ds.story.base||'outline')) applyBasemap(SM,ds.story.base||'outline');
+  if(!S.viewer) renderDesign();
+  SM.data.clearLayers(); const cur=st.items[st.i];
+  const mk=(e,k,on)=>{const v=val1(S.V.colorBy,e), m=new ShapeMarker([e.lat,e.lon],{shape:CS.shape(v),renderer:SM.dataR,radius:on?11:6,fillColor:CS.col(v),fillOpacity:cur&&!on?.4:.85,color:on?PAL.sel:PAL.mk,weight:on?2.5:1,opacity:1}); m.k=k; m.e=e; SM.data.addLayer(m);};
+  st.items.forEach((e,k)=>{ if(e!==cur) mk(e,k,false); }); if(cur) mk(cur,st.i,true);
+  renderCard(); renderStNav(); renderStTl();
+  if(fly) stView();
+  if(st.i>=0) history.replaceState(null,'','#event-'+(st.i+1)); else if(location.hash) history.replaceState(null,'',location.pathname+location.search);
+}
+function stView(){
+  const e=S.st.items[S.st.i], z=S.ds.story.zoom||8; SM.map.invalidateSize();
+  if(e){ if(matchMedia('(prefers-reduced-motion: reduce)').matches) SM.map.setView([e.lat,e.lon],z); else SM.map.flyTo([e.lat,e.lon],z,{duration:.9}); }
+  else if(S.st.items.length) SM.map.fitBounds(L.latLngBounds(S.st.items.map(e=>[e.lat,e.lon])),{padding:[40,40],maxZoom:9});
+}
+function renderCard(){
+  const ds=S.ds, st=S.st, e=st.items[st.i], box=$('#st-card'); box.scrollTop=0;
+  if(!e){ const n=st.items.length, a=st.items[0], z=st.items[n-1];
+    put(box,h('p',{class:'eyebrow'},n?`${fN(n)} event${n>1?'s':''} · ${a.date===z.date?fD(a.date):fD(a.date)+' – '+fD(z.date)}`:'Map timeline'),
+      h('h2',{class:'st-h'},ds.name),ds.story.intro?h('p',{class:'st-x'},ds.story.intro):null,
+      n?h('div',{class:'ff-b'},h('button',{type:'button',class:'btn pri',onclick:()=>stGo(0)},'Start →')):h('p',{class:'hint'},'No events are in the map timeline yet. Tick them in the Sheet’s “In story” column, or use “Include all”.'));
+    return; }
+  const v=val1(S.V.colorBy,e), r=e.raw, extra=ds.cols.filter(c=>ds.colMeta[c]==='card'&&String(r[c]??'').trim());
+  const val=x=>{x=String(x).trim(); return /^https?:\/\/\S+$/i.test(x)?ext(x,x.replace(/^https?:\/\/(www\.)?/,'').slice(0,40)+' ↗'):x;};
+  put(box,
+    h('div',{class:'st-meta'},h('span',{class:'d-tag'},h('i',{class:'dot '+CS.sh(v),style:'background:'+CS.col(v)}),dispV(v)),h('span',{class:'muted'},`${st.i+1} of ${st.items.length}`)),
+    h('p',{class:'st-date'},dateText(e)),
+    h('h2',{class:'st-h'},titleOf(e)),
+    figure(e),
+    e.notes?h('p',{class:'st-x'},e.notes):null,
+    h('p',{class:'st-loc muted'},uniq([e.place,e.adm2,e.adm1,e.country]).join(', ')),
+    extra.length?h('dl',{class:'kv'},extra.flatMap(c=>[h('dt',null,c),h('dd',null,val(r[c]))])):null,
+    e.src.length?h('div',{class:'d-sec'},h('h3',{class:'eyebrow'},'Sources'),h('ul',{class:'st-src'},e.src.map(s=>h('li',null,s.url?ext(s.url,s.name+' ↗'):[s.name,s.date?' · '+s.date:'',s.headline?': '+s.headline:''].join(''))))):null,
+    S.viewer?null:h('div',{class:'ff-b'},h('button',{type:'button',class:'btn sm',onclick:()=>openForm(r)},'Edit this event'),h('button',{type:'button',class:'btn ghost sm',onclick:()=>setOut([r],true)},'Leave it out')));
+}
+function renderStNav(){
+  const st=S.st, n=st.items.length;
+  put($('#st-nav'),h('button',{type:'button',class:'btn',disabled:st.i<0,onclick:()=>stGo(st.i-1)},'← Previous'),
+    h('button',{type:'button',class:'btn',disabled:!n,'aria-pressed':String(!!S.play),onclick:togglePlay},S.play?'Pause':'Play'),
+    h('button',{type:'button',class:'btn pri',disabled:st.i>=n-1,onclick:()=>stGo(st.i+1)},st.i<0?'Start →':'Next →'),
+    h('span',{class:'sp'}),st.i>=0?h('button',{type:'button',class:'lnk',onclick:()=>stGo(-1)},'Overview'):null);
+}
+function renderStTl(){
+  const it=S.st.items, box=$('#st-tl'); if(!it.length) return put(box,);
+  const W=Math.max(320,box.clientWidth), m={l:18,r:18}, pw=W-m.l-m.r; let a=Infinity,b=-Infinity;
+  for(const e of it){a=Math.min(a,e.date); b=Math.max(b,e.end);} if(b-a<6*DAY){a-=3*DAY; b+=3*DAY;} const pad=(b-a)*.02; a-=pad; b+=pad;
+  const X=t=>m.l+(t-a)/(b-a)*pw, ends=[], lane=it.map(e=>{const x0=X(e.date)-7; let k=ends.findIndex(x=>x<x0); if(k<0) k=ends.length<5?ends.length:ends.indexOf(Math.min(...ends)); ends[k]=Math.max(X(e.end),X(e.date))+7; return k;});
+  const LH=18, top=10, nL=Math.max(1,ends.length), base=top+nL*LH+4, H=base+24, Y=k=>top+k*LH+LH/2;
+  const svg=sv('svg',{viewBox:`0 0 ${W} ${H}`,width:W,height:H,role:'img','aria-label':`Timeline of ${it.length} events from ${fD(it[0].date)} to ${fD(it[it.length-1].date)}`});
+  const span=(b-a)/DAY, u=['day','week','month','quarter','year'].find(u=>pw/(span/{day:1,week:7,month:30.4,quarter:91,year:365}[u])>=74)||'year';
+  svg.append(sv('line',{x1:m.l,x2:W-m.r,y1:base,y2:base,class:'axis'}));
+  for(let t=binStart(a,u);t<=b;t=binNext(t,u)){ if(t<a) continue; const x=X(t), d=new Date(t);
+    svg.append(sv('line',{x1:x,x2:x,y1:top,y2:base,class:'grid'}),sv('text',{x,y:H-6,'text-anchor':'middle',class:'tk'},u==='year'?String(d.getUTCFullYear()):u==='quarter'?`Q${Math.floor(d.getUTCMonth()/3)+1} ${d.getUTCFullYear()}`:u==='month'?(d.getUTCMonth()?MSH[d.getUTCMonth()]:fM(t)):_dm.format(t))); }
+  const cur=S.st.i;
+  it.forEach((e,k)=>{ const v=val1(S.V.colorBy,e), on=k===cur, x=X(e.date), x2=X(e.end), y=Y(lane[k]), col=CS.col(v), g=sv('g',{class:'mk'}, sv('title',null,`${dateText(e)}: ${titleOf(e)}`));
+    g.append(x2-x>4?sv('rect',{x,y:y-4,width:x2-x,height:8,rx:4,fill:col,opacity:on||cur<0?1:.55,stroke:on?PAL.sel:'none','stroke-width':2}):sv('circle',{cx:x,cy:y,r:on?7:5,fill:col,opacity:on||cur<0?1:.55,stroke:on?PAL.sel:PAL.surface,'stroke-width':on?2.5:1}));
+    g.addEventListener('click',()=>stGo(k)); svg.append(g); });
+  if(cur>=0){const x=X(it[cur].date); svg.prepend(sv('line',{x1:x,x2:x,y1:top-6,y2:base,class:'now'}));}
+  put(box,svg);
+}
+function renderDesign(){
+  const ds=S.ds, st=ds.story, box=$('#st-design'), focus=document.activeElement?.id, inN=S.st.items.length, all=ds.rows.length, out=ds.raw.length-all;
+  const roleSel=(k,l)=>selectF('sd-'+k,l,[['','Not used'],...ds.cols.map(c=>[c,c])],ds.map[k]||'',v=>setMap(mp=>{ if(v) mp[k]=v; else delete mp[k]; }));
+  const structural=new Set(['date','dateEnd','year','month','day','lat','lon','title','notes','media','caption','credit','source'].map(k=>ds.map[k]).filter(Boolean));
+  const colorOpts=[...['cat','sub','actor','adm1','country'].filter(k=>ds.fields.includes(k)&&k!=='actor').map(k=>[k,lab(k)]),...ds.catCols.map(c=>['col:'+c,c])];
+  if(!colorOpts.some(o=>o[0]===S.V.colorBy)) colorOpts.push([S.V.colorBy,lab(S.V.colorBy)]);
+  const filtered=S.viewFor===ds&&S.view.length<all;
+  put(box,
+    h('section',{class:'sd-sec',id:'sd-title'},h('h2',{class:'eyebrow'},'Title and introduction'),
+      h('label',{class:'fld'},h('span',null,'Title'),h('input',{type:'text',id:'sd-name',value:ds.name,onchange:ev=>setStory('name',ev.target.value.trim()||ds.name)})),
+      h('label',{class:'fld'},h('span',null,'Introduction'),h('textarea',{id:'sd-intro',rows:4,value:st.intro||'',placeholder:'What does this map show? Where does the data come from, and what does it leave out?',onchange:ev=>setStory('intro',ev.target.value)}))),
+    h('section',{class:'sd-sec',id:'sd-fields'},h('h2',{class:'eyebrow'},'What each card shows'),
+      roleSel('title','Headline'),roleSel('notes','Text'),roleSel('media','Image'),roleSel('caption','Image caption'),roleSel('credit','Image credit'),roleSel('source','Links and sources'),
+      selectF('sd-color','Colour by',colorOpts,S.V.colorBy,v=>{S.V.colorBy=v; makeCS(); renderStory(); saveSoon(ds);})),
+    h('section',{class:'sd-sec',id:'sd-cols'},h('h2',{class:'eyebrow'},'Other columns'),h('p',{class:'hint'},'Show a column on the card, or keep it out of everything you export.'),
+      h('div',{class:'sd-cols'},ds.cols.filter(c=>!structural.has(c)).map(c=>h('label',{class:'sd-col'},h('span',{class:'t',title:c},c),selectEl('sdc-'+c,[['hidden','Hidden'],['card','On the card'],['drop','Don’t export']],ds.colMeta[c]||'hidden',v=>setMeta(c,v)))))),
+    h('section',{class:'sd-sec',id:'sd-events'},h('h2',{class:'eyebrow'},'Events'),
+      h('p',null,`${fN(inN)} of ${fN(all)} events are in the map timeline.`+(out?` ${fN(out)} more rows have no date or coordinates.`:'')),
+      inN>300?h('p',{class:'hint warn'},'Map timelines work best with a few dozen events. Use Explore and its export for large sets.'):null,
+      h('div',{class:'ff-b'},h('button',{type:'button',class:'btn sm',id:'sd-all',disabled:inN===all,onclick:()=>setOut(ds.rows.map(e=>e.raw),false)},'Include all'),
+        h('button',{type:'button',class:'btn sm',id:'sd-none',disabled:!inN,onclick:()=>setOut(ds.rows.map(e=>e.raw),true)},'Include none'),
+        filtered?h('button',{type:'button',class:'btn sm',id:'sd-filt',onclick:keepFiltered},`Only the ${fN(S.view.length)} filtered`):null),
+      h('p',{class:'hint'},'Tick or untick single events in the Sheet’s “In story” column.')),
+    h('section',{class:'sd-sec'},h('h2',{class:'eyebrow'},'Map'),
+      selectF('sd-base','Basemap',BASEMAPS,st.base||'outline',v=>setStory('base',v)),
+      rangeF('sd-zoom','Zoom on each event',3,14,1,st.zoom||8,v=>String(v),debounce(v=>setStory('zoom',v),400))),
+    h('section',{class:'sd-sec',id:'sd-export'},h('button',{type:'button',class:'btn pri',disabled:!inN,onclick:exportStory},'Export map timeline'),
+      h('p',{class:'hint'},'One web page anyone can open in a browser. Events left out and columns marked “Don’t export” never go in it.')));
+  if(focus&&box.contains(document.getElementById(focus))) document.getElementById(focus).focus({preventScroll:true});
+}
+function keepFiltered(){ const keep=new Set(S.view.map(e=>e.raw)); setOut(S.ds.rows.map(e=>e.raw),r=>!keep.has(r)); }
+function toStory(){ const ds=S.ds; ensureProject(ds); if(S.view.length<ds.rows.length) keepFiltered(); openStory(ds); }
+function sampleStory(){
+  const p=ingest($('#sample-acled-events').textContent,'DR Congo: the deadliest events of 13–19 September 2025'); p.norm=normalize(p.raw,p.kind,p.map);
+  const ds=buildDataset(p), keep=new Set(ds.rows.slice().sort((a,b)=>b.fat-a.fat||a.date-b.date).slice(0,15).map(e=>e.raw));
+  for(const r of ds.raw) if(!keep.has(r)) r.__out='1';
+  ds.story={intro:'The 15 events with the most reported deaths in ACLED’s data for eastern DR Congo in one week of September 2025. Each card has ACLED’s notes and the sources it names. This is a sample: edit it, add images, then export it.'};
+  S.datasets.push(ds); openStory(ds);
 }
 
 /* ---------- tutorial ---------- */
 // Each step points at a part of the screen; steps whose target isn't on screen for this dataset are skipped.
 function tourSteps(){
+  const scr=document.body.dataset.screen, shown=st=>{st.pre?.(); const e=$(st.el); return e&&e.getClientRects().length;};
+  const views={el:'#hdr-nav',t:'Three views of the same data',x:`Explore filters and counts your events. Sheet is where you fix, add and remove them. Map timeline tells their story one event at a time, and exports it as a web page.`};
+  if(scr==='scr-sheet') return [
+    {el:'#sh-grid',t:'Your sheet',x:`Each row is one event and each column one piece of information. Click a cell and start typing, or press Enter to edit it, and use the arrow keys to move. You can paste a block of cells copied from Google Sheets or Excel.`},
+    {el:'#sh-grid th.stc',t:'Will it show on the map?',x:`An orange ! marks a row without a readable date or coordinates. It stays in your sheet, but it can’t appear on the map or in the map timeline. Point at the ! to see what’s missing.`},
+    {el:'#sh-grid th.col',t:'Column settings',x:`Click a column title to rename it, sort by it, move or delete it, and say what it holds: a date, a place, a headline, an image… You can also keep a column out of everything you export.`},
+    {el:'#sh-grid th.inc',t:'In the map timeline?',x:`Untick a row to leave that event out of the map timeline. It stays in the sheet and in the explorer.`},
+    {el:'#sh-add',t:'Add rows and columns',x:`A new row goes below the one you’ve selected. New columns appear on the right; click their title to name them.`},
+    {el:'#sh-place',t:'Place an event',x:`Find a town by name, or click the map, to fill in the selected row’s latitude and longitude.`},
+    {el:'#sh-form',t:'Longer text and images',x:`Open the selected row as a form to write longer notes, upload an image or paste an image link.`},
+    {el:'#sh-undo',t:'Undo',x:`Every change can be undone, and redone. ⌘Z or Ctrl+Z works too.`},
+    {el:'#hdr-proj',t:'Saving',x:`Your project saves itself in this browser as you work, and appears on the start page. Browsers can clear what they store, so use “Save file” to keep a copy on your computer or send it to a colleague.`},
+    views].filter(shown);
+  if(scr==='scr-story') return [
+    {el:'#st-card',t:'The event card',x:`Each event gets a card with its date, headline, image, text and sources, while the map flies to where it happened.`},
+    {el:'#st-nav',t:'Step through',x:`Use Previous and Next, or the left and right arrow keys. Play moves on by itself every few seconds. Overview shows all the events at once.`},
+    {el:'#st-tl',t:'The timeline',x:`Every event in the map timeline, in date order. Events that lasted several days are bars. Click one to jump to it.`},
+    {el:'#sd-title',t:'Title and introduction',x:`This is the first card people see. Say what the map shows, where the data comes from and what it leaves out.`},
+    {el:'#sd-fields',t:'What each card shows',x:`Choose the columns that hold the headline, the text, the image and the sources. Without a headline column, cards are titled with the actors or the place.`},
+    {el:'#sd-cols',t:'Other columns',x:`Show extra columns on the card, or mark them “Don’t export” to keep sensitive information, such as the names of victims or sources, out of the file you share.`},
+    {el:'#sd-events',t:'Choose the events',x:`Include every event, none, or only those that match your filters in Explore. Fine-tune it in the Sheet’s “In story” column.`},
+    {el:'#sd-export',t:'Export',x:`Save the map timeline as a single web page anyone can open in a browser, without this tool. Read every card before you share it: once you send the file, what’s in it is out of your hands.`},
+    {el:'#hdr-proj',t:'Saving',x:`Your project saves itself in this browser. Use “Save file” to keep a copy on your computer.`},
+    views].filter(shown);
   const ds=S.ds, cat=lab('cat').toLowerCase(), fat=ds.kind==='awsd'?'aid workers killed':'deaths', narrow=innerWidth<=980;
   const openSide=()=>{ if(narrow) document.body.classList.add('side-open'); };
   return [
@@ -1526,12 +2182,14 @@ function tourSteps(){
     {el:'#tl',t:'The timeline',x:`Each bar is one period of time; taller bars mean more ${S.V.measure==='fat'?fat:'events'}. Drag across the bars to look at just those dates. Click a single bar to pick that period, and click it again to undo.`},
     {el:'#bd',t:'Who and where',x:`This ranking shows who or where appears most often. Change what it ranks with “Group by”. Click a bar to show only that name everywhere else.`},
     {el:'#records',t:'The event list',x:`Every event that matches your filters, one per row. Click a column title to sort. Click a row to read the full details and its sources.`},
+    {el:'#to-story',t:'Make a map timeline',x:`Turn the events that match your filters into a map timeline: a story readers step through one event at a time.`},
+    views,
     {el:'#hdr-new',t:'Your own data',x:`Load another file here. It stays on your computer and is never uploaded. You can reopen this tutorial any time with the Tutorial button.`},
-  ].filter(st=>{st.pre?.(); const e=$(st.el); return e&&e.getClientRects().length;});
+  ].filter(shown);
 }
 const TOUR={i:0,steps:[],card:null,spot:null};
 function tourPlace(){
-  const st=TOUR.steps[TOUR.i], el=st&&$(st.el); if(!el) return;
+  const st=TOUR.steps[TOUR.i], el=st&&$(st.el); if(!el||!TOUR.card) return;
   const r=el.getBoundingClientRect(), p=6, c=TOUR.card, cw=c.offsetWidth, ch=c.offsetHeight, W=innerWidth, H=innerHeight, g=14;
   Object.assign(TOUR.spot.style,{left:r.left-p+'px',top:r.top-p+'px',width:r.width+2*p+'px',height:r.height+2*p+'px'});
   // prefer the side with room: right, left, below, above; otherwise sit inside the target's top-left
@@ -1596,7 +2254,32 @@ addEventListener('dragleave',()=>{if(--dragN<=0){dragN=0; document.body.classLis
 addEventListener('dragover',ev=>{if(hasFiles(ev)) ev.preventDefault();});
 addEventListener('drop',ev=>{if(!hasFiles(ev))return; ev.preventDefault(); dragN=0; document.body.classList.remove('dragging'); const f=ev.dataTransfer.files[0]; if(f) loadFile(f);});
 new ResizeObserver(debounce(()=>{if(S.ds&&document.body.dataset.screen==='scr-explore') renderTimeline();},120)).observe($('#tl'));
-show('scr-import');
+/* projects, sheet and map timeline */
+$('#blank').onclick=$('#g-blank').onclick=()=>{$('#guide').close(); newProject();};
+$('#sample-story').onclick=sampleStory;
+{ const g=$('#sh-grid'); let raf=0;
+  g.addEventListener('keydown',shKey);
+  g.addEventListener('beforeinput',ev=>{ if(ev.target===g&&ev.inputType==='insertText'&&ev.data&&!S.ds.sh.edit){ev.preventDefault(); startEdit(ev.data);} }); // dictation and some keyboards send no key events
+  g.addEventListener('scroll',()=>{ if(raf||S.ds?.sh?.edit) return; raf=requestAnimationFrame(()=>{raf=0; drawGrid();}); });
+  g.addEventListener('mousedown',ev=>{ const td=ev.target.closest('td.c'); if(!td||td.classList.contains('editing')) return; ev.preventDefault();
+    const i=+td.dataset.i, j=+td.dataset.j; endEdit(true); g.focus({preventScroll:true}); shMove(i,j); });
+  g.addEventListener('dblclick',ev=>{ if(ev.target.closest('td.c')) startEdit(); });
+  g.addEventListener('copy',ev=>{ const sh=S.ds?.sh, r=sh&&!sh.edit&&shCur(); if(!r) return; ev.preventDefault(); ev.clipboardData.setData('text/plain',String(r[S.ds.cols[sh.c]]??'')); });
+  g.addEventListener('paste',ev=>{ const sh=S.ds?.sh, t=ev.clipboardData.getData('text/plain'); if(!sh||sh.edit||!t) return; ev.preventDefault(); pasteBlock(t); }); }
+$('#pl-q').oninput=debounce(plFind,120);
+$('#pl-q').onkeydown=ev=>{ if(ev.key==='Enter'){ev.preventDefault(); $('#pl-res .pl-hit')?.click();} };
+$('#pl-ok').onclick=plOk;
+$('#pl-x').onclick=$('#pl-no').onclick=()=>$('#place').close();
+new ResizeObserver(debounce(()=>{if(S.st&&document.body.dataset.screen==='scr-story') renderStTl();},120)).observe($('#st-tl'));
+addEventListener('keydown',ev=>{
+  const scr=document.body.dataset.screen, t=ev.target, typing=/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)||t.isContentEditable;
+  if(typing||$('#guide').open||$('#place').open||TOUR.card||!S.ds) return;
+  if((ev.metaKey||ev.ctrlKey)&&!S.viewer&&VIEWS.includes(scr)){ const k=ev.key.toLowerCase(); if(k==='z'||k==='y'){ev.preventDefault(); k==='y'||ev.shiftKey?redo():undo();} return; }
+  if(scr==='scr-story'&&!t.closest?.('.leaflet-container')&&(ev.key==='ArrowRight'||ev.key==='ArrowLeft')){ ev.preventDefault(); stGo(S.st.i+(ev.key==='ArrowRight'?1:-1)); }
+});
+// a save that hasn't finished yet would be lost with the page
+addEventListener('beforeunload',ev=>{ const p=S.datasets.filter(d=>d.saveState==='pending'||d.saveState==='saving'); if(!p.length) return; p.forEach(saveProject); ev.preventDefault(); ev.returnValue=''; });
+show('scr-import'); renderProjects();
 addEventListener('DOMContentLoaded',()=>{const x=$('#export'); if(x) openExport(JSON.parse(x.textContent));});
 </script>
 <!-- Embedded data: Natural Earth basemap (public domain) and sample CSVs. -->
