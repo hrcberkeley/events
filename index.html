@@ -2455,7 +2455,7 @@ const attr=t=>String(t).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</
 const kb=n=>n<1048576?Math.round(n/1024)+' KB':(n/1048576).toFixed(1)+' MB';
 function embedCode(){
   const sx=S.sx, url=sx.url||`https://example.org/${slug(S.ds.name)}.html`, hh=sx.h[640]||sx.h[sx.w]||600;
-  return `<iframe src="${attr(url)}" title="${attr(S.ds.name)}" style="width:100%;height:${hh}px;border:0" loading="lazy"></iframe>`+
+  return `<iframe src="${attr(url)}" title="${attr(S.ds.name)}" style="width:100%;height:${hh}px;border:0"></iframe>`+
     (sx.auto?`\n<script>addEventListener("message",function(e){var h=e.data&&e.data["event-explorer-height"];if(!h)return;document.querySelectorAll("iframe").forEach(function(f){if(f.contentWindow===e.source)f.style.height=h+"px";});});<\/script>`:'');
 }
 function openShare(){ S.sx={blur:false,auto:true,url:'',w:640,h:{},res:null}; $('#share').showModal(); buildShare(); }
