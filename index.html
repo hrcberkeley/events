@@ -48,7 +48,7 @@ code{font:13px var(--mono);background:var(--surface-2);border:1px solid var(--li
 .seg button{border:0;background:none;height:26px;padding:0 10px;border-radius:5px;cursor:pointer;font-size:13.5px;font-weight:600;color:var(--muted);white-space:nowrap}
 .seg button:hover{color:var(--ink)}
 .seg button.on{background:var(--surface);color:var(--ink);box-shadow:0 0 0 1px var(--line-2),0 1px 2px rgba(0,0,0,.08)}
-select,input[type=search],input[type=text],input[type=number],input[type=date]{height:30px;border:1px solid var(--line-2);border-radius:6px;background:var(--surface);padding:0 8px;font-size:13px;min-width:0;max-width:100%}
+select,input[type=search],input[type=text],input[type=number],input[type=date],input[type=url]{height:30px;border:1px solid var(--line-2);border-radius:6px;background:var(--surface);padding:0 8px;font-size:13px;min-width:0;max-width:100%}
 select{padding-right:4px}
 .ctl select{max-width:24ch}
 input[type=range]{accent-color:var(--pri);width:120px}
@@ -354,12 +354,21 @@ td.nowrap{white-space:nowrap}
   .stat .v{font-size:22px}
   .bd-row{grid-template-columns:minmax(0,1fr)}
 }
-/* header: views and saving */
+/* header: project, views, sharing */
 #hdr-nav,#hdr-proj{display:flex;align-items:center;gap:8px}
-.save-st{font-size:13px;color:var(--muted);white-space:nowrap}
-.save-st.err{color:var(--crit);font-weight:600}
-@media (max-width:1100px){.save-st,.hdr-ds .badge{display:none}}
-@media (max-width:640px){#hdr-file,#hdr-new,body:not([data-screen="scr-import"]) .brand b{display:none}#hdr-nav{min-width:0;overflow-x:auto}#hdr-nav .seg button{padding:0 7px}}
+.pname{border:0;background:none;font-weight:650;font-size:14px;max-width:30ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:4px 6px;border-radius:6px;cursor:text;color:var(--ink)}
+.pname:hover{background:var(--surface-2)}
+input.pname-in{width:30ch;font-weight:650}
+.saved{display:inline-flex;align-items:center;gap:4px;font-size:12.5px;color:var(--muted);white-space:nowrap}
+.saved.err{color:var(--crit);font-weight:600}
+#hdr-more{font-size:18px;padding:0 10px}
+.menu.mlist{width:auto;min-width:230px;max-width:320px;padding:6px;gap:2px}
+.mi{display:grid;gap:1px;text-align:left;padding:8px 10px;border:0;border-radius:6px;background:none;cursor:pointer;font-size:13.5px;font-weight:600}
+.mi:hover,.mi:focus-visible{background:var(--surface-2)}
+.mi:disabled{opacity:.45;cursor:not-allowed}
+.mi .hint{font-size:12.5px;font-weight:400}
+@media (max-width:1100px){.saved .t{display:none}}
+@media (max-width:640px){.hdr-ds,#hdr-preview,body:not([data-screen="scr-import"]) .brand b{display:none}#hdr-nav{min-width:0;overflow-x:auto}#hdr-nav .seg button{padding:0 7px}}
 textarea{font:inherit;font-size:13px;line-height:1.45;border:1px solid var(--line-2);border-radius:6px;background:var(--surface);color:inherit;padding:6px 8px;resize:vertical;width:100%;min-width:0}
 .pj{display:flex;gap:2px;align-items:center;min-width:0}
 .pj .ds-row{flex:1;flex-wrap:wrap;gap:0 10px}
@@ -373,7 +382,7 @@ textarea{font:inherit;font-size:13px;line-height:1.45;border:1px solid var(--lin
 .sh-grp{display:flex;gap:6px;flex-wrap:wrap}
 .sh-sum{font-size:13.5px;color:var(--ink-2);display:inline-flex;gap:4px;align-items:center}
 .sh-msg{margin:0;padding:8px 16px;background:var(--accent-soft);font-size:13.5px}
-.sh-grid{flex:1;min-height:0;overflow:auto;scroll-padding-top:34px}
+.sh-grid{min-height:0;overflow:auto;scroll-padding-top:34px}
 .sh-grid:focus-visible{outline-offset:-2px}
 table.sheet{table-layout:fixed;font-size:13px}
 .sheet th{padding:0 8px;height:34px;background:var(--surface-2);border-right:1px solid var(--line);cursor:default}
@@ -404,64 +413,155 @@ table.sheet{table-layout:fixed;font-size:13px}
 .ff-b{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .ff-img{max-width:100%;max-height:220px;border-radius:6px;border:1px solid var(--line);justify-self:start}
 
-/* place picker */
-#place{width:min(1000px,calc(100vw - 32px));height:min(680px,calc(100dvh - 32px));padding:0;border:1px solid var(--line-2);border-radius:14px;background:var(--surface);color:var(--ink);box-shadow:0 24px 64px rgba(0,0,0,.3)}
-#place[open]{display:flex;flex-direction:column}
-#place::backdrop{background:rgba(8,17,31,.55)}
-#place h2{margin:4px 0 0;font-size:24px;line-height:1.05;font-weight:760;font-stretch:72%;overflow-wrap:anywhere}
-.pl-b{flex:1;min-height:0;display:grid;grid-template-columns:290px minmax(0,1fr)}
-.pl-side{padding:16px;display:grid;gap:10px;align-content:start;overflow:auto;border-right:1px solid var(--line)}
-.pl-side input{width:100%}
-#pmap{min-height:280px;background:var(--water)}
-.pl-res{display:grid;gap:2px;margin-inline:-6px}
+/* sheet: side map */
+.sh-body{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 340px}
+.sh-body.nomap{grid-template-columns:minmax(0,1fr)}
+.sh-body.nomap .sh-map{display:none}
+.sh-map{display:flex;flex-direction:column;min-height:0;border-left:1px solid var(--line);background:var(--surface)}
+.sh-map-h{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:6px 12px;font-size:13px;min-height:44px;border-bottom:1px solid var(--line)}
+.sh-map-h .t{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sh-mapw{position:relative;flex:1;min-height:220px}
+#shmap{position:absolute;inset:0;background:var(--water)}
+@media (max-width:860px){.sh-body{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) 260px}.sh-map{border-left:0;border-top:1px solid var(--line)}}
+
+/* placing a row on a map */
+.leaflet-container.placing{cursor:crosshair}
+.placebar{position:absolute;z-index:900;left:50%;top:10px;transform:translateX(-50%);width:min(440px,calc(100% - 20px));padding:10px;border-radius:10px;border:1px solid var(--line-2);background:var(--surface);box-shadow:0 10px 30px rgba(0,0,0,.18);display:grid;gap:6px}
+.placebar .hint{font-size:12.5px}
+.pl-row{display:flex;gap:6px}
+.pl-row input{flex:1;min-width:0}
+.pl-at{margin:0;font:12.5px var(--mono);color:var(--ink-2)}
+.pl-at:empty{display:none}
+.pl-res{display:grid;gap:1px}
 .pl-hit{display:flex;justify-content:space-between;gap:8px;padding:6px;border:0;border-radius:6px;background:none;cursor:pointer;text-align:left;font-size:13.5px}
 .pl-hit:hover{background:var(--surface-2)}
-.pl-at{font:13px var(--mono);color:var(--ink-2)}
-@media (max-width:700px){#place{width:100%;max-width:100%;height:100dvh;max-height:100dvh;margin:0;border-radius:0}.pl-b{grid-template-columns:1fr;grid-template-rows:auto minmax(260px,1fr)}.pl-side{border-right:0;border-bottom:1px solid var(--line)}}
+.pin span{display:block;width:20px;height:20px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:var(--accent);border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4)}
 
-/* map timeline */
-#scr-story{overflow:hidden}
-.story{display:grid;grid-template-columns:320px minmax(0,1fr);height:100%;min-height:0}
-.story.viewer{grid-template-columns:minmax(0,1fr)}
-.story.viewer .st-design{display:none}
-.st-design{overflow:auto;border-right:1px solid var(--line);background:var(--surface);padding:0 16px 24px}
-.sd-sec{border-top:1px solid var(--line);padding-block:14px;display:grid;gap:10px}
-.sd-sec:first-child{border-top:0}
-.sd-sec p{margin:0;font-size:13.5px}
-.sd-sec input[type=text],.sd-sec select{width:100%}
-.sd-cols{display:grid;gap:4px;max-height:260px;overflow:auto}
-.sd-col{display:grid;grid-template-columns:minmax(0,1fr) 130px;gap:8px;align-items:center;font-size:13px}
-.sd-col .t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.hint.warn{color:var(--warn);font-weight:600}
-.st-main{display:flex;flex-direction:column;min-width:0;min-height:0}
-.st-stage{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) min(420px,42%)}
-#smap{min-height:300px;background:var(--water)}
-.st-card{overflow:auto;padding:20px 22px 28px;border-left:1px solid var(--line);background:var(--surface);display:grid;gap:12px;align-content:start}
-.st-meta{display:flex;justify-content:space-between;gap:8px;align-items:center;font-size:13px}
-.st-date{margin:0;font-weight:650;color:var(--ink-2)}
-.st-h{margin:0;font-size:28px;line-height:1.05;font-weight:760;font-stretch:72%;overflow-wrap:anywhere}
+/* map timeline: an event list beside the graphic, which is edited where readers will see it */
+#scr-story{overflow:hidden;background:var(--surface-2)}
+.story{display:grid;grid-template-columns:270px minmax(0,1fr);height:100%;min-height:0}
+.st-rail{display:flex;flex-direction:column;gap:8px;min-height:0;overflow:auto;padding:10px 10px 24px;background:var(--surface);border-right:1px solid var(--line)}
+.ri-h{display:flex;justify-content:space-between;align-items:center;padding:0 4px}
+.ri-list{display:grid;gap:2px}
+.ri{display:grid;gap:1px;min-width:0;padding:7px 9px;text-align:left;border:1px solid transparent;border-radius:8px;background:none;cursor:pointer}
+.ri:hover{background:var(--surface-2)}
+.ri.on{border-color:var(--line-2);background:var(--surface-2);box-shadow:inset 3px 0 0 var(--pri)}
+.ri-k{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.ri-t{font-size:13.5px;font-weight:650;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ri-t.muted{font-weight:500}
+.ri-add{display:flex;gap:6px;padding:2px 4px}
+.ri-out{border-top:1px solid var(--line);padding:10px 4px 0;font-size:13px;display:grid;gap:5px}
+.ri-out summary{cursor:pointer;font-weight:650}
+.ro{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px;align-items:center}
+.ro .t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink-2)}
+.st-main{display:flex;flex-direction:column;min-width:0;min-height:0;overflow:auto}
+.st-pv{display:flex;gap:10px;align-items:center;justify-content:center;padding:12px}
+.st-pv:empty{display:none}
+.st-frame{container-type:inline-size;flex:1;min-height:0;display:flex;flex-direction:column;background:var(--surface)}
+body.preview .story{grid-template-columns:minmax(0,1fr)}
+body.preview .st-rail{display:none}
+body.preview .st-main{align-items:center;padding:0 16px 32px}
+body.preview .st-frame{flex:none;width:var(--pw,640px);max-width:100%;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.gx-h{display:grid;gap:4px;padding:14px 16px 12px}
+.gx-t{margin:0;font-size:clamp(20px,3.6cqw,30px);line-height:1.08;font-weight:760;font-stretch:72%;overflow-wrap:anywhere}
+.gx-d{margin:0;font-size:15px;line-height:1.45;color:var(--ink-2);max-width:72ch}
+.st-stage{position:relative;flex:1;min-height:340px;border-top:1px solid var(--line)}
+body.preview .st-stage,body.embed .st-stage{flex:none;height:clamp(420px,66cqw,600px)}
+#smap{position:absolute;inset:0;background:var(--water)}
+.st-key{display:flex;flex-wrap:wrap;gap:3px 14px;padding:0 16px 10px;margin-top:-4px;font-size:12.5px;color:var(--ink-2)}
+.st-key:empty{display:none}
+.st-key span{display:inline-flex;align-items:center;gap:5px}
+.st-touch{position:absolute;z-index:450;right:10px;top:10px;margin:0;padding:5px 10px;border-radius:8px;background:var(--surface);border:1px solid var(--line-2);font-size:12.5px}
+.st-card{position:absolute;z-index:500;right:12px;top:12px;width:min(380px,44%);max-height:calc(100% - 24px);overflow:auto;display:grid;gap:10px;align-content:start;padding:16px 18px 18px;border-radius:12px;border:1px solid var(--line);background:var(--surface);box-shadow:0 10px 30px rgba(0,0,0,.14)}
+@container (max-width:700px){
+  .st-card{left:10px;right:10px;top:auto;bottom:10px;width:auto;max-height:56%;padding:12px 14px;gap:8px}
+  .st-h{font-size:21px!important}
+  .st-x{font-size:14px!important}
+  .st-fig img,.st-img img{max-height:130px!important}
+  .gx-d{font-size:14px}
+}
+.st-meta{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:13px}
+.st-meta input{height:26px;font-weight:650;min-width:0}
+.st-date{margin:0;font-size:13.5px;font-weight:650;color:var(--ink-2);display:flex;flex-wrap:wrap;align-items:center;gap:4px}
+.st-date input[type=date]{height:26px}
+.st-where{font-weight:500}
+.st-ctx{flex-basis:100%;font-weight:400;font-size:12.5px}
+.st-h{margin:0;font-size:27px;line-height:1.06;font-weight:760;font-stretch:72%;overflow-wrap:anywhere}
 .st-x{margin:0;font-size:15px;line-height:1.55;color:var(--ink-2);white-space:pre-line}
-.st-loc{margin:0;font-size:13.5px}
-.st-fig{margin:0;display:grid;gap:6px}
-.st-fig img{max-width:100%;max-height:340px;object-fit:contain;border-radius:6px;justify-self:start;background:var(--surface-2)}
-.st-fig figcaption{font-size:13px;color:var(--ink-2)}
+.st-facts{margin:0;font-size:14px;color:var(--ink-2)}
+.st-facts b{font-size:19px;font-weight:750;color:var(--ink);font-variant-numeric:tabular-nums}
+.st-fig{margin:0;display:grid;gap:5px}
+.st-fig img{display:block;max-width:100%;max-height:300px;object-fit:contain;border-radius:6px;justify-self:start;background:var(--surface-2)}
+.st-fig figcaption,.st-fig .ed{font-size:13px;color:var(--ink-2)}
+.st-img{position:relative;justify-self:start;border-radius:6px}
+.st-img-b{position:absolute;top:6px;right:6px;display:flex;gap:4px;opacity:0;transition:opacity .15s}
+.st-img:hover .st-img-b,.st-img:focus-within .st-img-b{opacity:1}
+.st-drop{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:10px;border:1.5px dashed var(--line-2);border-radius:8px;font-size:13px}
+.st-drop input{flex:1;min-width:110px}
+.st-drop.over,.st-img.over{outline:2px solid var(--focus);background:var(--surface-2)}
 .st-src{margin:0;padding-left:18px;display:grid;gap:4px;font-size:13.5px}
-.st-nav{flex:none;display:flex;gap:8px;align-items:center;padding:10px 16px;border-top:1px solid var(--line);background:var(--surface)}
-.st-tl{flex:none;background:var(--surface);border-top:1px solid var(--line);padding:0 0 4px}
-.st-tl svg{display:block;width:100%;height:auto;user-select:none}
-.st-tl .tk{font-size:12px;fill:var(--muted);font-variant-numeric:tabular-nums}
-.st-tl .axis{stroke:var(--line-2);stroke-width:1}
-.st-tl .grid{stroke:var(--line);stroke-width:1}
-.st-tl .mk{cursor:pointer}
-.st-tl .now{stroke:var(--sel);stroke-width:1.5}
+.st-card .kv dt{display:flex;gap:4px;align-items:center}
+.st-card .kv .x{border:0;background:none;cursor:pointer;color:var(--muted);padding:0 2px}
+.st-tools{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding-top:10px;border-top:1px dashed var(--line-2)}
+.st-zoom{display:inline-flex;gap:6px;align-items:center;font-size:13px;color:var(--muted)}
+.st-zoom select{height:28px}
+.st-empty{display:grid;gap:10px;justify-items:start}
+.st-empty p{margin:0}
+.ed{display:inline-block;min-width:3ch;border-radius:4px;outline:1px dashed transparent;outline-offset:2px;cursor:text}
+p.ed,h2.ed{display:block}
+.ed:hover{outline-color:var(--line-2)}
+.ed:focus{outline:2px solid var(--focus)}
+.ed:empty::before{content:attr(data-ph);color:var(--muted)}
+.st-nav{flex:none;display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:8px 12px;border-top:1px solid var(--line)}
+@container (max-width:520px){.st-nav .st-scrub{order:5;flex-basis:100%}.st-nav .btn.ghost{margin-left:auto}}
+.st-count{min-width:54px;text-align:center;font-size:13px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.st-scrub{flex:1;min-width:80px}
+.st-scrub svg{display:block;width:100%;height:auto;user-select:none}
+.st-scrub .tk{font-size:11px;fill:var(--muted);font-variant-numeric:tabular-nums}
+.st-scrub .mk{cursor:pointer}
+.gx-f{display:flex;flex-wrap:wrap;gap:2px 0;padding:8px 16px 12px;font-size:12.5px;color:var(--muted);border-top:1px solid var(--line)}
+.gx-f>*:not(:last-child)::after{content:"·";margin:0 7px;color:var(--muted)}
+.smk b{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--surface);color:#fff;font:700 11.5px/1 var(--sans);text-shadow:0 0 2px rgba(0,0,0,.6);box-shadow:0 1px 3px rgba(0,0,0,.35)}
+.smk.on b{width:30px;height:30px;font-size:13px;border:2.5px solid var(--sel)}
+.smk.dim{opacity:.5}
+.smk i{position:absolute;left:36px;top:7px;white-space:nowrap;font:600 12.5px var(--sans);font-style:normal;color:var(--ink);text-shadow:0 0 3px var(--halo),0 0 3px var(--halo),0 0 3px var(--halo)}
 @media (max-width:980px){
   #scr-story{overflow:visible}
   .story{display:flex;flex-direction:column;height:auto}
-  .st-design{order:2;border-right:0;border-top:1px solid var(--line);overflow:visible}
-  .st-stage{grid-template-columns:minmax(0,1fr)}
-  #smap{height:50vh}
-  .st-card{border-left:0;border-top:1px solid var(--line);overflow:visible}
+  .st-rail{order:2;overflow:visible;border-right:0;border-top:1px solid var(--line)}
+  .st-main{overflow:visible}
+  .st-frame{flex:none}
+  .st-stage{flex:none;height:70vh}
 }
+
+/* the embedded graphic: only the map timeline, at its natural height */
+html:has(body.embed),body.embed{height:auto;overflow:visible;background:var(--surface)}
+body.embed .app{height:auto}
+body.embed .bar,body.embed #scr-import,body.embed .st-rail,body.embed .st-pv{display:none!important}
+body.embed .screen{flex:none;overflow:visible}
+body.embed .story{display:block;height:auto}
+body.embed .st-main{overflow:visible}
+body.embed .st-frame{flex:none}
+
+/* share: embed in an article */
+#share{width:min(1200px,calc(100vw - 32px));height:min(880px,calc(100dvh - 32px));padding:0;border:1px solid var(--line-2);border-radius:14px;background:var(--surface);color:var(--ink);box-shadow:0 24px 64px rgba(0,0,0,.3)}
+#share[open]{display:flex;flex-direction:column}
+#share::backdrop{background:rgba(8,17,31,.55)}
+#share h2{margin:4px 0 0;font-size:24px;line-height:1.05;font-weight:760;font-stretch:72%}
+.sx-b{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 390px}
+.sx-pv{min-width:0;overflow:auto;padding:14px;display:grid;gap:10px;align-content:start;background:var(--surface-2)}
+.sx-pvbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.sx-stage{position:relative;overflow:hidden;margin-inline:auto}
+.sx-stage iframe{display:block;border:0;background:var(--surface);transform-origin:0 0;box-shadow:0 0 0 1px var(--line)}
+.sx-side{overflow:auto;padding:4px 18px 24px;border-left:1px solid var(--line);display:grid;grid-template-columns:minmax(0,1fr);align-content:start}
+.sx-side .btn.pri{white-space:normal;height:auto;min-height:36px;padding:7px 12px;text-align:left;justify-content:flex-start}
+.sx-sec{display:grid;gap:8px;padding:14px 0;border-top:1px solid var(--line)}
+.sx-sec:first-child{border-top:0}
+.sx-sec p{margin:0;font-size:13.5px}
+.sx-sec .checks{margin:0}
+.sx-sec input[type=url]{width:100%}
+.sx-code{font:12px/1.45 var(--mono)}
+@media (max-width:860px){.sx-b{grid-template-columns:minmax(0,1fr);overflow:auto}.sx-side{border-left:0;overflow:visible}.sx-pv{overflow:visible}}
 
 /* tutorial */
 #tour-spot{position:fixed;z-index:4000;pointer-events:none;border-radius:10px;outline:2px solid var(--focus);outline-offset:2px;box-shadow:0 0 0 9999px color-mix(in srgb,#08111f 45%,transparent);transition:all .2s}
@@ -488,9 +588,8 @@ table.sheet{table-layout:fixed;font-size:13px}
     <div id="hdr-nav"></div>
     <div class="sp"></div>
     <div id="hdr-proj"></div>
-    <button class="btn" id="hdr-guide" type="button">Build a dataset</button>
-    <button class="btn" id="hdr-tut" type="button" hidden>Tutorial</button>
-    <button class="btn" id="hdr-new" type="button" hidden>New dataset</button>
+    <button class="btn" id="hdr-guide" type="button">Guide</button>
+    <button class="btn ghost" id="hdr-more" type="button" aria-haspopup="menu" aria-label="More options" hidden>⋯</button>
   </header>
 
   <section class="screen wrap" id="scr-import">
@@ -503,7 +602,7 @@ table.sheet{table-layout:fixed;font-size:13px}
           <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><path d="M8 4h12l6 6v20H8z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M20 4v6h6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M17 26V15m-4.5 4.5L17 15l4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
           <strong>Drop a CSV or project file here</strong>
           <span class="muted">or</span>
-          <span style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center"><button class="btn" type="button" id="pick">Choose a file</button><button class="btn" type="button" id="blank">Start a blank project</button></span>
+          <span style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center"><button class="btn" type="button" id="pick">Choose a file</button><button class="btn" type="button" id="blank">Start a map timeline from scratch</button></span>
           <input type="file" id="file" accept=".csv,.tsv,.txt,.json,.html,text/csv,application/json,text/html" hidden>
         </div>
         <p id="imp-msg" class="imp-msg" role="status" hidden></p>
@@ -595,34 +694,33 @@ table.sheet{table-layout:fixed;font-size:13px}
     <div class="sh">
       <div class="sh-bar" id="sh-bar"></div>
       <p class="sh-msg" id="sh-msg" role="status" hidden></p>
-      <div class="sh-grid" id="sh-grid" tabindex="0" aria-label="Sheet. Arrow keys move between cells, Enter or typing edits, Escape cancels."></div>
+      <div class="sh-body">
+        <div class="sh-grid" id="sh-grid" tabindex="0" aria-label="Sheet. Arrow keys move between cells, Enter or typing edits, Escape cancels."></div>
+        <aside class="sh-map" id="sh-map" aria-label="Selected row on the map"><div class="sh-map-h" id="sh-map-h"></div><div class="sh-mapw"><div id="shmap"></div></div></aside>
+      </div>
     </div>
   </section>
 
   <section class="screen" id="scr-story" hidden>
     <div class="story">
-      <aside class="st-design" id="st-design" aria-label="Map timeline settings"></aside>
+      <aside class="st-rail" id="st-rail" aria-label="Events in the map timeline"></aside>
       <div class="st-main">
-        <div class="st-stage"><div id="smap"></div><article class="st-card" id="st-card" aria-live="polite"></article></div>
-        <div class="st-nav" id="st-nav"></div>
-        <div class="st-tl" id="st-tl"></div>
+        <div class="st-pv" id="st-pv"></div>
+        <div class="st-frame" id="st-frame">
+          <header class="gx-h" id="gx-head"></header>
+          <div class="st-key" id="st-key"></div>
+          <div class="st-stage"><div id="smap"></div><p class="st-touch" id="st-touch" hidden>Tap the map to move it</p><article class="st-card" id="st-card" aria-live="polite"></article></div>
+          <div class="st-nav" id="st-nav"></div>
+          <footer class="gx-f" id="gx-foot"></footer>
+          <ol class="sr" id="st-alt" aria-label="Every event in this map timeline"></ol>
+        </div>
       </div>
     </div>
   </section>
 </div>
-<dialog id="place" aria-labelledby="pl-t">
-  <div class="g-h"><div><p class="eyebrow">Place on the map</p><h2 id="pl-t"></h2></div><button class="btn ghost sm" id="pl-x" type="button">Close ✕</button></div>
-  <div class="pl-b">
-    <div class="pl-side">
-      <label class="fld"><span>Find a town or city</span><input type="search" id="pl-q" autocomplete="off"></label>
-      <div class="pl-res" id="pl-res"></div>
-      <p class="hint">Or click the map where it happened. Villages are easier to find on the streets or satellite map.</p>
-      <div id="pl-base"></div>
-      <p class="pl-at" id="pl-at" role="status"></p>
-      <div class="ff-b"><button class="btn pri" type="button" id="pl-ok">Use this point</button><button class="btn" type="button" id="pl-no">Cancel</button></div>
-    </div>
-    <div id="pmap"></div>
-  </div>
+<dialog id="share" aria-labelledby="sx-t">
+  <div class="g-h"><div><p class="eyebrow">Share</p><h2 id="sx-t">Embed in an article</h2></div><button class="btn ghost sm" id="sx-x" type="button">Close ✕</button></div>
+  <div class="sx-b"><div class="sx-pv" id="sx-pv"></div><div class="sx-side" id="sx-side"></div></div>
 </dialog>
 <aside id="drawer" hidden aria-label="Details"><div class="dr-h"><span class="eyebrow" id="dr-k">Event</span><button class="btn ghost sm" id="dr-x" type="button">Close ✕</button></div><div class="dr-b" id="dr-b"></div></aside>
 <dialog id="guide" aria-labelledby="g-title">
@@ -680,8 +778,8 @@ table.sheet{table-layout:fixed;font-size:13px}
       <p>With these column names the explorer recognises your columns by itself, and the links in <code>source</code> become clickable in each event’s details. You can add any other column you need; it shows up in the details and can be used as a filter.</p>
       <div class="g-dl"><button class="btn pri" type="button" data-tpl="events">Download the event template (CSV)</button><button class="btn" type="button" data-tpl="log">Download the search log template (CSV)</button></div>
       <p class="hint">Open the templates in Google Sheets (File › Import) or Excel. Each has one example row to show the format: delete it before you start.</p>
-      <p><b>Or work right here.</b> A blank project has these columns, plus a headline and an image for map timelines, and you fill it in the explorer’s Sheet. A shared Google Sheet is still the better choice when several people collect events together.</p>
-      <div class="g-dl"><button class="btn" type="button" id="g-blank">Start a blank project</button></div>
+      <p><b>Or work right here.</b> A new map timeline starts with these columns, plus a headline and an image, and you add events on the map or in the Sheet. A shared Google Sheet is still the better choice when several people collect events together.</p>
+      <div class="g-dl"><button class="btn" type="button" id="g-blank">Start a map timeline from scratch</button></div>
     </section>
 
     <section id="g4"><h3><span class="n">4</span>Data that already exists</h3>
@@ -825,31 +923,34 @@ table.sheet{table-layout:fixed;font-size:13px}
     </section>
 
     <section id="g11"><h3><span class="n">10</span>Tell the story with a map timeline</h3>
-      <p>A map timeline walks readers through your events one at a time: the map flies to each place while a card shows what happened, with a headline, an image and the sources. Open any dataset and choose <b>Map timeline</b> at the top of the screen.</p>
+      <p>A map timeline walks readers through your events one at a time: the map moves to each place while a card shows what happened, with a headline, an image and the sources. It is built to sit inside a news article, like a chart. Open any dataset and choose <b>Map timeline</b> at the top of the screen, or start one from scratch on the start page.</p>
       <h4 class="eyebrow">Choose and write</h4>
       <ul>
-        <li><b>Pick the events that carry the story.</b> Ten to forty is plenty. Untick the rest in the Sheet’s “In story” column, or use the explorer’s filters and keep only the matching events.</li>
-        <li><b>Write a headline for each event:</b> a plain sentence saying who did what, where. “Armed men loot the health centre in Beni”, not “Tragedy strikes”.</li>
+        <li><b>Pick the events that carry the story.</b> Ten to forty is plenty. Take the rest out with <b>Leave out</b> on their card, or filter them in Explore and choose <b>Make a map timeline</b>.</li>
+        <li><b>Write on the graphic itself.</b> Click the title, the subtitle, a headline or the text to type in it. Write each headline as a plain sentence saying who did what, where: “Armed men loot the health centre in Beni”, not “Tragedy strikes”.</li>
         <li><b>In the text, say who claims what,</b> what is confirmed and what is still disputed. Keep the source links: readers and editors will check them.</li>
-        <li><b>Write an introduction</b> that says what the map shows, where the data comes from and what it leaves out.</li>
+        <li><b>Use text cards</b> for context or a turning point: a card with no place, between two events.</li>
+        <li><b>Fill in the source and credit line</b> under the map, and use the introduction on the cover to say what the map leaves out.</li>
       </ul>
       <h4 class="eyebrow">Images</h4>
       <ul>
-        <li>Only use images you have the right to use, and credit them in the image credit column.</li>
+        <li>Only use images you have the right to use, and credit them under the image.</li>
         <li>Think before showing dead or injured people, and blur or leave out faces of victims, witnesses and bystanders who could be put at risk.</li>
-        <li>Uploaded images are made smaller and re-saved without their hidden data, such as the GPS location where a photo was taken. They are stored inside your project and the files you export.</li>
-        <li>An image link loads the picture from the other website each time someone opens your map, which tells that site who is looking, and the picture disappears if the site removes it. Upload a copy when you can.</li>
+        <li>Uploaded images are made smaller and re-saved without their hidden data, such as the GPS location where a photo was taken. They are stored inside your project and the files you share.</li>
+        <li>An image link loads the picture from the other website each time someone opens your graphic, which tells that site who is looking, and the picture disappears if the site removes it. Upload a copy when you can.</li>
       </ul>
-      <h4 class="eyebrow">Before you share it</h4>
+      <h4 class="eyebrow">Put it in an article</h4>
       <ul>
-        <li>Mark columns you must keep private, such as names of victims or sources, as <b>Don’t export</b>. Events left out of the map timeline never go in the exported file either.</li>
-        <li>Exact coordinates can lead people to someone’s home or a hiding place. Use the nearest town where that is a risk.</li>
-        <li>Open the exported file and read every card before you send it to anyone.</li>
+        <li>Choose <b>Share › Embed the map timeline in an article</b>. The explorer checks what’s missing, shows the graphic at phone, article and wide sizes, and makes one small web page with everything inside: data, map, images and code. Readers’ browsers load nothing from other websites.</li>
+        <li>Only the columns the graphic shows go into that file, and events you left out never do. Tick <b>Blur locations</b> to round coordinates to about 1 km where exact places could lead someone to a home or a hiding place.</li>
+        <li>Upload the file where your publication can link to it: your website’s file storage, or GitHub Pages (create a repository, upload the file, then turn on Pages in the repository’s settings).</li>
+        <li>Paste the file’s address in the Share window, copy the embed code, and paste it into your article where your publishing system accepts HTML. With automatic fitting, the graphic takes the height it needs at every width.</li>
+        <li>Open the article on a phone and step through every card before you publish: most readers will see it there.</li>
       </ul>
       <h4 class="eyebrow">Keep your work</h4>
       <ul>
-        <li>Your project saves itself in this browser as you work, and is listed on the start page. Browsers can clear what they store, so use <b>Save file</b> often to keep a copy on your computer.</li>
-        <li>A project file holds your rows, settings and images. Send it to a colleague, and open it by dropping it on the start page. Exported maps and map timelines can be dropped there too, to edit them again.</li>
+        <li>Projects save themselves in this browser as you work, and are listed on the start page. Browsers can clear what they store, so download a <b>Project file</b> from Share often.</li>
+        <li>A project file holds your rows, settings and images. Send it to a colleague, and open it by dropping it on the start page. The graphic’s file can be dropped there too, to edit it again.</li>
       </ul>
     </section>
 
@@ -892,7 +993,7 @@ function h(tag,p,...kids){
   if(p) for(const k in p){const v=p[k]; if(v==null||v===false) continue;
     if(k==='class') e.className=v; else if(k==='style') e.style.cssText=v;
     else if(k.startsWith('on')) e.addEventListener(k.slice(2),v);
-    else if(k in e&&!k.includes('-')) e[k]=v; else e.setAttribute(k,v===true?'':v);}
+    else if(k in e&&!k.includes('-')&&k!=='list') e[k]=v; else e.setAttribute(k,v===true?'':v);}
   for(const c of kids.flat(Infinity)) if(c!=null&&c!==false) e.append(c instanceof Node?c:String(c));
   return e;
 }
@@ -1082,21 +1183,40 @@ const metric=e=>S.V.measure==='fat'?e.fat:e.events;
 const measureWord=()=>S.V.measure==='fat'?'deaths':'events';
 
 const VIEWS=['scr-explore','scr-sheet','scr-story'];
-function show(id){ tourEnd(); closeMenu(); stopPlay();
+function show(id){ tourEnd(); closeMenu(); stopPlay(); endPlacing(); if(id!=='scr-story') document.body.classList.remove('preview');
   for(const s of document.querySelectorAll('.screen')) s.hidden=s.id!==id;
-  document.body.dataset.screen=id; document.body.classList.remove('side-open'); hideTip(); if(S.ds&&VIEWS.includes(id)) S.ds.lastView=id; renderHeader();
+  document.body.dataset.screen=id; document.body.classList.remove('side-open'); hideTip(); if(S.ds&&VIEWS.includes(id)&&S.ds.lastView!==id){ S.ds.lastView=id; if(S.ds.pid) saveSoon(S.ds); } renderHeader();
 }
 function renderHeader(){
-  const scr=document.body.dataset.screen, ds=S.ds, ex=VIEWS.includes(scr)&&ds, d=$('#hdr-ds'); put(d,);
-  if(ex){ const f=FORMATS[ds.kind]; d.append(h('span',{class:'badge'},f.name+' · '+f.level));
-    d.append(S.datasets.length>1?selectEl('ds-sel',S.datasets.map((x,i)=>[String(i),x.name]),String(S.datasets.indexOf(ds)),v=>openView(S.datasets[+v],scr)):h('span',{class:'ds-name',title:ds.name},ds.name)); }
+  const scr=document.body.dataset.screen, ds=S.ds, ex=VIEWS.includes(scr)&&ds, pv=document.body.classList.contains('preview');
+  put($('#hdr-ds'),ex?[S.viewer?h('span',{class:'pname',style:'cursor:default'},ds.name):h('button',{type:'button',class:'pname',id:'hdr-name',title:'Rename the project',onclick:renameProject},ds.name),
+    S.viewer?null:h('span',{class:'saved',id:'hdr-saved',role:'status'})]:null);
   const views=[['scr-explore','Explore'],...(S.viewer?[]:[['scr-sheet','Sheet']]),...(!S.viewer||S.storyX?[['scr-story','Map timeline']]:[])];
-  put($('#hdr-nav'),ex&&views.length>1?seg(views,scr,v=>openView(ds,v),'View'):null);
-  $('#hdr-new').hidden=!ex; $('#hdr-tut').hidden=!ex; renderSave();
+  put($('#hdr-nav'),ex&&views.length>1&&!S.embed?seg(views,scr,v=>openView(ds,v),'View'):null);
+  put($('#hdr-proj'),ex&&!S.viewer?[scr==='scr-story'?h('button',{type:'button',class:'btn',id:'hdr-preview','aria-pressed':String(pv),onclick:togglePreview},pv?'Back to editing':'Preview'):null,
+    h('button',{type:'button',class:'btn pri',id:'hdr-share','aria-haspopup':'menu',onclick:ev=>shareMenu(ev.currentTarget)},'Share')]:null);
+  $('#hdr-guide').hidden=!!ex; $('#hdr-more').hidden=!ex; renderSave();
 }
-// Explore and Map timeline need at least one row with a date and coordinates; the Sheet works with none.
+function renameProject(){
+  const b=$('#hdr-name'), ds=S.ds, inp=h('input',{type:'text',class:'pname-in',value:ds.name,'aria-label':'Project name'}); let done=false;
+  const fin=keep=>{ if(done) return; done=true; const v=inp.value.trim(); if(keep&&v&&v!==ds.name) setStory('name',v); else renderHeader(); };
+  inp.onkeydown=ev=>{ ev.stopPropagation(); if(ev.key==='Enter') fin(true); else if(ev.key==='Escape') fin(false); }; inp.onblur=()=>fin(true);
+  b.replaceWith(inp); inp.focus(); inp.select();
+}
+function shareMenu(a){
+  const ds=S.ds, scr=document.body.dataset.screen, has=storyItems(ds).some(x=>x.e);
+  popMenu(a,[['Embed the map timeline in an article',()=>{ if(scr!=='scr-story') openStory(ds); openShare(); },!has,has?'One small file, and the code to paste':'Add events to the map timeline first'],
+    scr==='scr-explore'?['Web page of the explorer',exportMap,false,'With only the events that match your filters']:null,
+    ['Project file',()=>downloadProject(projectOf(ds)),false,'To keep a copy, or send to a colleague'],
+    ['Spreadsheet (CSV)',downloadCsv,false,'For Google Sheets or Excel']],'Share');
+}
+function moreMenu(a){
+  popMenu(a,[['Tutorial',tourStart,false,'A short tour of this screen'],['Guide',()=>$('#guide').showModal(),false,'How to build an event dataset and tell its story'],
+    ['Open another file',()=>{show('scr-import'); renderImport(); $('#scr-import').scrollTop=0;}],S.viewer?null:['New map timeline',newProject]],'More');
+}
+// Explore needs at least one row with a date and coordinates; the Sheet and the map timeline work with none.
 function openView(ds,v){
-  if(v!=='scr-sheet'&&!ds.rows.length){ openSheet(ds); shMsg(`Add at least one row with a date and coordinates to open the ${v==='scr-story'?'map timeline':'explorer'}.`); return; }
+  if(v==='scr-explore'||v==null) if(!ds.rows.length){ openSheet(ds); shMsg('Add at least one row with a date and coordinates to open the explorer.'); return; }
   v==='scr-sheet'?openSheet(ds):v==='scr-story'?openStory(ds):openDataset(ds);
 }
 
@@ -1109,31 +1229,26 @@ async function loadFile(file){
     if(/\.(json|html?)$/i.test(file.name)){ // a project file, or a map exported from this explorer
       let x=null; if(/\.json$/i.test(file.name)) x=JSON.parse(text); else x=exportedData(text);
       if(!x||!Array.isArray(x.rows)||!Array.isArray(x.cols)) throw new Error('It isn’t a project file or a map exported from this explorer.');
-      const ds=openProject(x,true); ensureProject(ds); saveProject(ds); openView(ds,x.mode==='story'?'scr-story':x.view);
+      const ds=openProject(x,true); ensureProject(ds); saveProject(ds); openView(ds,x.mode==='story'||x.mode==='embed'?'scr-story':x.view);
     } else startReview(ingest(text,file.name));
     importMsg(''); }
   catch(err){ show('scr-import'); importMsg(`${file.name} couldn’t be read. ${err.message||''}`,true); }
 }
-function renderImport(){
-  const box=$('#loaded'); put(box,);
-  if(S.datasets.length) box.append(h('h2',{class:'eyebrow'},'Loaded this session'),...S.datasets.map(d=>h('button',{type:'button',class:'ds-row',onclick:()=>openView(d,d.lastView)},h('span',{class:'badge'},FORMATS[d.kind].name),h('span',{class:'n',title:d.name},d.name),h('span',{class:'muted'},fN(d.raw.length)+' rows'))));
-  renderProjects();
-}
+function renderImport(){ renderProjects(); }
 function renderProjects(){
-  const box=$('#projects'); if(S.viewer||!window.indexedDB){put(box,); return;}
-  DB.list().then(list=>{ if(S.viewer) return put(box,); list.sort((a,b)=>b.updated-a.updated);
-    put(box,list.length?[h('h2',{class:'eyebrow'},'Your projects in this browser'),
-      ...list.map(m=>h('div',{class:'pj'},
-        h('button',{type:'button',class:'ds-row',onclick:()=>openStored(m.id)},h('span',{class:'n',title:m.name},m.name),h('span',{class:'muted'},`${fN(m.n)} rows · ${fD(m.updated)}`)),
-        h('button',{type:'button',class:'btn ghost sm','aria-label':'Download '+m.name,onclick:()=>DB.get(m.id).then(downloadProject)},'Download'),
-        h('button',{type:'button',class:'btn ghost sm','aria-label':'Delete '+m.name,onclick:()=>{
-          if(!confirm(`Delete “${m.name}” from this browser? This can’t be undone. Download it first if you may need it again.`)) return;
-          for(const d of S.datasets) if(d.pid===m.id) d.pid=null;
-          DB.del(m.id).then(renderProjects);}},'Delete'))),
-      h('p',{class:'hint'},'Browsers can clear this storage. Download a project to keep a copy.')]:[]);
-  }).catch(()=>put(box,h('p',{class:'hint'},'This browser won’t let the explorer save projects here. Use Save file to keep your work.')));
+  const box=$('#projects'); if(S.viewer||document.body.classList.contains('embed')) return put(box,);
+  const row=(name,n,when,open,dl,del)=>h('div',{class:'pj'},h('button',{type:'button',class:'ds-row',onclick:open},h('span',{class:'n',title:name},name),h('span',{class:'muted'},`${fN(n)} rows${when?' · '+fD(when):''}`)),
+    dl?h('button',{type:'button',class:'btn ghost sm','aria-label':'Download '+name,onclick:dl},'Download'):null,del?h('button',{type:'button',class:'btn ghost sm','aria-label':'Delete '+name,onclick:del},'Delete'):null);
+  const draw=list=>{ list.sort((a,b)=>b.updated-a.updated); const extra=S.datasets.filter(d=>!d.pid||!list.some(m=>m.id===d.pid));
+    put(box,list.length||extra.length?[h('h2',{class:'eyebrow'},'Your projects'),
+      ...extra.map(d=>row(d.name,d.raw.length,0,()=>openView(d,d.lastView))),
+      ...list.map(m=>row(m.name,m.n,m.updated,()=>openStored(m.id),()=>DB.get(m.id).then(downloadProject),()=>{
+        if(!confirm(`Delete “${m.name}” from this browser? This can’t be undone. Download it first if you may need it again.`)) return;
+        for(const d of S.datasets) if(d.pid===m.id) d.pid=null; DB.del(m.id).then(renderProjects);})),
+      h('p',{class:'hint'},'Projects save themselves in this browser, which can clear its storage. Download the ones you need to keep.')]:[]); };
+  if(!window.indexedDB) return draw([]);
+  DB.list().then(draw).catch(()=>{ draw([]); box.append(h('p',{class:'hint'},'This browser won’t let the explorer save projects. Use Share › Project file to keep your work.')); });
 }
-
 /* ---------- review ---------- */
 function startReview(p){ S.pend=p; S.mapOpen=null; show('scr-review'); renderReview(); $('#scr-review').scrollTop=0; }
 function selfMap(p){p.forced=true; p.kind='generic'; p.map={...guessMap(p.cols),...(p.tags?hxlMap(p.tags):{}),...p.map};}
@@ -1171,7 +1286,7 @@ function renderReview(){
       h('p',{class:'note'},p.forced?'You chose to match the columns yourself. The choices below start from a best guess; only the date (or year) and the coordinates are needed.':f.note),
       det),
     h('div',{class:'rev-side'},
-      h('button',{type:'button',class:'btn pri lg',disabled:!n||miss.length>0,onclick:()=>{const ds=buildDataset(S.pend); S.datasets.push(ds); S.pend=null; openDataset(ds);}},'Open the explorer →')));
+      h('button',{type:'button',class:'btn pri lg',disabled:!n||miss.length>0,onclick:()=>{const p=S.pend, ds=buildDataset(p); if(p.pid) ds.pid=p.pid; S.datasets.push(ds); S.pend=null; ensureProject(ds); saveProject(ds); openDataset(ds);}},'Open the explorer →')));
 }
 
 /* ---------- explore ---------- */
@@ -1345,7 +1460,7 @@ const lakeStyle=()=>({fillColor:PAL.water,fillOpacity:1,color:PAL.border,weight:
 const TILES={gray:['Canvas/World_Light_Gray_Base','Esri, HERE, Garmin'],streets:['World_Street_Map','Esri, HERE, Garmin, OpenStreetMap contributors'],topo:['World_Topo_Map','Esri, HERE, Garmin, OpenStreetMap contributors'],sat:['World_Imagery','Esri, Maxar, Earthstar Geographics']};
 // The built-in basemap is parsed once and shared by every map: the explorer, the map timeline and the place picker.
 let GEO=null; const MAPS=[];
-const geoData=()=>GEO||(GEO=(t=>({countries:topojson.feature(t,t.objects.countries),lakes:JSON.parse($('#geo-lakes').textContent),places:JSON.parse($('#geo-places').textContent)}))(JSON.parse($('#geo-countries').textContent)));
+const geoData=()=>GEO||(GEO=(t=>({countries:t.type==='Topology'?topojson.feature(t,t.objects.countries):t,lakes:JSON.parse($('#geo-lakes').textContent),places:JSON.parse($('#geo-places').textContent)}))(JSON.parse($('#geo-countries').textContent)));
 function baseMap(el){
   const map=L.map(el,{scrollWheelZoom:false,preferCanvas:true,minZoom:1,maxZoom:18,zoomSnap:.5,worldCopyJump:true}).setView([0,20],3);
   map.createPane('base').style.zIndex=150; const lp=map.createPane('lab'); lp.style.zIndex=450; lp.style.pointerEvents='none'; map.createPane('hi').style.zIndex=460;
@@ -1634,7 +1749,7 @@ function buildMapControls(){
   put($('#map-ctl'),
     S.datasets.length>1?selectF('m-cmp','Compare with',[['','Nothing'],...S.datasets.map((d,i)=>[String(i),d.name]).filter(([i])=>S.datasets[+i]!==S.ds)],V.cmp,v=>{V.cmp=v; update();}):null,
     h('button',{type:'button',class:'btn',title:'Zoom to the filtered events',onclick:fitData},'Reset view'),
-    h('button',{type:'button',class:'btn',title:'Save this map as a web page anyone can open in a browser. Only the rows that match your filters go in it.',onclick:exportMap},'Export map'),
+    S.viewer?h('button',{type:'button',class:'btn',title:'Save this map as a web page anyone can open in a browser. Only the rows that match your filters go in it.',onclick:exportMap},'Export map'):null,
     S.viewer?null:h('button',{type:'button',class:'btn',id:'to-story',title:'Turn the events that match your filters into a map timeline you can step through and export',onclick:toStory},'Make a map timeline'));
   const rerender=()=>renderMap();
   put($('#map-ctl2'),
@@ -1744,12 +1859,11 @@ function exportMap(){
   writeExport({...projectOf(ds,{rows:S.view.map(e=>e.raw),cols:exportCols(ds)}),out:[],more:S.more,pin:{[S.V.colorBy]:CS.top},bounds:[[b.getSouth(),b.getWest()],[b.getNorth(),b.getEast()]],
     applied:[...(ds.applied||[]),...[...document.querySelectorAll('#chips .chip>span')].map(s=>s.textContent)]},ds.name.replace(/\.\w+$/,'')+' map.html');
 }
-function exportStory(){
-  const ds=S.ds; writeExport({...projectOf(ds,{rows:storyItems(ds).map(e=>e.raw),cols:exportCols(ds)}),out:[],mode:'story',pin:{[S.V.colorBy]:CS.top}},ds.name+' map timeline.html');
-}
 function openExport(x){
   for(const el of document.querySelectorAll('.sample,.imp-side>h2')) el.remove(); // the samples aren't bundled
-  S.viewer=true; S.storyX=x.mode==='story'; S.more=x.more||{};
+  S.viewer=true; S.embed=x.mode==='embed'; S.storyX=S.embed||x.mode==='story'; S.more=x.more||{};
+  if(S.embed){ document.body.classList.add('embed');
+    if(parent!==window){ const post=()=>parent.postMessage({'event-explorer-height':Math.ceil(document.documentElement.getBoundingClientRect().height)},'*'); new ResizeObserver(post).observe(document.body); } } // lets the article fit the iframe to the graphic
   const ds=openProject(x,true); Object.assign(ds,{pin:x.pin,applied:x.applied}); ds.F.ex={}; // rows were already filtered on export
   if(S.storyX) openStory(ds); else {openDataset(ds); M.map.fitBounds(x.bounds);}
 }
@@ -1772,20 +1886,21 @@ const mediaSrc=(v,ds=S.ds)=>{v=String(v||'').trim(); return v.startsWith('media:
 function projectOf(ds,{rows=ds.raw,cols=ds.cols}={}){
   const media={}; if(ds.media&&Object.keys(ds.media).length) for(const r of rows) for(const c of cols){const v=r[c]; if(typeof v==='string'&&v.startsWith('media:')&&ds.media[v.slice(6)]) media[v.slice(6)]=ds.media[v.slice(6)];}
   return {app:'event-explorer-project',v:1,id:ds.pid,name:ds.name,updated:Date.now(),kind:ds.kind,view:ds.lastView,cols:[...cols],
-    map:Object.fromEntries(Object.entries(ds.map).filter(([,c])=>cols.includes(c))),rows:rows.map(r=>cols.map(c=>r[c]??'')),out:rows.flatMap((r,i)=>r.__out?[i]:[]),
+    map:Object.fromEntries(Object.entries(ds.map).filter(([,c])=>cols.includes(c))),rows:rows.map(r=>cols.map(c=>r[c]??'')),out:rows.flatMap((r,i)=>r.__out?[i]:[]),zooms:rows.flatMap((r,i)=>r.__zoom?[[i,+r.__zoom]]:[]),
     colMeta:Object.fromEntries(Object.entries(ds.colMeta||{}).filter(([c])=>cols.includes(c))),story:ds.story||{},V:ds.V?{...ds.V,cmp:''}:null,media};
 }
 function openProject(x,fresh){
   const raw=x.rows.map(a=>Object.fromEntries(x.cols.map((c,i)=>[c,a[i]??''])));
   for(const i of x.out||[]) if(raw[i]) raw[i].__out='1';
+  for(const [i,z] of x.zooms||[]) if(raw[i]) raw[i].__zoom=z;
   const p={fileName:x.name||'Untitled',raw,cols:[...x.cols],kind:FORMATS[x.kind]?x.kind:'generic',map:x.map||{}}; p.norm=normalize(raw,p.kind,p.map);
   const ds=buildDataset(p);
-  Object.assign(ds,{pid:fresh?null:x.id,media:x.media||{},colMeta:x.colMeta||{},story:x.story||{},F:defaultF(ds),lastView:x.view});
+  Object.assign(ds,{pid:fresh?null:x.id,media:x.media||{},colMeta:x.colMeta||{},story:x.story||{},F:defaultF(ds),lastView:x.view,clip:x.clip});
   if(x.V) ds.V={...defaultV(ds),...x.V};
   S.datasets.push(ds); return ds;
 }
 function ensureProject(ds){
-  if(ds.pid||S.viewer) return; ds.pid=uid(); ds.name=ds.name.replace(/\.(csv|tsv|txt)$/i,''); ds.media??={}; ds.colMeta??={}; ds.story??={};
+  ds.media??={}; ds.colMeta??={}; ds.story??={}; if(ds.pid||S.viewer) return; ds.pid=uid(); ds.name=ds.name.replace(/\.(csv|tsv|txt)$/i,'');
   navigator.storage?.persist?.().catch(()=>{}); renderHeader();
 }
 function saveProject(ds){ if(!ds.pid||S.viewer) return; ds.saveState='saving'; renderSave();
@@ -1797,15 +1912,14 @@ function openStored(id){
   DB.get(id).then(x=>{ if(!x) return renderProjects(); const ds=openProject(x,false); openView(ds,x.view); },()=>importMsg('That project couldn’t be opened.',true));
 }
 function renderSave(){
-  const box=$('#hdr-proj'), ds=S.ds; if(!ds||S.viewer||!VIEWS.includes(document.body.dataset.screen)){put(box,); return;}
-  const st=ds.saveState, t=!ds.pid?'':st==='error'?'Not saved in this browser':st==='saved'?'Saved in this browser':st?'Saving…':'';
-  put(box,t?h('span',{class:'save-st'+(st==='error'?' err':''),role:'status',title:st==='error'?`${ds.saveErr||''} Use Save file to keep your work.`:''},t):null,
-    h('button',{type:'button',class:'btn',id:'hdr-file',title:'Download this project, with its images, as a file you can open here again or send to a colleague',onclick:()=>downloadProject(projectOf(ds))},'Save file'));
+  const el=$('#hdr-saved'), ds=S.ds; if(!el||!ds) return; const st=ds.saveState, ok=!st||st==='saved';
+  el.className='saved'+(st==='error'?' err':''); el.title=st==='error'?`This browser didn’t save your last changes. ${ds.saveErr||''} Use Share › Project file to keep a copy.`:'Your project saves itself in this browser. Use Share › Project file to keep a copy.';
+  put(el,h('span',{'aria-hidden':'true'},st==='error'?'!':ok?'✓':'…'),h('span',{class:'t'},st==='error'?'Not saved':ok?'Saved':'Saving…'));
 }
 function newProject(){
   const cols=['date','date_end','location','admin1','country','latitude','longitude','event_type','headline','notes','image','image_caption','image_credit','source'];
-  const raw=[{}], p={fileName:'Untitled project',raw,cols,kind:'generic',map:guessMap(cols)}; p.norm=normalize(raw,p.kind,p.map);
-  const ds=buildDataset(p); S.datasets.push(ds); ensureProject(ds); openSheet(ds);
+  const raw=[], p={fileName:'Untitled map timeline',raw,cols,kind:'generic',map:guessMap(cols)}; p.norm=normalize(raw,p.kind,p.map);
+  const ds=buildDataset(p); S.datasets.push(ds); ensureProject(ds); saveProject(ds); openStory(ds);
 }
 
 /* edits: every change goes through act(), so it can be undone, re-renders the current view and autosaves */
@@ -1855,12 +1969,32 @@ function renderSheet(){
   const cur=shCur(), b=(id,t,on,dis,title)=>h('button',{type:'button',class:'btn sm',id,onclick:on,disabled:!!dis,title},t);
   put($('#sh-bar'),
     h('div',{class:'sh-grp'},b('sh-add','+ Row',()=>addRow(cur?ds.raw.indexOf(cur)+1:ds.raw.length),0,'Add a row below the selected one'),b(null,'+ Column',()=>addCol(ds.cols.length)),b('sh-del','Delete row',delRow,!cur)),
-    h('div',{class:'sh-grp'},b('sh-form','Edit in a form',()=>openForm(cur),!cur),b('sh-place','Place on map',()=>openPlace(cur),!cur)),
+    h('div',{class:'sh-grp'},b('sh-form','Edit in a form',()=>openForm(cur),!cur)),
     h('div',{class:'sh-grp'},b('sh-undo','Undo',undo,!sh.undo.length,'Undo (⌘Z or Ctrl+Z)'),b(null,'Redo',redo,!sh.redo.length,'Redo (⇧⌘Z or Ctrl+Y)')),
     h('span',{class:'sp'}),
     h('span',{class:'sh-sum'},`${fN(ds.raw.length)} row${ds.raw.length===1?'':'s'} · `,bad?h('button',{type:'button',class:'lnk',onclick:()=>{sh.bad=!sh.bad; sh.r=0; $('#sh-grid').scrollTop=0; renderSheet();}},sh.bad?'Show all rows':`${fN(bad)} won’t show on the map`):'all show on the map'),
-    b(null,'Download CSV',downloadCsv,0,'Download the sheet as a CSV for Google Sheets or Excel. Uploaded images aren’t included.'));
-  drawGrid();
+    b('sh-maptog',sh.nomap?'Show map':'Hide map',()=>{sh.nomap=!sh.nomap; renderSheet();}));
+  $('.sh-body').classList.toggle('nomap',!!sh.nomap);
+  drawGrid(); shMapRender();
+}
+// The side map shows the selected row; clicking it places that row.
+let SHM=null;
+function shMapRender(){
+  const ds=S.ds; if(ds.sh.nomap) return;
+  if(!SHM){ readPal(); SHM=baseMap($('#shmap')); applyBasemap(SHM,'outline'); SHM.R=L.canvas({tolerance:4}); SHM.dots=L.layerGroup().addTo(SHM.map); SHM.sel=L.layerGroup().addTo(SHM.map);
+    SHM.map.on('click',ev=>{ const r=shCur(); if(PL||!r) return; startPlacing(SHM,r); plSet(ev.latlng.lat,ev.latlng.lng); }); }
+  SHM.idx=new Map(ds.rows.map(e=>[e.raw,e])); SHM.dots.clearLayers();
+  for(const e of ds.rows){ const m=L.circleMarker([e.lat,e.lon],{renderer:SHM.R,radius:3,weight:0,fillColor:PAL.bar,fillOpacity:.6}); m.on('click',ev=>{ L.DomEvent.stop(ev); const i=ds.sh.vis.indexOf(e.raw); if(i>=0&&!PL) shMove(i,ds.sh.c); }); SHM.dots.addLayer(m); }
+  if(SHM.for!==ds){ SHM.for=ds; requestAnimationFrame(()=>{ SHM.map.invalidateSize(); if(ds.rows.length) SHM.map.fitBounds(L.latLngBounds(ds.rows.map(e=>[e.lat,e.lon])),{padding:[20,20],maxZoom:8}); else SHM.map.setView([10,20],2); }); }
+  shMapSel();
+}
+function shMapSel(){
+  const ds=S.ds; if(!SHM||ds.sh.nomap) return; const r=shCur(), e=r&&SHM.idx.get(r), why=r&&ds.why.get(r);
+  if(PL&&PL.B===SHM&&PL.r!==r) endPlacing();
+  SHM.sel.clearLayers();
+  put($('#sh-map-h'),r?h('div',{class:'t'},h('b',null,`Row ${ds.raw.indexOf(r)+1}`),' ',h('span',{class:'muted'},e?uniq([e.place,e.adm1]).join(', ')||`${e.lat.toFixed(3)}, ${e.lon.toFixed(3)}`:why==='date'?'has no readable date yet':'isn’t on the map yet')):h('span',{class:'muted'},'No row selected'),
+    r&&!(PL&&PL.B===SHM)?h('button',{type:'button',class:'btn sm',id:'sh-place',onclick:()=>startPlacing(SHM,r)},e?'Move it':'Place it'):null);
+  if(e){ SHM.sel.addLayer(L.circleMarker([e.lat,e.lon],{radius:9,color:PAL.sel,weight:2.5,fill:false,interactive:false})); if(!SHM.map.getBounds().contains([e.lat,e.lon])) SHM.map.panTo([e.lat,e.lon]); }
 }
 function drawGrid(){
   const ds=S.ds, sh=ds?.sh, g=$('#sh-grid'); if(!sh||document.body.dataset.screen!=='scr-sheet') return;
@@ -1885,7 +2019,7 @@ function shMove(i,j){
   const ds=S.ds, sh=ds.sh, g=$('#sh-grid'); if(!sh.vis.length) return;
   sh.r=Math.max(0,Math.min(sh.vis.length-1,i)); sh.c=Math.max(0,Math.min(ds.cols.length-1,j));
   const y=sh.r*SH_RH, vh=g.clientHeight-34; if(y<g.scrollTop) g.scrollTop=y; else if(y+SH_RH>g.scrollTop+vh) g.scrollTop=y+SH_RH-vh;
-  drawGrid(); g.querySelector('td.sel')?.scrollIntoView({block:'nearest',inline:'nearest'});
+  drawGrid(); g.querySelector('td.sel')?.scrollIntoView({block:'nearest',inline:'nearest'}); shMapSel();
 }
 function startEdit(init){
   const ds=S.ds, sh=ds.sh, r=shCur(), c=ds.cols[sh.c], td=$('#sh-grid td.sel'); if(!r||!td) return;
@@ -1942,23 +2076,30 @@ function sortBy(j,dir){
 }
 function downloadCsv(){ const ds=S.ds; saveFile(ds.name.replace(/\.\w+$/,'')+'.csv','﻿'+Papa.unparse({fields:ds.cols,data:ds.raw.map(r=>ds.cols.map(c=>r[c]??''))}),'text/csv'); }
 const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+// Pop-overs: the column menu, Share, More and Map style. One at a time, closed by Escape or a click outside.
+function pop(anchor,kids,{label,commit}={}){
+  closeMenu(); const m=h('div',{class:'menu',id:'colmenu',role:'dialog','aria-label':label,onkeydown:ev=>{ if(ev.key==='Escape'){ev.stopPropagation(); closeMenu(false); anchor.focus?.({preventScroll:true});} }},kids);
+  m.commit=commit; document.body.append(m); const r=anchor.getBoundingClientRect();
+  m.style.left=Math.max(8,Math.min(r.left,innerWidth-m.offsetWidth-8))+'px'; m.style.top=Math.max(8,Math.min(r.bottom+4,innerHeight-m.offsetHeight-8))+'px';
+  setTimeout(()=>addEventListener('pointerdown',menuOut,true)); return m;
+}
+function popMenu(anchor,items,label){
+  const m=pop(anchor,items.filter(Boolean).map(([t,f,dis,hint])=>h('button',{type:'button',class:'mi',disabled:!!dis,onclick:()=>{closeMenu(); f();}},h('span',null,t),hint?h('span',{class:'hint'},hint):null)),{label});
+  m.classList.add('mlist'); m.querySelector('.mi:not(:disabled)')?.focus();
+}
 function colMenu(j,anchor){
-  closeMenu(); const ds=S.ds, c=ds.cols[j], role=Object.keys(ds.map).find(k=>ds.map[k]===c)||'', need=['date','year','month','day','lat','lon'].includes(role);
+  const ds=S.ds, c=ds.cols[j], role=Object.keys(ds.map).find(k=>ds.map[k]===c)||'', need=['date','year','month','day','lat','lon'].includes(role);
   const name=h('input',{type:'text',value:c,'aria-label':'Column name',onkeydown:ev=>{if(ev.key==='Enter'){ev.preventDefault(); closeMenu(true);}}});
   const go=f=>()=>{closeMenu(); f(); $('#sh-grid').focus({preventScroll:true});}, mb=(t,f,dis)=>h('button',{type:'button',class:'btn sm',disabled:!!dis,onclick:go(f)},t);
-  const m=h('div',{class:'menu',id:'colmenu',role:'dialog','aria-label':'Column settings: '+c,onkeydown:ev=>{if(ev.key==='Escape'){ev.stopPropagation(); closeMenu(false); $('#sh-grid').focus({preventScroll:true});}}},
-    h('label',{class:'fld'},h('span',null,'Name'),name),
+  pop(anchor,[h('label',{class:'fld'},h('span',null,'Name'),name),
     h('label',{class:'fld'},h('span',null,'What it holds'),selectEl(null,[['','Nothing in particular'],...ROLES.map(([k,l])=>[k,l])],role,v=>setMap(mp=>{for(const k in mp) if(mp[k]===c) delete mp[k]; if(v) mp[v]=c;}))),
     h('label',{class:'fld'},h('span',null,'In the map timeline and exports'),selectEl(null,[['hidden','Not on the card'],['card','Show on the card'],...(need?[]:[['drop','Don’t export at all']])],ds.colMeta[c]||'hidden',v=>setMeta(c,v))),
     h('div',{class:'menu-b'},mb('Sort A → Z',()=>sortBy(j,1)),mb('Sort Z → A',()=>sortBy(j,-1)),mb('← Move',()=>moveCol(j,-1),j===0),mb('Move →',()=>moveCol(j,1),j===ds.cols.length-1),
-      mb('Insert column',()=>addCol(j+1)),mb('Delete column',()=>delCol(j))));
-  m.commit=()=>renameCol(j,name.value);
-  document.body.append(m); const r=anchor.getBoundingClientRect();
-  m.style.left=Math.max(8,Math.min(r.left,innerWidth-m.offsetWidth-8))+'px'; m.style.top=Math.max(8,Math.min(r.bottom+4,innerHeight-m.offsetHeight-8))+'px';
-  name.focus(); name.select(); setTimeout(()=>addEventListener('pointerdown',menuOut,true));
+      mb('Insert column',()=>addCol(j+1)),mb('Delete column',()=>delCol(j)))],{label:'Column settings: '+c,commit:()=>renameCol(j,name.value)});
+  name.focus(); name.select();
 }
 function menuOut(ev){ if(!ev.target.closest('#colmenu')) closeMenu(true); }
-function closeMenu(commit){ const m=$('#colmenu'); if(!m) return; m.remove(); removeEventListener('pointerdown',menuOut,true); if(commit!==false) m.commit(); }
+function closeMenu(commit){ const m=$('#colmenu'); if(!m) return; m.remove(); removeEventListener('pointerdown',menuOut,true); if(commit!==false) m.commit?.(); }
 
 /* ---------- one row as a form, with images ---------- */
 async function shrink(file){ // re-encoding drops EXIF, including GPS location
@@ -1981,53 +2122,96 @@ function openForm(r){
   const why=ds.why.get(r);
   put($('#dr-b'),
     h('div',null,h('h2',{class:'d-title'},'Row '+(ds.raw.indexOf(r)+1)),h('p',{class:'d-date'},why?(why==='coords'?'No usable coordinates yet, so it won’t show on the map.':'No readable date yet, so it won’t show on the map.'):'Changes are kept when you leave a field, and can be undone.')),
-    h('div',{class:'ff-b'},h('button',{type:'button',class:'btn sm',onclick:()=>openPlace(r)},'Place on map'),h('label',{class:'chk',style:'height:auto'},h('input',{type:'checkbox',checked:!r.__out,onchange:ev=>setOut([r],!ev.target.checked)}),'In the map timeline')),
+    h('div',{class:'ff-b'},h('button',{type:'button',class:'btn sm',onclick:()=>placeRow(r)},'Place on map'),h('label',{class:'chk',style:'height:auto'},h('input',{type:'checkbox',checked:!r.__out,onchange:ev=>setOut([r],!ev.target.checked)}),'In the map timeline')),
     ...ds.cols.map(fld));
   openDrawer('Edit');
 }
 
-/* ---------- place picker ---------- */
-let PM=null;
-function openPlace(r){
-  const ds=S.ds; if(!r) return;
-  if(!ds.map.lat||!ds.map.lon) return shMsg('First choose which columns hold the latitude and the longitude: click a column title, then “What it holds”.');
-  $('#place').showModal(); readPal();
-  if(!PM){ PM=baseMap($('#pmap')); PM.map.on('click',ev=>plSet(ev.latlng.lat,ev.latlng.lng)); applyBasemap(PM,'outline'); }
-  put($('#pl-base'),segF('Map',[['outline','Outline'],['streets','Streets'],['sat','Satellite']],PM.base,function pick(v){applyBasemap(PM,v); put($('#pl-base'),segF('Map',[['outline','Outline'],['streets','Streets'],['sat','Satellite']],v,pick));}));
-  PM.r=r; const lat=num(r[ds.map.lat]), lon=num(r[ds.map.lon]);
-  $('#pl-t').textContent=String(r[ds.map.title]||r[ds.map.place]||'').trim()||'Row '+(ds.raw.indexOf(r)+1);
-  $('#pl-q').value=''; put($('#pl-res'),);
-  requestAnimationFrame(()=>{ PM.map.invalidateSize(); const ok=lat!=null&&lon!=null&&Math.abs(lat)<=90&&Math.abs(lon)<=180;
-    plSet(ok?lat:null,lon); if(ok) PM.map.setView([lat,lon],9); else if(ds.rows.length) PM.map.fitBounds(L.latLngBounds(ds.rows.map(e=>[e.lat,e.lon])),{maxZoom:7,padding:[20,20]}); else PM.map.setView([0,20],2);
-    $('#pl-q').focus(); });
+/* ---------- placing a row on a map ---------- */
+// One way to place a row, used by the Sheet's side map and the map timeline: search the built-in towns or click the map, then confirm.
+let PL=null;
+function startPlacing(B,r,fresh){
+  endPlacing(); const ds=S.ds, wrap=B.map.getContainer().parentElement, name=r&&ds.map.title&&String(r[ds.map.title]??'').trim();
+  const q=h('input',{type:'search',placeholder:'Find a town or city','aria-label':'Find a town or city',autocomplete:'off'}), res=h('div',{class:'pl-res'}), at=h('p',{class:'pl-at',role:'status'});
+  const ok=h('button',{type:'button',class:'btn pri sm',disabled:true,onclick:plDone},fresh?'Add the event here':'Use this point');
+  const bar=h('div',{class:'placebar',role:'group','aria-label':'Place on the map',onkeydown:ev=>{ev.stopPropagation(); if(ev.key==='Escape') endPlacing();}},
+    h('div',{class:'pl-row'},q,ok,h('button',{type:'button',class:'btn ghost sm',onclick:endPlacing},'Cancel')),res,
+    h('p',{class:'hint'},`Search for a town, or click the map where ${fresh?'it happened':name?`“${name.slice(0,60)}” happened`:'this row happened'}.`),at);
+  wrap.append(bar); B.map.getContainer().classList.add('placing');
+  PL={B,r,fresh,bar,q,res,atEl:at,ok,pt:null,at:null,name:'',click:ev=>plSet(ev.latlng.lat,ev.latlng.lng)}; B.map.on('click',PL.click);
+  q.oninput=debounce(plFind,120); q.onkeydown=ev=>{ if(ev.key==='Enter'){ev.preventDefault(); res.querySelector('.pl-hit')?.click();} };
+  const lat=r&&ds.map.lat?num(r[ds.map.lat]):null, lon=r&&ds.map.lon?num(r[ds.map.lon]):null; plSet(lat!=null&&lon!=null?lat:null,lon);
+  if(B===SHM) shMapSel(); q.focus({preventScroll:true});
 }
 function plSet(lat,lon,name=''){
-  if(PM.pt){PM.map.removeLayer(PM.pt); PM.pt=null;}
-  PM.at=lat==null?null:[+(+lat).toFixed(5),+L.latLng(lat,lon).wrap().lng.toFixed(5)]; PM.name=name;
-  if(PM.at) PM.pt=L.circleMarker(PM.at,{radius:8,color:PAL.sel,weight:2.5,fillColor:PAL.s[0],fillOpacity:.9}).addTo(PM.map);
-  $('#pl-at').textContent=PM.at?`${PM.at[0]}, ${PM.at[1]}${name?' · '+name:''}`:'No point chosen yet.'; $('#pl-ok').disabled=!PM.at;
+  const P=PL; if(!P) return; if(P.pt){P.B.map.removeLayer(P.pt); P.pt=null;}
+  P.at=lat==null?null:[+(+lat).toFixed(5),+L.latLng(lat,lon).wrap().lng.toFixed(5)]; P.name=name;
+  if(P.at) P.pt=L.marker(P.at,{interactive:false,keyboard:false,icon:L.divIcon({className:'pin',iconSize:[24,24],iconAnchor:[12,26],html:'<span></span>'})}).addTo(P.B.map);
+  P.atEl.textContent=P.at?`${P.at[0]}, ${P.at[1]}${name?' · '+name:''}`:''; P.ok.disabled=!P.at;
 }
 function plFind(){
-  const q=$('#pl-q').value.trim().toLowerCase(), box=$('#pl-res'); if(q.length<2) return put(box,);
-  const hits=geoData().places.filter(p=>p[0].toLowerCase().startsWith(q)).slice(0,8);
-  put(box,hits.map(p=>h('button',{type:'button',class:'pl-hit',onclick:()=>{plSet(p[1],p[2],p[0]); PM.map.setView([p[1],p[2]],9);}},h('span',null,p[0]),h('span',{class:'muted'},`${p[1].toFixed(2)}, ${p[2].toFixed(2)}`))),
+  const P=PL; if(!P) return; const q=P.q.value.trim().toLowerCase(); if(q.length<2) return put(P.res,);
+  const hits=geoData().places.filter(p=>p[0].toLowerCase().startsWith(q)).slice(0,6);
+  put(P.res,hits.map(p=>h('button',{type:'button',class:'pl-hit',onclick:()=>{ plSet(p[1],p[2],p[0]); P.B.map.setView([p[1],p[2]],Math.max(P.B.map.getZoom(),9)); put(P.res,); }},h('span',null,p[0]),h('span',{class:'muted'},`${p[1].toFixed(2)}, ${p[2].toFixed(2)}`))),
     hits.length?null:h('p',{class:'hint'},'Not in the built-in list of towns. Click the map instead.'));
 }
-function plOk(){
-  const ds=S.ds, r=PM.r, at=PM.at; if(!at) return; $('#place').close();
-  edit([[r,ds.map.lat,String(at[0])],[r,ds.map.lon,String(at[1])],...(PM.name&&ds.map.place&&!String(r[ds.map.place]??'').trim()?[[r,ds.map.place,PM.name]]:[])]);
+function plDone(){
+  const P=PL; if(!P?.at) return; const ds=S.ds, v={lat:String(P.at[0]),lon:String(P.at[1])}; endPlacing();
+  if(P.fresh){ const cur=S.st?.items[S.st.i], r={}; v.date=iso(cur?(cur.e?cur.e.date:cur.c.at):Date.now()); if(P.name) v.place=P.name; S.st.want=r; return setRoles(r,v,[r]); }
+  if(P.name&&!(ds.map.place&&String(P.r[ds.map.place]??'').trim())) v.place=P.name;
+  setRoles(P.r,v);
+}
+function endPlacing(){ const P=PL; if(!P) return; PL=null; P.bar.remove(); P.B.map.off('click',P.click); P.B.map.getContainer().classList.remove('placing'); if(P.pt) P.B.map.removeLayer(P.pt); if(P.B===SHM) shMapSel(); }
+function placeRow(r){
+  closeDrawer(); if(document.body.dataset.screen==='scr-story'&&SM) return startPlacing(SM,r);
+  if(document.body.dataset.screen!=='scr-sheet') openSheet(S.ds);
+  const sh=S.ds.sh; sh.nomap=false; sh.bad=false; renderSheet(); const i=sh.vis.indexOf(r); if(i>=0) shMove(i,sh.c); startPlacing(SHM,r);
 }
 
 /* ---------- map timeline ---------- */
 let SM=null;
-const storyItems=(ds=S.ds)=>ds.rows.filter(e=>!e.raw.__out).sort((a,b)=>a.date-b.date||a.i-b.i);
+const ZOOMS=[['5','Country'],['7','Region'],['9','District'],['11','Town'],['14','Street']];
+const ROLE_COL={title:'headline',notes:'notes',media:'image',caption:'image_caption',credit:'image_credit',lat:'latitude',lon:'longitude',place:'location',date:'date',source:'source',cat:'event_type'};
+// Writes values by role ({title:'…'}). A role with no column yet gets one, in the same undo step, so writing a headline needs no setup.
+function setRoles(r,vals,news=[]){
+  const ds=S.ds, add=[], sets=[], used=new Set(Object.values(ds.map));
+  for(const k in vals){ let c=ds.map[k];
+    if(!c){ const base=ROLE_COL[k]||k; c=base; if(ds.cols.includes(c)&&used.has(c)){let i=2; while(ds.cols.includes(base+'_'+i)) i++; c=base+'_'+i;} add.push([k,c,!ds.cols.includes(c)]); used.add(c); }
+    sets.push([r,c,vals[k]]); }
+  const old=sets.map(([r,c])=>r[c]);
+  act(()=>{ for(const [k,c,nw] of add){ if(nw) ds.cols.push(c); ds.map[k]=c; } ds.raw.push(...news); for(const [r,c,v] of sets) r[c]=v; },
+    ()=>{ for(let i=sets.length;i--;){const [r,c]=sets[i]; if(old[i]===undefined) delete r[c]; else r[c]=old[i];} for(const n of news) ds.raw.splice(ds.raw.indexOf(n),1);
+      for(const [k,c,nw] of add){ if(nw) ds.cols.splice(ds.cols.indexOf(c),1); delete ds.map[k]; } });
+}
+function setRowProp(r,k,v){ const old=r[k]; act(()=>{ if(v) r[k]=v; else delete r[k]; },()=>{ if(old) r[k]=old; else delete r[k]; }); }
+function setCards(fn){ const ds=S.ds, old=ds.story.cards||[], nw=fn(old.map(c=>({...c}))); act(()=>{ds.story.cards=nw;},()=>{ds.story.cards=old;}); }
+// Steps of the map timeline: the events left in, plus text cards, in date order.
+function storyItems(ds=S.ds){
+  return [...ds.rows.filter(e=>!e.raw.__out).map(e=>({e,k:e.date,t:e.i})),...(ds.story?.cards||[]).map(c=>({c,k:c.at,t:c.ai}))].sort((a,b)=>a.k-b.k||a.t-b.t);
+}
+const storyTitle=e=>cell(e,'title')||[e.sub||e.cat,e.place||e.adm2||e.adm1||e.country].filter(Boolean).join(' in ')||'Untitled event';
+const editing=()=>!S.viewer&&!document.body.classList.contains('preview');
+// Text edited in place on the graphic. Saving waits a tick so focus has moved on, and the re-render can put it back.
+function ed(tag,f,val,ph,save,cls){
+  val=val||''; if(!editing()) return val?h(tag,{class:cls},val):null;
+  const el=h(tag,{class:(cls?cls+' ':'')+'ed',contentEditable:'plaintext-only','data-f':f,'data-ph':ph,role:'textbox','aria-label':ph,'aria-multiline':String(tag==='p')},val);
+  el.addEventListener('keydown',ev=>{ ev.stopPropagation(); if(ev.key==='Enter'&&(tag!=='p'||ev.metaKey||ev.ctrlKey)){ev.preventDefault(); el.blur();} else if(ev.key==='Escape'){el.textContent=val; el.blur();} });
+  el.addEventListener('blur',()=>{ const v=el.innerText.replace(/\n{3,}/g,'\n\n').trim(); if(v!==val) setTimeout(()=>save(v)); });
+  return el;
+}
+function keepFocus(fn){
+  const a=document.activeElement, f=a?.dataset?.f, sel=getSelection(), off=f&&a.isContentEditable&&sel.rangeCount?sel.getRangeAt(0).startOffset:null;
+  fn(); if(!f) return;
+  const el=document.querySelector(`#scr-story [data-f="${CSS.escape(f)}"]`); if(!el||el===a) return; el.focus({preventScroll:true});
+  if(off!=null&&el.firstChild){ const rg=document.createRange(); rg.setStart(el.firstChild,Math.min(off,el.firstChild.length)); rg.collapse(true); sel.removeAllRanges(); sel.addRange(rg); }
+}
 function openStory(ds){
   if(S.ds!==ds){ S.ds=ds; ds.F??=defaultF(ds); ds.V??=defaultV(ds); S.F=ds.F; S.V=ds.V; }
-  ensureProject(ds); ds.story??={}; closeDrawer(); show('scr-story'); readPal(); makeCS();
-  if(!SM){ SM=baseMap($('#smap')); SM.dataR=L.canvas({tolerance:6,padding:.3}); SM.data=L.featureGroup().addTo(SM.map);
-    SM.data.on('click',ev=>{const l=ev.propagatedFrom||ev.layer; hideTip(); if(l.k!=null) stGo(l.k);})
-      .on('mouseover',ev=>{const l=ev.propagatedFrom||ev.layer; if(l.e) showTip([h('div',{class:'m'},dateText(l.e)),h('div',{class:'v'},titleOf(l.e))],ev.originalEvent);})
-      .on('mousemove',ev=>moveTip(ev.originalEvent)).on('mouseout',hideTip); }
+  ensureProject(ds); closeDrawer(); show('scr-story'); readPal(); makeCS();
+  if(!SM){ SM=baseMap($('#smap')); SM.data=L.layerGroup().addTo(SM.map);
+    SM.map.on('click',ev=>{ if(PL||!editing()||S.st.items.some(x=>x.e)) return; startPlacing(SM,null,true); plSet(ev.latlng.lat,ev.latlng.lng); }); // an empty map timeline starts where you click
+    if(S.embed&&matchMedia('(pointer: coarse)').matches){ SM.map.dragging.disable(); $('#st-touch').hidden=false; SM.map.once('click',()=>{ SM.map.dragging.enable(); $('#st-touch').hidden=true; }); } } // one finger keeps scrolling the article
+  if(S.embed&&ds.clip&&!SM.clipped){ SM.clipped=true; SM.map.setMaxBounds(L.latLngBounds(ds.clip)); requestAnimationFrame(()=>SM.map.setMinZoom(Math.max(1,Math.floor(SM.map.getBoundsZoom(ds.clip,true))))); }
   const m=/^#event-(\d+)$/.exec(location.hash); S.st={i:m?+m[1]-1:-1,items:[]};
   renderStory(true);
 }
@@ -2037,137 +2221,304 @@ function togglePlay(){
   else { if(S.st.i>=S.st.items.length-1) S.st.i=-1; S.play=setInterval(()=>{ if(S.st.i>=S.st.items.length-1){stopPlay(); renderStNav();} else stGo(S.st.i+1); },4500); stGo(S.st.i+1); }
   renderStNav();
 }
+function togglePreview(){ document.body.classList.toggle('preview'); endPlacing(); renderHeader(); renderStory(true); }
 function stGo(k){ if(!S.st) return; S.st.i=Math.max(-1,Math.min(S.st.items.length-1,k)); renderStory(true); }
 function renderStory(fly){
-  const ds=S.ds, st=S.st; if(!st||!SM) return;
-  st.items=storyItems(ds); if(st.i>=st.items.length) st.i=st.items.length-1;
-  $('.story').classList.toggle('viewer',!!S.viewer);
-  if(SM.base!==(ds.story.base||'outline')) applyBasemap(SM,ds.story.base||'outline');
-  if(!S.viewer) renderDesign();
-  SM.data.clearLayers(); const cur=st.items[st.i];
-  const mk=(e,k,on)=>{const v=val1(S.V.colorBy,e), m=new ShapeMarker([e.lat,e.lon],{shape:CS.shape(v),renderer:SM.dataR,radius:on?11:6,fillColor:CS.col(v),fillOpacity:cur&&!on?.4:.85,color:on?PAL.sel:PAL.mk,weight:on?2.5:1,opacity:1}); m.k=k; m.e=e; SM.data.addLayer(m);};
-  st.items.forEach((e,k)=>{ if(e!==cur) mk(e,k,false); }); if(cur) mk(cur,st.i,true);
-  renderCard(); renderStNav(); renderStTl();
-  if(fly) stView();
-  if(st.i>=0) history.replaceState(null,'','#event-'+(st.i+1)); else if(location.hash) history.replaceState(null,'',location.pathname+location.search);
+  const ds=S.ds, st=S.st; if(!st||!SM||document.body.dataset.screen!=='scr-story') return;
+  keepFocus(()=>{
+    st.items=storyItems(ds); let n=0; for(const it of st.items) if(it.e) it.n=++n; st.nEv=n;
+    if(st.want!=null){ const k=st.items.findIndex(it=>it.e?it.e.raw===st.want:it.c.id===st.want); if(k>=0){st.i=k; fly=true;} st.want=null; }
+    st.i=Math.max(-1,Math.min(st.i,st.items.length-1));
+    const base=ds.story.base||'outline'; if(SM.base!==base) applyBasemap(SM,base);
+    const pv=document.body.classList.contains('preview'); $('#st-frame').style.setProperty('--pw',(S.pw||640)+'px');
+    put($('#st-pv'),pv?[h('span',{class:'hint'},'What readers see, at'),seg([['360','Phone'],['640','Article'],['1000','Wide']],String(S.pw||640),v=>{S.pw=+v; renderStory(true);},'Preview width')]:null);
+    renderFrame(); renderRail(); renderCard(); renderStNav(); renderMarkers(); renderKey(); renderAlt();
+  });
+  if(fly) requestAnimationFrame(stView);
+  try{ history.replaceState(null,'',st.i>=0?'#event-'+(st.i+1):location.pathname+location.search); }catch{} // not allowed in the Share preview's frame
 }
-function stView(){
-  const e=S.st.items[S.st.i], z=S.ds.story.zoom||8; SM.map.invalidateSize();
-  if(e){ if(matchMedia('(prefers-reduced-motion: reduce)').matches) SM.map.setView([e.lat,e.lon],z); else SM.map.flyTo([e.lat,e.lon],z,{duration:.9}); }
-  else if(S.st.items.length) SM.map.fitBounds(L.latLngBounds(S.st.items.map(e=>[e.lat,e.lon])),{padding:[40,40],maxZoom:9});
+function renderFrame(){
+  const ds=S.ds, st=ds.story;
+  put($('#gx-head'),editing()?ed('h2','gtitle',ds.name,'Title',v=>setStory('name',v||ds.name),'gx-t'):h('h2',{class:'gx-t'},ds.name),
+    ed('p','gdek',st.dek,'Subtitle: one sentence on what the map shows',v=>setStory('dek',v),'gx-d'));
+  put($('#gx-foot'),ed('span','gsource',st.source,'Source, such as “Source: ACLED”',v=>setStory('source',v)),
+    ed('span','gcredit',st.credit,'Credit, such as “Graphic: your name”',v=>setStory('credit',v)),
+    h('span',null,'Updated '+fD(st.updated||Date.now())));
+}
+function renderRail(){
+  const box=$('#st-rail'); if(!editing()) return put(box,);
+  const ds=S.ds, st=S.st, outRows=ds.rows.filter(e=>e.raw.__out), noLoc=ds.raw.length-ds.rows.length;
+  const item=(k,it)=>{ const on=k===st.i, e=it?.e, c=it?.c, own=!it?ds.name:e?cell(e,'title'):c.title;
+    return h('button',{type:'button',class:'ri'+(on?' on':''),'data-f':'ri'+k,'aria-current':on?'step':null,onclick:()=>stGo(k)},
+      h('span',{class:'ri-k'},!it?'Cover':e?[h('i',{class:'dot',style:'background:'+CS.col(val1(S.V.colorBy,e))}),`${it.n} · ${fD(e.date)}`]:'Text card'),
+      h('span',{class:'ri-t'+(own?'':' muted')},own||(e?storyTitle(e):'Untitled text card')));};
+  put(box,
+    h('div',{class:'ri-h'},h('span',{class:'eyebrow'},`${fN(st.nEv)} event${st.nEv===1?'':'s'}`),h('button',{type:'button',class:'btn ghost sm',id:'st-style','aria-haspopup':'dialog',onclick:ev=>styleMenu(ev.currentTarget)},'Map style')),
+    h('div',{class:'ri-list'},item(-1,null),st.items.map((it,k)=>item(k,it))),
+    h('div',{class:'ri-add',id:'st-add'},h('button',{type:'button',class:'btn sm',onclick:()=>startPlacing(SM,null,true)},'+ Event'),h('button',{type:'button',class:'btn sm',onclick:addTextCard},'+ Text card')),
+    outRows.length||noLoc?h('details',{class:'ri-out',open:!!S.outOpen,ontoggle:ev=>{S.outOpen=ev.target.open;}},h('summary',null,`Left out (${fN(outRows.length)})`),
+      outRows.length>1?h('button',{type:'button',class:'lnk',onclick:()=>setOut(outRows.map(e=>e.raw),false)},'Add them all back'):null,
+      outRows.slice(0,300).map(e=>h('div',{class:'ro'},h('span',{class:'t',title:storyTitle(e)},`${fD(e.date)} · ${storyTitle(e)}`),h('button',{type:'button',class:'lnk',onclick:()=>{S.st.want=e.raw; setOut([e.raw],false);}},'Add back'))),
+      outRows.length>300?h('p',{class:'hint'},`${fN(outRows.length-300)} more: find them in the Sheet’s “In story” column.`):null,
+      noLoc?h('p',{class:'hint'},`${fN(noLoc)} row${noLoc===1?' has':'s have'} no date or place yet, so ${noLoc===1?'it':'they'} can’t be on the map. Fix that in the Sheet.`):null):null);
+  const on=box.querySelector('.ri.on'); if(on&&box.scrollHeight>box.clientHeight+1){ // scroll the list only, never the page
+    const b=box.getBoundingClientRect(), r=on.getBoundingClientRect(); if(r.top<b.top) box.scrollTop-=b.top-r.top+8; else if(r.bottom>b.bottom) box.scrollTop+=r.bottom-b.bottom+8; }
 }
 function renderCard(){
-  const ds=S.ds, st=S.st, e=st.items[st.i], box=$('#st-card'); box.scrollTop=0;
-  if(!e){ const n=st.items.length, a=st.items[0], z=st.items[n-1];
-    put(box,h('p',{class:'eyebrow'},n?`${fN(n)} event${n>1?'s':''} · ${a.date===z.date?fD(a.date):fD(a.date)+' – '+fD(z.date)}`:'Map timeline'),
-      h('h2',{class:'st-h'},ds.name),ds.story.intro?h('p',{class:'st-x'},ds.story.intro):null,
-      n?h('div',{class:'ff-b'},h('button',{type:'button',class:'btn pri',onclick:()=>stGo(0)},'Start →')):h('p',{class:'hint'},'No events are in the map timeline yet. Tick them in the Sheet’s “In story” column, or use “Include all”.'));
-    return; }
-  const v=val1(S.V.colorBy,e), r=e.raw, extra=ds.cols.filter(c=>ds.colMeta[c]==='card'&&String(r[c]??'').trim());
-  const val=x=>{x=String(x).trim(); return /^https?:\/\/\S+$/i.test(x)?ext(x,x.replace(/^https?:\/\/(www\.)?/,'').slice(0,40)+' ↗'):x;};
+  const ds=S.ds, st=S.st, it=st.items[st.i], box=$('#st-card'), E=editing(); box.scrollTop=0;
+  if(!it){ const ev=st.items.filter(x=>x.e), a=ev[0]?.e, z=ev[ev.length-1]?.e;
+    return put(box,ev.length?h('p',{class:'eyebrow'},`${fN(ev.length)} event${ev.length>1?'s':''} · ${a.date===z.date?fD(a.date):fD(a.date)+' – '+fD(z.date)}`):null,
+      ed('p','intro',ds.story.intro,'Introduction: what does the map show, where does the data come from, and what does it leave out?',v=>setStory('intro',v),'st-x'),
+      st.items.length?h('div',{class:'ff-b'},h('button',{type:'button',class:'btn pri','data-f':'start',onclick:()=>stGo(0)},'Start →'))
+        :E?h('div',{class:'st-empty'},h('p',null,'Add your first event: search for a town, or click the map where it happened.'),h('button',{type:'button',class:'btn pri',onclick:()=>startPlacing(SM,null,true)},'+ Add an event')):null); }
+  if(it.c) return renderTextCard(it.c);
+  const e=it.e, r=e.raw, m=ds.map, v=val1(S.V.colorBy,e), fat=cell(e,'fat'), ctx=uniq([e.adm2,e.adm1,e.country]).filter(x=>x!==e.place).join(', ');
+  const extra=ds.cols.filter(c=>ds.colMeta[c]==='card'&&(E||String(r[c]??'').trim()));
+  const val=x=>{x=String(x??'').trim(); return /^https?:\/\/\S+$/i.test(x)?ext(x,x.replace(/^https?:\/\/(www\.)?/,'').slice(0,40)+' ↗'):x;};
   put(box,
-    h('div',{class:'st-meta'},h('span',{class:'d-tag'},h('i',{class:'dot '+CS.sh(v),style:'background:'+CS.col(v)}),dispV(v)),h('span',{class:'muted'},`${st.i+1} of ${st.items.length}`)),
-    h('p',{class:'st-date'},dateText(e)),
-    h('h2',{class:'st-h'},titleOf(e)),
-    figure(e),
-    e.notes?h('p',{class:'st-x'},e.notes):null,
-    h('p',{class:'st-loc muted'},uniq([e.place,e.adm2,e.adm1,e.country]).join(', ')),
-    extra.length?h('dl',{class:'kv'},extra.flatMap(c=>[h('dt',null,c),h('dd',null,val(r[c]))])):null,
-    e.src.length?h('div',{class:'d-sec'},h('h3',{class:'eyebrow'},'Sources'),h('ul',{class:'st-src'},e.src.map(s=>h('li',null,s.url?ext(s.url,s.name+' ↗'):[s.name,s.date?' · '+s.date:'',s.headline?': '+s.headline:''].join(''))))):null,
-    S.viewer?null:h('div',{class:'ff-b'},h('button',{type:'button',class:'btn sm',onclick:()=>openForm(r)},'Edit this event'),h('button',{type:'button',class:'btn ghost sm',onclick:()=>setOut([r],true)},'Leave it out')));
+    h('div',{class:'st-meta'},v===BLANK&&!(E&&S.V.colorBy==='cat')?h('span'):h('span',{class:'d-tag'},h('i',{class:'dot',style:'background:'+CS.col(v)}),
+        E&&S.V.colorBy==='cat'?[h('input',{type:'text',list:'cat-list','data-f':'cat','aria-label':lab('cat'),value:e.cat,size:Math.max(8,e.cat.length),onkeydown:ev=>ev.stopPropagation(),onchange:ev=>setRoles(r,{cat:ev.target.value.trim()})}),h('datalist',{id:'cat-list'},ordered('cat').filter(x=>x!==BLANK).map(x=>h('option',{value:x})))]:dispV(v)),
+      h('span',{class:'muted'},`${it.n} of ${st.nEv}`)),
+    h('p',{class:'st-date'},E&&(m.date||!m.year)?h('input',{type:'date','data-f':'date','aria-label':'Date',value:iso(e.date),onchange:ev=>{ if(ev.target.value){S.st.want=r; setRoles(r,{date:ev.target.value});} }}):dateText(e),
+      h('span',{'aria-hidden':'true'},'·'),E?[ed('span','place',e.place,'Place',x=>setRoles(r,{place:x}),'st-where'),ctx?h('span',{class:'muted st-ctx'},ctx):null]:h('span',{class:'st-where'},uniq([e.place,ctx]).join(', '))),
+    E?ed('h2','title',cell(e,'title'),storyTitle(e),x=>setRoles(r,{title:x}),'st-h'):h('h2',{class:'st-h'},storyTitle(e)),
+    mediaBlock(e),
+    ed('p','notes',e.notes,'What happened, who says so, and what is still disputed',x=>setRoles(r,{notes:x}),'st-x'),
+    m.fat&&fat!==''?h('p',{class:'st-facts'},h('b',null,fN(num(fat)??0)),` ${ds.kind==='awsd'?'aid workers killed':num(fat)===1?'death':'deaths'}`):null,
+    extra.length?h('dl',{class:'kv'},extra.flatMap(c=>[h('dt',null,c,E?h('button',{type:'button',class:'x','aria-label':`Take ${c} off the card`,onclick:()=>setMeta(c,'hidden')},'×'):null),
+      h('dd',null,E?ed('span','col:'+c,String(r[c]??''),'Empty',x=>edit([[r,c,x]])):val(r[c]))])):null,
+    sourcesBlock(e),
+    E?h('div',{class:'st-tools'},h('button',{type:'button',class:'btn sm',onclick:ev=>fieldMenu(ev.currentTarget)},'+ Field'),
+      h('label',{class:'st-zoom'},'Zoom',selectEl(null,[['','Default'],...ZOOMS],r.__zoom||'',x=>{setRowProp(r,'__zoom',x); stView();})),
+      h('button',{type:'button',class:'btn sm',onclick:()=>startPlacing(SM,r)},'Move on map'),
+      h('button',{type:'button',class:'btn sm',onclick:()=>openForm(r)},'All fields'),
+      h('button',{type:'button',class:'btn ghost sm',onclick:()=>setOut([r],true)},'Leave out')):null);
+}
+function mediaBlock(e){
+  const r=e.raw; if(!editing()) return figure(e);
+  const v=cell(e,'media'), src=mediaSrc(v), cap=cell(e,'caption'), cr=cell(e,'credit');
+  const file=h('input',{type:'file',accept:'image/*',hidden:true,onchange:ev=>{const f=ev.target.files[0]; if(f) addImage(r,f);}});
+  const drop=el=>{ el.addEventListener('dragover',ev=>{ev.preventDefault(); ev.stopPropagation(); el.classList.add('over');}); el.addEventListener('dragleave',()=>el.classList.remove('over'));
+    el.addEventListener('drop',ev=>{ ev.preventDefault(); ev.stopPropagation(); el.classList.remove('over'); dragN=0; document.body.classList.remove('dragging'); const f=ev.dataTransfer.files[0]; if(f&&f.type.startsWith('image/')) addImage(r,f); }); return el; };
+  return h('figure',{class:'st-fig'},file,
+    src?drop(h('div',{class:'st-img'},h('img',{src,alt:cap}),h('div',{class:'st-img-b'},h('button',{type:'button',class:'btn sm',onclick:()=>file.click()},'Replace'),h('button',{type:'button',class:'btn sm',onclick:()=>setRoles(r,{media:''})},'Remove'))))
+      :drop(h('div',{class:'st-drop'},h('button',{type:'button',class:'btn sm',onclick:()=>file.click()},'Add an image'),h('span',{class:'muted'},'drop one here, or'),
+        h('input',{type:'url','data-f':'imglink',placeholder:'paste a link','aria-label':'Image link',onkeydown:ev=>ev.stopPropagation(),onchange:ev=>{const x=ev.target.value.trim(); if(x) setRoles(r,{media:x});}}))),
+    src?ed('span','caption',cap,'Caption',x=>setRoles(r,{caption:x})):null,
+    src?ed('span','credit',cr,'Credit, such as “Photo: name”',x=>setRoles(r,{credit:x})):null);
+}
+async function addImage(r,f){ try{ const id=uid(); S.ds.media[id]=await shrink(f); setRoles(r,{media:'media:'+id}); }catch{ alert('That image couldn’t be read. Try a JPEG or PNG file.'); } }
+function sourcesBlock(e){
+  const E=editing(); if(!e.src.length&&!E) return null;
+  return h('div',{class:'d-sec'},h('h3',{class:'eyebrow'},'Sources'),
+    e.src.length?h('ul',{class:'st-src'},e.src.map(s=>h('li',null,s.url?ext(s.url,s.name+' ↗'):ext(gq(sourceQuery(s,e)),[s.name,s.headline].filter(Boolean).join(': ')+' ↗')))):null,
+    E?h('input',{type:'url','data-f':'addsrc',placeholder:'Add a source link (https://…)','aria-label':'Add a source link',onkeydown:ev=>{ev.stopPropagation(); if(ev.key==='Enter'){ev.preventDefault(); ev.target.blur();}},
+      onchange:ev=>{ const x=ev.target.value.trim(); if(!x) return; const cur=cell(e,'source'); setRoles(e.raw,{source:cur?cur+'; '+x:x}); }}):null);
+}
+function renderTextCard(c){
+  const E=editing(), upd=p=>setCards(cs=>cs.map(x=>x.id===c.id?{...x,...p}:x));
+  put($('#st-card'),h('p',{class:'eyebrow'},'Text card'),
+    E?ed('h2','ctitle',c.title,'Title',x=>upd({title:x}),'st-h'):c.title?h('h2',{class:'st-h'},c.title):null,
+    ed('p','ctext',c.text,'Context, a turning point, or what the next events have in common',x=>upd({text:x}),'st-x'),
+    E?h('div',{class:'st-tools'},h('span',{class:'hint'},c.view?'The map shows the view you saved.':'The map shows all the events.'),
+      h('button',{type:'button',class:'btn sm',onclick:()=>{const ce=SM.map.getCenter(); upd({view:[+ce.lat.toFixed(4),+ce.lng.toFixed(4),SM.map.getZoom()]});}},'Use this map view'),
+      c.view?h('button',{type:'button',class:'btn sm',onclick:()=>upd({view:null})},'Show all events'):null,
+      h('button',{type:'button',class:'btn ghost sm',onclick:()=>setCards(cs=>cs.filter(x=>x.id!==c.id))},'Delete card')):null);
+}
+function addTextCard(){
+  const st=S.st, cur=st.items[st.i], id=uid(), first=st.items[0];
+  const at=cur?(cur.e?cur.e.date:cur.c.at):first?first.k:Date.now(), ai=cur?(cur.e?cur.e.i+.5:cur.c.ai+.01):-1;
+  st.want=id; setCards(cs=>[...cs,{id,at,ai,title:'',text:'',view:null}]);
 }
 function renderStNav(){
   const st=S.st, n=st.items.length;
-  put($('#st-nav'),h('button',{type:'button',class:'btn',disabled:st.i<0,onclick:()=>stGo(st.i-1)},'← Previous'),
-    h('button',{type:'button',class:'btn',disabled:!n,'aria-pressed':String(!!S.play),onclick:togglePlay},S.play?'Pause':'Play'),
-    h('button',{type:'button',class:'btn pri',disabled:st.i>=n-1,onclick:()=>stGo(st.i+1)},st.i<0?'Start →':'Next →'),
-    h('span',{class:'sp'}),st.i>=0?h('button',{type:'button',class:'lnk',onclick:()=>stGo(-1)},'Overview'):null);
+  put($('#st-nav'),h('button',{type:'button',class:'btn sm','data-f':'prev','aria-label':'Previous',disabled:st.i<0,onclick:()=>stGo(st.i-1)},'←'),
+    h('span',{class:'st-count'},st.i<0?'Start':`${st.i+1} / ${n}`),
+    h('button',{type:'button',class:'btn sm','data-f':'next','aria-label':'Next',disabled:st.i>=n-1,onclick:()=>stGo(st.i+1)},'→'),
+    h('div',{class:'st-scrub',id:'st-scrub'}),
+    h('button',{type:'button',class:'btn ghost sm','data-f':'play','aria-pressed':String(!!S.play),disabled:!n,onclick:togglePlay},S.play?'Pause':'Play'));
+  renderScrub();
 }
-function renderStTl(){
-  const it=S.st.items, box=$('#st-tl'); if(!it.length) return put(box,);
-  const W=Math.max(320,box.clientWidth), m={l:18,r:18}, pw=W-m.l-m.r; let a=Infinity,b=-Infinity;
-  for(const e of it){a=Math.min(a,e.date); b=Math.max(b,e.end);} if(b-a<6*DAY){a-=3*DAY; b+=3*DAY;} const pad=(b-a)*.02; a-=pad; b+=pad;
-  const X=t=>m.l+(t-a)/(b-a)*pw, ends=[], lane=it.map(e=>{const x0=X(e.date)-7; let k=ends.findIndex(x=>x<x0); if(k<0) k=ends.length<5?ends.length:ends.indexOf(Math.min(...ends)); ends[k]=Math.max(X(e.end),X(e.date))+7; return k;});
-  const LH=18, top=10, nL=Math.max(1,ends.length), base=top+nL*LH+4, H=base+24, Y=k=>top+k*LH+LH/2;
-  const svg=sv('svg',{viewBox:`0 0 ${W} ${H}`,width:W,height:H,role:'img','aria-label':`Timeline of ${it.length} events from ${fD(it[0].date)} to ${fD(it[it.length-1].date)}`});
-  const span=(b-a)/DAY, u=['day','week','month','quarter','year'].find(u=>pw/(span/{day:1,week:7,month:30.4,quarter:91,year:365}[u])>=74)||'year';
-  svg.append(sv('line',{x1:m.l,x2:W-m.r,y1:base,y2:base,class:'axis'}));
-  for(let t=binStart(a,u);t<=b;t=binNext(t,u)){ if(t<a) continue; const x=X(t), d=new Date(t);
-    svg.append(sv('line',{x1:x,x2:x,y1:top,y2:base,class:'grid'}),sv('text',{x,y:H-6,'text-anchor':'middle',class:'tk'},u==='year'?String(d.getUTCFullYear()):u==='quarter'?`Q${Math.floor(d.getUTCMonth()/3)+1} ${d.getUTCFullYear()}`:u==='month'?(d.getUTCMonth()?MSH[d.getUTCMonth()]:fM(t)):_dm.format(t))); }
-  const cur=S.st.i;
-  it.forEach((e,k)=>{ const v=val1(S.V.colorBy,e), on=k===cur, x=X(e.date), x2=X(e.end), y=Y(lane[k]), col=CS.col(v), g=sv('g',{class:'mk'}, sv('title',null,`${dateText(e)}: ${titleOf(e)}`));
-    g.append(x2-x>4?sv('rect',{x,y:y-4,width:x2-x,height:8,rx:4,fill:col,opacity:on||cur<0?1:.55,stroke:on?PAL.sel:'none','stroke-width':2}):sv('circle',{cx:x,cy:y,r:on?7:5,fill:col,opacity:on||cur<0?1:.55,stroke:on?PAL.sel:PAL.surface,'stroke-width':on?2.5:1}));
+function renderScrub(){
+  const box=$('#st-scrub'), it=S.st?.items; if(!box||!it?.length) return box&&put(box,);
+  const W=Math.max(120,box.clientWidth), p=8; let a=Infinity,b=-Infinity;
+  for(const x of it){ a=Math.min(a,x.k); b=Math.max(b,x.e?x.e.end:x.k); } if(b-a<DAY){a-=DAY; b+=DAY;}
+  const X=t=>p+(t-a)/(b-a)*(W-2*p), ends=[], lane=it.map(x=>{ const x0=X(x.k)-6; let k=ends.findIndex(v=>v<x0); if(k<0) k=ends.length<3?ends.length:ends.indexOf(Math.min(...ends)); ends[k]=Math.max(X(x.e?x.e.end:x.k),X(x.k))+6; return k; });
+  const LH=9, nL=Math.max(1,ends.length), H=nL*LH+20, Y=k=>5+k*LH, cur=S.st.i;
+  const svg=sv('svg',{viewBox:`0 0 ${W} ${H}`,width:W,height:H,role:'img','aria-label':`${it.length} steps from ${fD(a)} to ${fD(b)}`},
+    sv('line',{x1:p,x2:W-p,y1:H-15,y2:H-15,stroke:PAL.line,'stroke-width':1}),
+    sv('text',{x:p,y:H-2,class:'tk'},fD(a)),sv('text',{x:W-p,y:H-2,'text-anchor':'end',class:'tk'},W<220?'':fD(b)));
+  it.forEach((x,k)=>{ const on=k===cur, y=Y(lane[k]), x0=X(x.k), x1=x.e?X(x.e.end):x0, col=x.e?CS.col(val1(S.V.colorBy,x.e)):PAL.muted;
+    const g=sv('g',{class:'mk'},sv('title',null,`${x.e?dateText(x.e):fD(x.k)}: ${x.e?storyTitle(x.e):x.c.title||'Text card'}`),
+      x.c?sv('rect',{x:x0-3,y:y-3,width:6,height:6,transform:`rotate(45 ${x0} ${y})`,fill:col,stroke:on?PAL.sel:'none','stroke-width':2})
+        :x1-x0>4?sv('rect',{x:x0,y:y-3,width:x1-x0,height:6,rx:3,fill:col,stroke:on?PAL.sel:'none','stroke-width':2}):sv('circle',{cx:x0,cy:y,r:on?5.5:3.5,fill:col,stroke:on?PAL.sel:PAL.surface,'stroke-width':on?2:1}));
     g.addEventListener('click',()=>stGo(k)); svg.append(g); });
-  if(cur>=0){const x=X(it[cur].date); svg.prepend(sv('line',{x1:x,x2:x,y1:top-6,y2:base,class:'now'}));}
   put(box,svg);
 }
-function renderDesign(){
-  const ds=S.ds, st=ds.story, box=$('#st-design'), focus=document.activeElement?.id, inN=S.st.items.length, all=ds.rows.length, out=ds.raw.length-all;
-  const roleSel=(k,l)=>selectF('sd-'+k,l,[['','Not used'],...ds.cols.map(c=>[c,c])],ds.map[k]||'',v=>setMap(mp=>{ if(v) mp[k]=v; else delete mp[k]; }));
-  const structural=new Set(['date','dateEnd','year','month','day','lat','lon','title','notes','media','caption','credit','source'].map(k=>ds.map[k]).filter(Boolean));
-  const colorOpts=[...['cat','sub','actor','adm1','country'].filter(k=>ds.fields.includes(k)&&k!=='actor').map(k=>[k,lab(k)]),...ds.catCols.map(c=>['col:'+c,c])];
+function renderMarkers(){
+  const st=S.st, cur=st.items[st.i]?.e; SM.data.clearLayers();
+  st.items.forEach((it,k)=>{ if(!it.e) return; const e=it.e, on=e===cur;
+    const m=L.marker([e.lat,e.lon],{keyboard:false,riseOnHover:true,zIndexOffset:on?1000:0,
+      icon:L.divIcon({className:'smk'+(on?' on':cur?' dim':''),iconSize:on?[30,30]:[22,22],html:h('span',null,h('b',{style:'background:'+CS.col(val1(S.V.colorBy,e))},String(it.n)),on?h('i',null,uniq([e.place,e.adm1,e.country])[0]||''):null)})});
+    m.on('click',()=>stGo(k)); if(!on) m.bindTooltip(storyTitle(e),{direction:'top',offset:[0,-12]}); SM.data.addLayer(m); });
+}
+function renderKey(){
+  const seen=new Set(S.st.items.filter(x=>x.e).map(x=>CS.bucket(val1(S.V.colorBy,x.e)))), box=$('#st-key');
+  if(seen.size<2) return put(box,);
+  put(box,[...seen].sort((a,b)=>(CS.idx.get(a)??99)-(CS.idx.get(b)??99)).map(v=>h('span',null,h('i',{class:'dot',style:'background:'+(v===OTHER?PAL.other:CS.col(v))}),dispV(v))));
+}
+function renderAlt(){ put($('#st-alt'),S.st.items.map(it=>h('li',null,it.e?[dateText(it.e),storyTitle(it.e),uniq([it.e.place,it.e.adm1,it.e.country]).join(', '),it.e.notes].filter(Boolean).join('. '):[it.c.title,it.c.text].filter(Boolean).join('. ')))); }
+// Keeps the event clear of the card: the map centres a little to the side of it, or above it on narrow screens.
+function stView(){
+  const st=S.st, it=st.items[st.i], map=SM.map; map.invalidateSize();
+  const c=$('#st-card').getBoundingClientRect(), mr=map.getContainer().getBoundingClientRect(), side=c.width>0&&c.left>mr.left+mr.width*.35;
+  const dx=side?(mr.right-c.left+12)/2:0, dy=side?0:Math.max(0,mr.bottom-c.top)/2, rm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const go=(ll,z)=>{ const cen=map.unproject(map.project(ll,z).add([dx,dy]),z); rm?map.setView(cen,z):map.flyTo(cen,z,{duration:.9}); };
+  if(it?.e) return go([it.e.lat,it.e.lon],+it.e.raw.__zoom||S.ds.story.zoom||9);
+  if(it?.c?.view) return go([it.c.view[0],it.c.view[1]],it.c.view[2]);
+  const ev=st.items.filter(x=>x.e);
+  if(ev.length) map.fitBounds(L.latLngBounds(ev.map(x=>[x.e.lat,x.e.lon])),{paddingTopLeft:[40,50],paddingBottomRight:[40+dx*2,40+dy*2],maxZoom:9,animate:!rm});
+  else map.setView([10,20],2);
+}
+function styleMenu(a){
+  const ds=S.ds, st=ds.story, colorOpts=[...['cat','sub','adm1','country'].filter(k=>ds.fields.includes(k)).map(k=>[k,lab(k)]),...ds.catCols.map(c=>['col:'+c,c])];
   if(!colorOpts.some(o=>o[0]===S.V.colorBy)) colorOpts.push([S.V.colorBy,lab(S.V.colorBy)]);
-  const filtered=S.viewFor===ds&&S.view.length<all;
-  put(box,
-    h('section',{class:'sd-sec',id:'sd-title'},h('h2',{class:'eyebrow'},'Title and introduction'),
-      h('label',{class:'fld'},h('span',null,'Title'),h('input',{type:'text',id:'sd-name',value:ds.name,onchange:ev=>setStory('name',ev.target.value.trim()||ds.name)})),
-      h('label',{class:'fld'},h('span',null,'Introduction'),h('textarea',{id:'sd-intro',rows:4,value:st.intro||'',placeholder:'What does this map show? Where does the data come from, and what does it leave out?',onchange:ev=>setStory('intro',ev.target.value)}))),
-    h('section',{class:'sd-sec',id:'sd-fields'},h('h2',{class:'eyebrow'},'What each card shows'),
-      roleSel('title','Headline'),roleSel('notes','Text'),roleSel('media','Image'),roleSel('caption','Image caption'),roleSel('credit','Image credit'),roleSel('source','Links and sources'),
-      selectF('sd-color','Colour by',colorOpts,S.V.colorBy,v=>{S.V.colorBy=v; makeCS(); renderStory(); saveSoon(ds);})),
-    h('section',{class:'sd-sec',id:'sd-cols'},h('h2',{class:'eyebrow'},'Other columns'),h('p',{class:'hint'},'Show a column on the card, or keep it out of everything you export.'),
-      h('div',{class:'sd-cols'},ds.cols.filter(c=>!structural.has(c)).map(c=>h('label',{class:'sd-col'},h('span',{class:'t',title:c},c),selectEl('sdc-'+c,[['hidden','Hidden'],['card','On the card'],['drop','Don’t export']],ds.colMeta[c]||'hidden',v=>setMeta(c,v)))))),
-    h('section',{class:'sd-sec',id:'sd-events'},h('h2',{class:'eyebrow'},'Events'),
-      h('p',null,`${fN(inN)} of ${fN(all)} events are in the map timeline.`+(out?` ${fN(out)} more rows have no date or coordinates.`:'')),
-      inN>300?h('p',{class:'hint warn'},'Map timelines work best with a few dozen events. Use Explore and its export for large sets.'):null,
-      h('div',{class:'ff-b'},h('button',{type:'button',class:'btn sm',id:'sd-all',disabled:inN===all,onclick:()=>setOut(ds.rows.map(e=>e.raw),false)},'Include all'),
-        h('button',{type:'button',class:'btn sm',id:'sd-none',disabled:!inN,onclick:()=>setOut(ds.rows.map(e=>e.raw),true)},'Include none'),
-        filtered?h('button',{type:'button',class:'btn sm',id:'sd-filt',onclick:keepFiltered},`Only the ${fN(S.view.length)} filtered`):null),
-      h('p',{class:'hint'},'Tick or untick single events in the Sheet’s “In story” column.')),
-    h('section',{class:'sd-sec'},h('h2',{class:'eyebrow'},'Map'),
-      selectF('sd-base','Basemap',BASEMAPS,st.base||'outline',v=>setStory('base',v)),
-      rangeF('sd-zoom','Zoom on each event',3,14,1,st.zoom||8,v=>String(v),debounce(v=>setStory('zoom',v),400))),
-    h('section',{class:'sd-sec',id:'sd-export'},h('button',{type:'button',class:'btn pri',disabled:!inN,onclick:exportStory},'Export map timeline'),
-      h('p',{class:'hint'},'One web page anyone can open in a browser. Events left out and columns marked “Don’t export” never go in it.')));
-  if(focus&&box.contains(document.getElementById(focus))) document.getElementById(focus).focus({preventScroll:true});
+  const m=pop(a,[h('h2',{class:'eyebrow'},'Map style'),
+    selectF(null,'Basemap',BASEMAPS,st.base||'outline',v=>setStory('base',v)),
+    st.base&&st.base!=='outline'?h('p',{class:'hint'},'Esri’s maps load from Esri’s servers each time someone opens the graphic. The outline map is built in.'):null,
+    selectF(null,'Colours show',colorOpts,S.V.colorBy,v=>{ S.V.colorBy=v; makeCS(); renderStory(); saveSoon(ds); }),
+    selectF(null,'Zoom on each event',ZOOMS,String(st.zoom||9),v=>setStory('zoom',+v)),
+    h('p',{class:'hint'},'Change the zoom of a single event on its card.')],{label:'Map style'});
+  m.querySelector('select').focus();
+}
+function fieldMenu(a){
+  const ds=S.ds, used=new Set(['date','dateEnd','year','month','day','lat','lon','title','notes','media','caption','credit','source','cat','place','fat'].map(k=>ds.map[k]).filter(Boolean));
+  const cs=ds.cols.filter(c=>!used.has(c)&&ds.colMeta[c]!=='card');
+  popMenu(a,cs.length?cs.slice(0,60).map(c=>[c,()=>setMeta(c,'card')]):[['No other columns',()=>{},true]],'Show a column on every card');
 }
 function keepFiltered(){ const keep=new Set(S.view.map(e=>e.raw)); setOut(S.ds.rows.map(e=>e.raw),r=>!keep.has(r)); }
 function toStory(){ const ds=S.ds; ensureProject(ds); if(S.view.length<ds.rows.length) keepFiltered(); openStory(ds); }
 function sampleStory(){
-  const p=ingest($('#sample-acled-events').textContent,'DR Congo: the deadliest events of 13–19 September 2025'); p.norm=normalize(p.raw,p.kind,p.map);
-  const ds=buildDataset(p), keep=new Set(ds.rows.slice().sort((a,b)=>b.fat-a.fat||a.date-b.date).slice(0,15).map(e=>e.raw));
-  for(const r of ds.raw) if(!keep.has(r)) r.__out='1';
-  ds.story={intro:'The 15 events with the most reported deaths in ACLED’s data for eastern DR Congo in one week of September 2025. Each card has ACLED’s notes and the sources it names. This is a sample: edit it, add images, then export it.'};
-  S.datasets.push(ds); openStory(ds);
+  const pid='sample-story', have=S.datasets.find(d=>d.pid===pid); if(have) return openStory(have);
+  const make=()=>{ const p=ingest($('#sample-acled-events').textContent,'DR Congo: the deadliest events of one week'); p.norm=normalize(p.raw,p.kind,p.map);
+    const ds=buildDataset(p), keep=new Set(ds.rows.slice().sort((a,b)=>b.fat-a.fat||a.date-b.date).slice(0,15).map(e=>e.raw));
+    for(const r of ds.raw) if(!keep.has(r)) r.__out='1';
+    ds.pid=pid; ds.story={dek:'The 15 events with the most reported deaths in eastern DR Congo, 13 to 19 September 2025.',intro:'Each card has ACLED’s notes and the sources it names. This is a sample: write headlines, add images, then share it.',source:'Source: ACLED'};
+    S.datasets.push(ds); ensureProject(ds); saveProject(ds); openStory(ds); };
+  if(!window.indexedDB) return make();
+  DB.get(pid).then(x=>x?openStory(openProject(x,false)):make(),make);
+}
+
+/* ---------- share: embed in an article ---------- */
+// The embed is this page in embed mode, holding only the columns the graphic shows, a basemap cut to the area of the events,
+// system fonts and, when it can be fetched, Leaflet itself, so readers' browsers load nothing from other sites.
+const LEAF_URL='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';
+let LEAF=null; const leafletCode=()=>LEAF||(LEAF=fetch(LEAF_URL).then(r=>r.ok?r.text():null).catch(()=>null));
+function embedCols(ds){
+  const keep=new Set(['date','dateEnd','year','month','day','lat','lon','cat','sub','fat','country','adm1','adm2','place','notes','source','title','media','caption','credit'].map(k=>ds.map[k]).filter(Boolean));
+  for(const c of ds.cols) if(ds.colMeta[c]==='card') keep.add(c); if(S.V.colorBy.startsWith('col:')) keep.add(S.V.colorBy.slice(4));
+  const must=new Set(['date','year','month','day','lat','lon'].map(k=>ds.map[k]));
+  return ds.cols.filter(c=>keep.has(c)&&(must.has(c)||ds.colMeta[c]!=='drop'));
+}
+async function buildEmbed(ds,{blur}={}){
+  const rows=storyItems(ds).filter(x=>x.e).map(x=>x.e.raw), cols=embedCols(ds), M_=ds.map;
+  const x={...projectOf(ds,{rows,cols}),mode:'embed',out:[],pin:{[S.V.colorBy]:CS.top}}; delete x.id; delete x.view; x.story={...x.story,updated:Date.now()};
+  if(blur){ const la=cols.indexOf(M_.lat), lo=cols.indexOf(M_.lon); for(const a of x.rows) for(const i of [la,lo]) if(i>=0&&num(a[i])!=null) a[i]=String(Math.round(num(a[i])*100)/100); }
+  let s=90,w=180,n=-90,e=-180; const add=(la,lo)=>{ if(la==null||lo==null) return; s=Math.min(s,la); n=Math.max(n,la); w=Math.min(w,lo); e=Math.max(e,lo); };
+  for(const r of rows) add(num(r[M_.lat]),num(r[M_.lon])); for(const c of ds.story.cards||[]) if(c.view) add(c.view[0],c.view[1]);
+  if(s>n){s=-60; n=80; w=-180; e=180;} const pad=Math.max(4,(n-s)*.8,(e-w)*.8); s=Math.max(-85,s-pad); n=Math.min(85,n+pad); w=Math.max(-180,w-pad); e=Math.min(180,e+pad);
+  x.clip=[[s,w],[n,e]];
+  const G=geoData(), fbox=f=>{const b=[180,90,-180,-90]; (function walk(c){ if(typeof c[0]==='number'){b[0]=Math.min(b[0],c[0]); b[1]=Math.min(b[1],c[1]); b[2]=Math.max(b[2],c[0]); b[3]=Math.max(b[3],c[1]);} else c.forEach(walk); })(f.geometry.coordinates); return b;};
+  const keep=fc=>({type:'FeatureCollection',features:fc.features.filter(f=>{ if(!f.geometry) return false; const b=fbox(f); return !(b[2]<w||b[0]>e||b[3]<s||b[1]>n); }).map(f=>({type:'Feature',properties:{},geometry:f.geometry}))});
+  const rnd=(k,v)=>typeof v==='number'?Math.round(v*1e3)/1e3:v; // ponytail: whole countries are kept, not clipped; clip polygons if embeds near Russia or Canada get too big
+  const geo=`<script type="application/json" id="geo-countries">${JSON.stringify(keep(G.countries),rnd)}<\/script>\n<script type="application/json" id="geo-lakes">${JSON.stringify(keep(G.lakes),rnd)}<\/script>\n<script type="application/json" id="geo-places">${JSON.stringify(G.places.filter(p=>p[1]>=s&&p[1]<=n&&p[2]>=w&&p[2]<=e))}<\/script>`;
+  let html=SRC.slice(0,SRC.lastIndexOf('</body>'));
+  html=html.replace(/<link[^>]+fonts\.(googleapis|gstatic)\.com[^>]*>/g,'').replace(/<script src="[^"]+(leaflet-heat|papaparse|topojson-client)[^"]*"><\/script>/g,'')
+    .replace('</style>',':root{--sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}</style>').replace('<body>','<body class="embed">');
+  const lf=await leafletCode(); if(lf) html=html.replace(/<script src="[^"]+leaflet\.min\.js"><\/script>/,()=>'<script>'+lf.replace(/<\/script/gi,'<\\/script')+'<\/script>');
+  return {inlined:!!lf,html:'<!doctype html>\n'+html+geo+'\n<script type="application/json" id="export">'+JSON.stringify(x).replace(/</g,'\\u003c')+'<\/script>\n</body></html>'};
+}
+function storyChecks(ds,sx){
+  const ev=storyItems(ds).filter(x=>x.e).map(x=>x.e), n=ev.length, out=[], cnt=f=>ev.filter(f).length, pl=(k,a,b)=>k===1?a:b;
+  if(!n) out.push(['bad','There are no events in the map timeline yet.']);
+  if(!ds.story.dek) out.push(['warn','Add a subtitle under the title: one sentence saying what the map shows.']);
+  if(!ds.story.source) out.push(['warn','Add a source line under the map, such as “Source: ACLED”.']);
+  const noT=cnt(e=>!cell(e,'title')); if(n&&noT) out.push(['warn',`${fN(noT)} ${pl(noT,'event has','events have')} no headline, so ${pl(noT,'its card uses','their cards use')} the event type and place.`]);
+  const links=cnt(e=>/^https?:/i.test(cell(e,'media'))); if(links) out.push(['warn',`${fN(links)} ${pl(links,'image loads','images load')} from another website, which sees every reader. Upload ${pl(links,'a copy','copies')} instead.`]);
+  if((ds.story.base||'outline')!=='outline') out.push(['warn','The basemap loads from Esri’s servers. Choose the built-in outline map in Map style to avoid that.']);
+  const exact=cnt(e=>/\.\d{4,}/.test(String(e.raw[ds.map.lat]??''))); if(exact&&!sx.blur) out.push(['warn',`${fN(exact)} ${pl(exact,'event has coordinates','events have coordinates')} precise to a few metres. Blur them below if that could put anyone at risk.`]);
+  out.push(['ok',`Only the ${fN(embedCols(ds).length)} columns the graphic uses go into the file, out of ${fN(ds.cols.length)}.`]);
+  return out;
+}
+const slug=t=>String(t).normalize('NFKD').replace(/[^\w\s-]/g,'').trim().replace(/\s+/g,'-').toLowerCase().slice(0,60)||'map-timeline';
+const attr=t=>String(t).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+const kb=n=>n<1048576?Math.round(n/1024)+' KB':(n/1048576).toFixed(1)+' MB';
+function embedCode(){
+  const sx=S.sx, url=sx.url||`https://example.org/${slug(S.ds.name)}.html`, hh=sx.h[640]||sx.h[sx.w]||600;
+  return `<iframe src="${attr(url)}" title="${attr(S.ds.name)}" style="width:100%;height:${hh}px;border:0" loading="lazy"></iframe>`+
+    (sx.auto?`\n<script>addEventListener("message",function(e){var h=e.data&&e.data["event-explorer-height"];if(!h)return;document.querySelectorAll("iframe").forEach(function(f){if(f.contentWindow===e.source)f.style.height=h+"px";});});<\/script>`:'');
+}
+function openShare(){ S.sx={blur:false,auto:true,url:'',w:640,h:{},res:null}; $('#share').showModal(); buildShare(); }
+async function buildShare(){ const sx=S.sx; sx.res=null; renderShare(); const res=await buildEmbed(S.ds,{blur:sx.blur}); if(S.sx!==sx) return; sx.res=res; sx.size=new Blob([res.html]).size; renderShare(); }
+function renderShare(){
+  const ds=S.ds, sx=S.sx, res=sx.res, file=slug(ds.name)+'.html';
+  const ck=([st,t])=>h('li',{class:'ck '+st},h('span',{class:'ic','aria-hidden':'true'},st==='ok'?'✓':st==='warn'?'!':'✕'),h('span',null,h('span',{class:'sr'},st==='ok'?'Done: ':st==='warn'?'Check: ':'Problem: '),t));
+  sx.frame=res?h('iframe',{title:'Preview of the embedded graphic',srcdoc:res.html}):null;
+  put($('#sx-pv'),h('div',{class:'sx-pvbar'},seg([['360','Phone'],['640','Article'],['1000','Wide']],String(sx.w),v=>{sx.w=+v; renderShare();},'Preview width'),h('span',{class:'hint',id:'sx-h'})),
+    h('div',{class:'sx-stage',id:'sx-stage'},sx.frame||h('p',{class:'hint'},'Preparing the preview…')));
+  layoutPv();
+  put($('#sx-side'),
+    h('section',{class:'sx-sec'},h('h3',{class:'eyebrow'},'Before you share'),h('ul',{class:'checks'},storyChecks(ds,sx).map(ck))),
+    h('section',{class:'sx-sec'},h('h3',{class:'eyebrow'},'1. Download the graphic'),
+      checkF('sx-blur','Blur locations to about 1 km',sx.blur,v=>{sx.blur=v; buildShare();}),
+      h('p',{class:'hint'},'Rounds the coordinates in the file. Your project keeps the exact ones.'),
+      h('button',{type:'button',class:'btn pri',disabled:!res,onclick:()=>saveFile(file,res.html,'text/html')},res?`Download ${file} · ${kb(sx.size)}`:'Preparing…'),
+      res?h('p',{class:'hint'},res.inlined?'One file with everything inside. Readers’ browsers load no fonts, code or map tiles from other websites.':'The map code couldn’t be built in, probably because you’re offline, so the file loads it from cdnjs.cloudflare.com.'):null),
+    h('section',{class:'sx-sec'},h('h3',{class:'eyebrow'},'2. Put it online'),
+      h('p',null,'Upload the file to your website, your newsroom’s file storage or GitHub Pages, then paste its address here.'),
+      h('input',{type:'url',id:'sx-url',placeholder:`https://…/${file}`,value:sx.url,'aria-label':'Address of the uploaded file',oninput:ev=>{sx.url=ev.target.value.trim(); $('#sx-code').value=embedCode();}})),
+    h('section',{class:'sx-sec'},h('h3',{class:'eyebrow'},'3. Paste the code in your article'),
+      h('textarea',{id:'sx-code',class:'sx-code',rows:6,readOnly:true,value:embedCode(),'aria-label':'Embed code',onfocus:ev=>ev.target.select()}),
+      h('div',{class:'ff-b'},h('button',{type:'button',class:'btn sm',onclick:async ev=>{ const b=ev.currentTarget; try{ await navigator.clipboard.writeText(embedCode()); b.textContent='Copied'; }catch{ $('#sx-code').select(); b.textContent='Press ⌘C or Ctrl+C'; } setTimeout(()=>{b.textContent='Copy the code';},2500); }},'Copy the code'),
+        checkF('sx-auto','Fit the height automatically',sx.auto,v=>{sx.auto=v; $('#sx-code').value=embedCode();})),
+      h('p',{class:'hint'},'Paste it where your publishing system accepts HTML. Without automatic fitting, the height is the one for an article-wide column.')));
+}
+function layoutPv(){
+  const sx=S.sx, st=$('#sx-stage'), f=sx?.frame; if(!f||!st) return;
+  const avail=$('#sx-pv').clientWidth-28, sc=Math.min(1,avail/sx.w), hh=sx.h[sx.w]||600;
+  Object.assign(f.style,{width:sx.w+'px',height:hh+'px',transform:`scale(${sc})`}); Object.assign(st.style,{width:sx.w*sc+'px',height:hh*sc+'px'});
+  $('#sx-h').textContent=sx.h[sx.w]?`${sx.w} × ${sx.h[sx.w]} px${sc<1?`, shown at ${Math.round(sc*100)}%`:''}`:'';
 }
 
 /* ---------- tutorial ---------- */
 // Each step points at a part of the screen; steps whose target isn't on screen for this dataset are skipped.
 function tourSteps(){
   const scr=document.body.dataset.screen, shown=st=>{st.pre?.(); const e=$(st.el); return e&&e.getClientRects().length;};
-  const views={el:'#hdr-nav',t:'Three views of the same data',x:`Explore filters and counts your events. Sheet is where you fix, add and remove them. Map timeline tells their story one event at a time, and exports it as a web page.`};
+  const views={el:'#hdr-nav',t:'Three views of the same data',x:`Explore filters and counts your events. Sheet is where you fix, add and remove them. Map timeline tells their story one event at a time, as a graphic you can embed in an article.`};
+  const saving={el:'#hdr-saved',t:'Saving',x:`Your project saves itself in this browser as you work, and is listed on the start page. Browsers can clear what they store, so keep a copy with Share › Project file.`};
   if(scr==='scr-sheet') return [
     {el:'#sh-grid',t:'Your sheet',x:`Each row is one event and each column one piece of information. Click a cell and start typing, or press Enter to edit it, and use the arrow keys to move. You can paste a block of cells copied from Google Sheets or Excel.`},
     {el:'#sh-grid th.stc',t:'Will it show on the map?',x:`An orange ! marks a row without a readable date or coordinates. It stays in your sheet, but it can’t appear on the map or in the map timeline. Point at the ! to see what’s missing.`},
     {el:'#sh-grid th.col',t:'Column settings',x:`Click a column title to rename it, sort by it, move or delete it, and say what it holds: a date, a place, a headline, an image… You can also keep a column out of everything you export.`},
     {el:'#sh-grid th.inc',t:'In the map timeline?',x:`Untick a row to leave that event out of the map timeline. It stays in the sheet and in the explorer.`},
     {el:'#sh-add',t:'Add rows and columns',x:`A new row goes below the one you’ve selected. New columns appear on the right; click their title to name them.`},
-    {el:'#sh-place',t:'Place an event',x:`Find a town by name, or click the map, to fill in the selected row’s latitude and longitude.`},
+    {el:'#sh-map',t:'Place events on the map',x:`The selected row shows on this map. Click the map, or search for a town, to set its latitude and longitude.`},
     {el:'#sh-form',t:'Longer text and images',x:`Open the selected row as a form to write longer notes, upload an image or paste an image link.`},
     {el:'#sh-undo',t:'Undo',x:`Every change can be undone, and redone. ⌘Z or Ctrl+Z works too.`},
-    {el:'#hdr-proj',t:'Saving',x:`Your project saves itself in this browser as you work, and appears on the start page. Browsers can clear what they store, so use “Save file” to keep a copy on your computer or send it to a colleague.`},
+    saving,
+    {el:'#hdr-share',t:'Share',x:`Download the project file to keep a copy or send it to a colleague, download the sheet as a CSV, or embed the map timeline in an article.`},
     views].filter(shown);
   if(scr==='scr-story') return [
-    {el:'#st-card',t:'The event card',x:`Each event gets a card with its date, headline, image, text and sources, while the map flies to where it happened.`},
-    {el:'#st-nav',t:'Step through',x:`Use Previous and Next, or the left and right arrow keys. Play moves on by itself every few seconds. Overview shows all the events at once.`},
-    {el:'#st-tl',t:'The timeline',x:`Every event in the map timeline, in date order. Events that lasted several days are bars. Click one to jump to it.`},
-    {el:'#sd-title',t:'Title and introduction',x:`This is the first card people see. Say what the map shows, where the data comes from and what it leaves out.`},
-    {el:'#sd-fields',t:'What each card shows',x:`Choose the columns that hold the headline, the text, the image and the sources. Without a headline column, cards are titled with the actors or the place.`},
-    {el:'#sd-cols',t:'Other columns',x:`Show extra columns on the card, or mark them “Don’t export” to keep sensitive information, such as the names of victims or sources, out of the file you share.`},
-    {el:'#sd-events',t:'Choose the events',x:`Include every event, none, or only those that match your filters in Explore. Fine-tune it in the Sheet’s “In story” column.`},
-    {el:'#sd-export',t:'Export',x:`Save the map timeline as a single web page anyone can open in a browser, without this tool. Read every card before you share it: once you send the file, what’s in it is out of your hands.`},
-    {el:'#hdr-proj',t:'Saving',x:`Your project saves itself in this browser. Use “Save file” to keep a copy on your computer.`},
-    views].filter(shown);
+    {el:'#st-rail',t:'Your events',x:`The cover, then every event in the map timeline in date order. Click one to open it. “Left out” lists the events you’ve taken out, to add back.`},
+    {el:'#gx-head',t:'Title and subtitle',x:`Click to write them. They sit above the map, the way a newspaper graphic does.`},
+    {el:'#st-card',t:'The card',x:`Click the headline, the text or the place to write in it. Add an image with “Add an image” or by dropping one on the card: uploaded images lose their hidden location data. The buttons at the bottom change the zoom, move the event or leave it out.`},
+    {el:'#st-nav',t:'Step through',x:`Readers use the arrows, the left and right keys, or the strip of dots, which shows when each event happened. Play moves on by itself every few seconds.`},
+    {el:'#st-add',t:'Add events and text cards',x:`“+ Event” lets you search for a town or click the map. “+ Text card” adds a card without a place, for context or a turning point.`},
+    {el:'#st-style',t:'Map style',x:`Choose the basemap, what the colours show, and how close the map zooms on each event.`},
+    {el:'#gx-foot',t:'Source and credit',x:`Say where the data comes from and who made the graphic. This line stays under the map wherever it’s embedded.`},
+    {el:'#hdr-preview',t:'Preview',x:`See exactly what readers get, at phone, article and wide sizes.`},
+    {el:'#hdr-share',t:'Embed it in an article',x:`Share › Embed checks the map timeline, makes one small file with everything inside, and gives you the code to paste into your article.`},
+    saving, views].filter(shown);
   const ds=S.ds, cat=lab('cat').toLowerCase(), fat=ds.kind==='awsd'?'aid workers killed':'deaths', narrow=innerWidth<=980;
   const openSide=()=>{ if(narrow) document.body.classList.add('side-open'); };
   return [
@@ -2184,7 +2535,7 @@ function tourSteps(){
     {el:'#records',t:'The event list',x:`Every event that matches your filters, one per row. Click a column title to sort. Click a row to read the full details and its sources.`},
     {el:'#to-story',t:'Make a map timeline',x:`Turn the events that match your filters into a map timeline: a story readers step through one event at a time.`},
     views,
-    {el:'#hdr-new',t:'Your own data',x:`Load another file here. It stays on your computer and is never uploaded. You can reopen this tutorial any time with the Tutorial button.`},
+    {el:'#hdr-more',t:'More',x:`Open another file, start a new map timeline, or reopen this tutorial and the guide. Files you load stay on your computer and are never uploaded.`},
   ].filter(shown);
 }
 const TOUR={i:0,steps:[],card:null,spot:null};
@@ -2224,12 +2575,15 @@ function tourEnd(){
 }
 
 /* ---------- wiring ---------- */
-$('#hdr-tut').onclick=tourStart;
+$('#hdr-more').onclick=ev=>moreMenu(ev.currentTarget);
 $('#pick').onclick=()=>$('#file').click();
 $('#file').onchange=ev=>{const f=ev.target.files[0]; ev.target.value=''; if(f) loadFile(f);};
-for(const b of document.querySelectorAll('.sample')) b.onclick=()=>{try{startReview(ingest($('#'+b.dataset.sample).textContent,b.dataset.name));}catch(err){importMsg(err.message,true);}};
+// Samples are projects too: opened once, then reopened with your changes.
+for(const b of document.querySelectorAll('.sample[data-sample]')) b.onclick=()=>{
+  const pid='sample-'+b.dataset.sample, have=S.datasets.find(d=>d.pid===pid); if(have) return openView(have,have.lastView);
+  const fresh=()=>{ try{ const p=ingest($('#'+b.dataset.sample).textContent,b.dataset.name); p.pid=pid; startReview(p); }catch(err){ importMsg(err.message,true); } };
+  if(!window.indexedDB) return fresh(); DB.get(pid).then(x=>x?openView(openProject(x,false),x.view):fresh(),fresh); };
 $('#brand').onclick=()=>{show('scr-import'); renderImport();};
-$('#hdr-new').onclick=()=>{show('scr-import'); renderImport(); $('#scr-import').scrollTop=0;};
 $('#f-reset').onclick=resetFilters;
 $('#side-btn').onclick=()=>document.body.classList.toggle('side-open');
 $('#dr-x').onclick=closeDrawer;
@@ -2249,7 +2603,7 @@ $('#g-x').onclick=()=>$('#guide').close();
 $('#guide').onclick=ev=>{if(ev.target===ev.currentTarget) ev.currentTarget.close();};
 $('#g-load').onclick=()=>{$('#guide').close(); $('#file').click();};
 const hasFiles=ev=>[...(ev.dataTransfer?.types||[])].includes('Files'); let dragN=0;
-addEventListener('dragenter',ev=>{if(!hasFiles(ev))return; ev.preventDefault(); dragN++; document.body.classList.add('dragging');});
+addEventListener('dragenter',ev=>{if(!hasFiles(ev)||S.embed||ev.target.closest?.('.st-drop,.st-img'))return; ev.preventDefault(); dragN++; document.body.classList.add('dragging');});
 addEventListener('dragleave',()=>{if(--dragN<=0){dragN=0; document.body.classList.remove('dragging');}});
 addEventListener('dragover',ev=>{if(hasFiles(ev)) ev.preventDefault();});
 addEventListener('drop',ev=>{if(!hasFiles(ev))return; ev.preventDefault(); dragN=0; document.body.classList.remove('dragging'); const f=ev.dataTransfer.files[0]; if(f) loadFile(f);});
@@ -2266,20 +2620,20 @@ $('#sample-story').onclick=sampleStory;
   g.addEventListener('dblclick',ev=>{ if(ev.target.closest('td.c')) startEdit(); });
   g.addEventListener('copy',ev=>{ const sh=S.ds?.sh, r=sh&&!sh.edit&&shCur(); if(!r) return; ev.preventDefault(); ev.clipboardData.setData('text/plain',String(r[S.ds.cols[sh.c]]??'')); });
   g.addEventListener('paste',ev=>{ const sh=S.ds?.sh, t=ev.clipboardData.getData('text/plain'); if(!sh||sh.edit||!t) return; ev.preventDefault(); pasteBlock(t); }); }
-$('#pl-q').oninput=debounce(plFind,120);
-$('#pl-q').onkeydown=ev=>{ if(ev.key==='Enter'){ev.preventDefault(); $('#pl-res .pl-hit')?.click();} };
-$('#pl-ok').onclick=plOk;
-$('#pl-x').onclick=$('#pl-no').onclick=()=>$('#place').close();
-new ResizeObserver(debounce(()=>{if(S.st&&document.body.dataset.screen==='scr-story') renderStTl();},120)).observe($('#st-tl'));
+$('#sx-x').onclick=()=>$('#share').close();
+$('#share').addEventListener('close',()=>{ S.sx=null; put($('#sx-pv'),); });
+addEventListener('message',ev=>{ const hh=ev.data?.['event-explorer-height'], sx=S.sx; if(!hh||!sx?.frame||ev.source!==sx.frame.contentWindow) return; sx.h[sx.w]=hh; layoutPv(); const c=$('#sx-code'); if(c) c.value=embedCode(); });
+addEventListener('resize',debounce(()=>{ if(S.sx) layoutPv(); },150));
+new ResizeObserver(debounce(()=>{ if(S.st&&document.body.dataset.screen==='scr-story') renderScrub(); },120)).observe($('#st-frame'));
 addEventListener('keydown',ev=>{
   const scr=document.body.dataset.screen, t=ev.target, typing=/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)||t.isContentEditable;
-  if(typing||$('#guide').open||$('#place').open||TOUR.card||!S.ds) return;
+  if(typing||$('#guide').open||$('#share').open||TOUR.card||!S.ds) return;
   if((ev.metaKey||ev.ctrlKey)&&!S.viewer&&VIEWS.includes(scr)){ const k=ev.key.toLowerCase(); if(k==='z'||k==='y'){ev.preventDefault(); k==='y'||ev.shiftKey?redo():undo();} return; }
   if(scr==='scr-story'&&!t.closest?.('.leaflet-container')&&(ev.key==='ArrowRight'||ev.key==='ArrowLeft')){ ev.preventDefault(); stGo(S.st.i+(ev.key==='ArrowRight'?1:-1)); }
 });
 // a save that hasn't finished yet would be lost with the page
 addEventListener('beforeunload',ev=>{ const p=S.datasets.filter(d=>d.saveState==='pending'||d.saveState==='saving'); if(!p.length) return; p.forEach(saveProject); ev.preventDefault(); ev.returnValue=''; });
-show('scr-import'); renderProjects();
+show('scr-import'); if(!document.body.classList.contains('embed')) renderProjects();
 addEventListener('DOMContentLoaded',()=>{const x=$('#export'); if(x) openExport(JSON.parse(x.textContent));});
 </script>
 <!-- Embedded data: Natural Earth basemap (public domain) and sample CSVs. -->
