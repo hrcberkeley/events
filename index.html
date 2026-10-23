@@ -414,15 +414,18 @@ table.sheet{table-layout:fixed;font-size:13px}
 .ff-img{max-width:100%;max-height:220px;border-radius:6px;border:1px solid var(--line);justify-self:start}
 
 /* sheet: side map */
-.sh-body{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 340px}
+.sh-body{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 7px var(--shm,340px)}
 .sh-body.nomap{grid-template-columns:minmax(0,1fr)}
-.sh-body.nomap .sh-map{display:none}
-.sh-map{display:flex;flex-direction:column;min-height:0;border-left:1px solid var(--line);background:var(--surface)}
+.sh-body.nomap .sh-map,.sh-body.nomap .sh-split{display:none}
+.sh-split{cursor:col-resize;touch-action:none;background:var(--surface-2);border-left:1px solid var(--line);border-right:1px solid var(--line);position:relative}
+.sh-split::after{content:"";position:absolute;inset:50% 2px auto;height:28px;margin-top:-14px;border-left:1px solid var(--line-2);border-right:1px solid var(--line-2)}
+.sh-split:hover,.sh-split:focus-visible,.sh-split.drag{background:color-mix(in srgb,var(--focus) 18%,var(--surface))}
+.sh-map{display:flex;flex-direction:column;min-height:0;background:var(--surface)}
 .sh-map-h{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:6px 12px;font-size:13px;min-height:44px;border-bottom:1px solid var(--line)}
 .sh-map-h .t{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .sh-mapw{position:relative;flex:1;min-height:220px}
 #shmap{position:absolute;inset:0;background:var(--water)}
-@media (max-width:860px){.sh-body{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) 260px}.sh-map{border-left:0;border-top:1px solid var(--line)}}
+@media (max-width:860px){.sh-body{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) 7px var(--shmh,260px)}.sh-split{cursor:row-resize;border:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.sh-split::after{inset:2px auto 2px 50%;width:28px;height:auto;margin:0 0 0 -14px;border:0;border-top:1px solid var(--line-2);border-bottom:1px solid var(--line-2)}}
 
 /* placing a row on a map */
 .leaflet-container.placing{cursor:crosshair}
@@ -465,8 +468,10 @@ body.preview .st-frame{flex:none;width:var(--pw,640px);max-width:100%;border:1px
 .gx-h{display:grid;gap:6px;padding:18px 16px 12px}
 .gx-t{margin:0;font-size:clamp(23px,4.2cqw,34px);line-height:1.04;font-weight:780;font-stretch:70%;letter-spacing:-.005em;text-wrap:balance;overflow-wrap:anywhere}
 .gx-d{margin:0;font-size:15.5px;line-height:1.45;color:var(--ink-2);max-width:62ch;text-wrap:pretty}
-.st-stage{position:relative;flex:1;min-height:340px;border-top:1px solid var(--line)}
-body.preview .st-stage,body.embed .st-stage{flex:none;height:clamp(480px,56cqw,620px)}
+.st-stage{position:relative;flex:1;min-height:0;display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.st-mapbox{position:relative;flex:1;min-height:340px}
+body.preview .st-stage,body.embed .st-stage{flex:none}
+body.preview .st-mapbox,body.embed .st-mapbox{flex:none;height:clamp(480px,56cqw,620px)}
 #smap{position:absolute;inset:0;background:var(--water)}
 .st-key{display:flex;flex-wrap:wrap;gap:4px 16px;padding:0 16px 14px;font-size:13px;color:var(--ink-2)}
 .st-key .dot{width:9px;height:9px}
@@ -474,8 +479,10 @@ body.preview .st-stage,body.embed .st-stage{flex:none;height:clamp(480px,56cqw,6
 .st-key span{display:inline-flex;align-items:center;gap:5px}
 .st-touch{position:absolute;z-index:450;right:10px;top:10px;margin:0;padding:5px 10px;border-radius:8px;background:var(--surface);border:1px solid var(--line-2);font-size:12.5px}
 .st-card{position:absolute;z-index:500;right:14px;top:14px;width:min(390px,42%);max-height:calc(100% - 28px);overflow:auto;display:grid;gap:12px;align-content:start;padding:20px 22px 22px;border-radius:10px;border:1px solid var(--line);background:var(--surface);box-shadow:0 12px 32px -8px rgba(8,17,31,.28)}
-@container (max-width:879px){ /* the card goes under the map, in the flow, so it never hides the map or scrolls inside the embed */
-  .st-frame .st-stage{flex:none!important;height:auto!important;min-height:0}
+@container (max-width:879px){ /* the card goes under the map and its controls, in the flow, so it never hides the map or scrolls inside the embed */
+  .st-frame .st-stage{flex:none!important;height:auto!important}
+  .st-frame .st-mapbox{display:contents}
+  .st-card{order:2}
   #smap{position:relative;inset:auto;height:clamp(260px,62cqw,440px)}
   .st-card{position:static;width:auto;max-height:none;overflow:visible;min-height:230px;padding:16px 16px 18px;border:0;border-top:1px solid var(--line);border-radius:0;box-shadow:none}
   .st-h{font-size:24px!important}
@@ -544,7 +551,8 @@ p.ed,h2.ed{display:block}
   .st-rail{order:2;overflow:visible;border-right:0;border-top:1px solid var(--line)}
   .st-main{overflow:visible}
   .st-frame{flex:none}
-  .st-stage{flex:none;height:70vh}
+  .st-stage{flex:none}
+  .st-mapbox{flex:none;height:70vh}
 }
 
 /* the embedded graphic: only the map timeline, at its natural height */
@@ -709,6 +717,7 @@ body.embed .st-frame{flex:none}
       <p class="sh-msg" id="sh-msg" role="status" hidden></p>
       <div class="sh-body">
         <div class="sh-grid" id="sh-grid" tabindex="0" aria-label="Sheet. Arrow keys move between cells, Enter or typing edits, Escape cancels."></div>
+        <div class="sh-split" id="sh-split" role="separator" tabindex="0" aria-label="Resize the map. Drag, or use the arrow keys." title="Drag to resize the map"></div>
         <aside class="sh-map" id="sh-map" aria-label="Selected row on the map"><div class="sh-map-h" id="sh-map-h"></div><div class="sh-mapw"><div id="shmap"></div></div></aside>
       </div>
     </div>
@@ -722,8 +731,8 @@ body.embed .st-frame{flex:none}
         <div class="st-frame" id="st-frame">
           <header class="gx-h" id="gx-head"></header>
           <div class="st-key" id="st-key"></div>
-          <div class="st-stage"><div id="smap"></div><p class="st-touch" id="st-touch" hidden>Tap the map to move it</p><article class="st-card" id="st-card" aria-live="polite"></article></div>
-          <div class="st-nav" id="st-nav"></div>
+          <div class="st-stage"><div class="st-mapbox"><div id="smap"></div><p class="st-touch" id="st-touch" hidden>Tap the map to move it</p><article class="st-card" id="st-card" aria-live="polite"></article></div>
+          <div class="st-nav" id="st-nav"></div></div>
           <footer class="gx-f" id="gx-foot"></footer>
           <ol class="sr" id="st-alt" aria-label="Every event in this map timeline"></ol>
         </div>
@@ -1982,7 +1991,7 @@ function renderSheet(){
   const cur=shCur(), b=(id,t,on,dis,title)=>h('button',{type:'button',class:'btn sm',id,onclick:on,disabled:!!dis,title},t);
   put($('#sh-bar'),
     h('div',{class:'sh-grp'},b('sh-add','+ Row',()=>addRow(cur?ds.raw.indexOf(cur)+1:ds.raw.length),0,'Add a row below the selected one'),b(null,'+ Column',()=>addCol(ds.cols.length)),b('sh-del','Delete row',delRow,!cur)),
-    h('div',{class:'sh-grp'},b('sh-form','Edit in a form',()=>openForm(cur),!cur)),
+    h('div',{class:'sh-grp'},b('sh-form','Open row',()=>openForm(cur),!cur,'Edit every field of the selected row in a side panel: longer notes, images, placing it on the map')),
     h('div',{class:'sh-grp'},b('sh-undo','Undo',undo,!sh.undo.length,'Undo (⌘Z or Ctrl+Z)'),b(null,'Redo',redo,!sh.redo.length,'Redo (⇧⌘Z or Ctrl+Y)')),
     h('span',{class:'sp'}),
     h('span',{class:'sh-sum'},`${fN(ds.raw.length)} row${ds.raw.length===1?'':'s'} · `,bad?h('button',{type:'button',class:'lnk',onclick:()=>{sh.bad=!sh.bad; sh.r=0; $('#sh-grid').scrollTop=0; renderSheet();}},sh.bad?'Show all rows':`${fN(bad)} won’t show on the map`):'all show on the map'),
@@ -2538,7 +2547,7 @@ function tourSteps(){
     {el:'#sh-grid th.inc',t:'In the map timeline?',x:`Untick a row to leave that event out of the map timeline. It stays in the sheet and in the explorer.`},
     {el:'#sh-add',t:'Add rows and columns',x:`A new row goes below the one you’ve selected. New columns appear on the right; click their title to name them.`},
     {el:'#sh-map',t:'Place events on the map',x:`The selected row shows on this map. Click the map, or search for a town, to set its latitude and longitude.`},
-    {el:'#sh-form',t:'Longer text and images',x:`Open the selected row as a form to write longer notes, upload an image or paste an image link.`},
+    {el:'#sh-form',t:'Longer text and images',x:`“Open row” shows every field of the selected row in a side panel, to write longer notes, upload an image or paste an image link.`},
     {el:'#sh-undo',t:'Undo',x:`Every change can be undone, and redone. ⌘Z or Ctrl+Z works too.`},
     saving,
     {el:'#hdr-share',t:'Share',x:`Download the project file to keep a copy or send it to a colleague, download the sheet as a CSV, or embed the map timeline in an article.`},
@@ -2655,6 +2664,17 @@ $('#sample-story').onclick=sampleStory;
   g.addEventListener('dblclick',ev=>{ if(ev.target.closest('td.c')) startEdit(); });
   g.addEventListener('copy',ev=>{ const sh=S.ds?.sh, r=sh&&!sh.edit&&shCur(); if(!r) return; ev.preventDefault(); ev.clipboardData.setData('text/plain',String(r[S.ds.cols[sh.c]]??'')); });
   g.addEventListener('paste',ev=>{ const sh=S.ds?.sh, t=ev.clipboardData.getData('text/plain'); if(!sh||sh.edit||!t) return; ev.preventDefault(); pasteBlock(t); }); }
+// drag the bar between the sheet and the map to resize the map; the size is remembered
+{ const sp=$('#sh-split'), body=$('.sh-body'), tall=()=>matchMedia('(max-width:860px)').matches;
+  const size=(px,keep)=>{ const r=body.getBoundingClientRect(), v=tall(), max=(v?r.height:r.width)-200;
+    px=Math.round(Math.max(200,Math.min(max,px))); body.style.setProperty(v?'--shmh':'--shm',px+'px'); sp.setAttribute('aria-valuenow',px); if(keep) store.set(v?'shmh':'shm',px); SHM?.map.invalidateSize(); };
+  for(const k of ['shm','shmh']){ const v=store.get(k); if(v) body.style.setProperty('--'+k,v+'px'); }
+  const cur=()=>{ const r=$('#sh-map').getBoundingClientRect(); return tall()?r.height:r.width; };
+  sp.addEventListener('pointerdown',ev=>{ ev.preventDefault(); sp.setPointerCapture(ev.pointerId); sp.classList.add('drag');
+    const mv=e=>{ const r=body.getBoundingClientRect(); size(tall()?r.bottom-e.clientY-3:r.right-e.clientX-3); };
+    sp.onpointermove=mv; sp.onpointerup=sp.onpointercancel=()=>{ sp.onpointermove=sp.onpointerup=sp.onpointercancel=null; sp.classList.remove('drag'); size(cur(),true); }; });
+  sp.addEventListener('keydown',ev=>{ const d={ArrowLeft:40,ArrowUp:40,ArrowRight:-40,ArrowDown:-40}[ev.key]; if(!d) return; ev.preventDefault(); size(cur()+d,true); });
+  sp.addEventListener('dblclick',()=>{ body.style.removeProperty(tall()?'--shmh':'--shm'); store.set(tall()?'shmh':'shm',''); SHM?.map.invalidateSize(); }); }
 $('#sx-x').onclick=()=>$('#share').close();
 $('#share').addEventListener('close',()=>{ S.sx=null; put($('#sx-pv'),); });
 addEventListener('message',ev=>{ const hh=ev.data?.['event-explorer-height'], sx=S.sx; if(!hh||!sx?.frame||ev.source!==sx.frame.contentWindow) return; sx.h[sx.w]=hh; layoutPv(); const c=$('#sx-code'); if(c) c.value=embedCode(); });
