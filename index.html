@@ -462,34 +462,40 @@ body.preview .story{grid-template-columns:minmax(0,1fr)}
 body.preview .st-rail{display:none}
 body.preview .st-main{align-items:center;padding:0 16px 32px}
 body.preview .st-frame{flex:none;width:var(--pw,640px);max-width:100%;border:1px solid var(--line);border-radius:4px;overflow:hidden}
-.gx-h{display:grid;gap:4px;padding:14px 16px 12px}
-.gx-t{margin:0;font-size:clamp(20px,3.6cqw,30px);line-height:1.08;font-weight:760;font-stretch:72%;overflow-wrap:anywhere}
-.gx-d{margin:0;font-size:15px;line-height:1.45;color:var(--ink-2);max-width:72ch}
+.gx-h{display:grid;gap:6px;padding:18px 16px 12px}
+.gx-t{margin:0;font-size:clamp(23px,4.2cqw,34px);line-height:1.04;font-weight:780;font-stretch:70%;letter-spacing:-.005em;text-wrap:balance;overflow-wrap:anywhere}
+.gx-d{margin:0;font-size:15.5px;line-height:1.45;color:var(--ink-2);max-width:62ch;text-wrap:pretty}
 .st-stage{position:relative;flex:1;min-height:340px;border-top:1px solid var(--line)}
-body.preview .st-stage,body.embed .st-stage{flex:none;height:clamp(420px,66cqw,600px)}
+body.preview .st-stage,body.embed .st-stage{flex:none;height:clamp(480px,56cqw,620px)}
 #smap{position:absolute;inset:0;background:var(--water)}
-.st-key{display:flex;flex-wrap:wrap;gap:3px 14px;padding:0 16px 10px;margin-top:-4px;font-size:12.5px;color:var(--ink-2)}
+.st-key{display:flex;flex-wrap:wrap;gap:4px 16px;padding:0 16px 14px;font-size:13px;color:var(--ink-2)}
+.st-key .dot{width:9px;height:9px}
 .st-key:empty{display:none}
 .st-key span{display:inline-flex;align-items:center;gap:5px}
 .st-touch{position:absolute;z-index:450;right:10px;top:10px;margin:0;padding:5px 10px;border-radius:8px;background:var(--surface);border:1px solid var(--line-2);font-size:12.5px}
-.st-card{position:absolute;z-index:500;right:12px;top:12px;width:min(380px,44%);max-height:calc(100% - 24px);overflow:auto;display:grid;gap:10px;align-content:start;padding:16px 18px 18px;border-radius:12px;border:1px solid var(--line);background:var(--surface);box-shadow:0 10px 30px rgba(0,0,0,.14)}
-@container (max-width:700px){
-  .st-card{left:10px;right:10px;top:auto;bottom:10px;width:auto;max-height:56%;padding:12px 14px;gap:8px}
-  .st-h{font-size:21px!important}
-  .st-x{font-size:14px!important}
-  .st-fig img,.st-img img{max-height:130px!important}
-  .gx-d{font-size:14px}
+.st-card{position:absolute;z-index:500;right:14px;top:14px;width:min(390px,42%);max-height:calc(100% - 28px);overflow:auto;display:grid;gap:12px;align-content:start;padding:20px 22px 22px;border-radius:10px;border:1px solid var(--line);background:var(--surface);box-shadow:0 12px 32px -8px rgba(8,17,31,.28)}
+@container (max-width:879px){ /* the card goes under the map, in the flow, so it never hides the map or scrolls inside the embed */
+  .st-frame .st-stage{flex:none!important;height:auto!important;min-height:0}
+  #smap{position:relative;inset:auto;height:clamp(260px,62cqw,440px)}
+  .st-card{position:static;width:auto;max-height:none;overflow:visible;min-height:230px;padding:16px 16px 18px;border:0;border-top:1px solid var(--line);border-radius:0;box-shadow:none}
+  .st-h{font-size:24px!important}
+  .st-fig img,.st-img img{max-height:220px!important}
 }
-.st-meta{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:13px}
-.st-meta input{height:26px;font-weight:650;min-width:0}
-.st-date{margin:0;font-size:13.5px;font-weight:650;color:var(--ink-2);display:flex;flex-wrap:wrap;align-items:center;gap:4px}
-.st-date input[type=date]{height:26px}
-.st-where{font-weight:500}
-.st-ctx{flex-basis:100%;font-weight:400;font-size:12.5px}
-.st-h{margin:0;font-size:27px;line-height:1.06;font-weight:760;font-stretch:72%;overflow-wrap:anywhere}
-.st-x{margin:0;font-size:15px;line-height:1.55;color:var(--ink-2);white-space:pre-line}
-.st-facts{margin:0;font-size:14px;color:var(--ink-2)}
-.st-facts b{font-size:19px;font-weight:750;color:var(--ink);font-variant-numeric:tabular-nums}
+
+.st-meta{margin:-4px 0 0;display:flex;flex-wrap:wrap;align-items:center;gap:2px 0;font-size:13.5px;line-height:1.5;color:var(--ink-2)}
+.st-meta>*+*::before{content:"·";margin:0 7px;color:var(--muted)}
+.st-meta input{height:26px;font-weight:600;min-width:0}
+.st-cat{display:inline-flex;align-items:center;gap:6px;font-weight:650;color:var(--ink)}
+.st-span{margin:0;font-size:14px;color:var(--ink-2)}
+.st-where{margin:-8px 0 0;font-size:13.5px;line-height:1.45;color:var(--muted)}
+.st-more summary{cursor:pointer;font-size:13.5px;color:var(--ink-2);list-style:none}
+.st-more summary::-webkit-details-marker{display:none}
+.st-more summary:hover{color:var(--ink)}
+.st-more[open] summary{display:none}
+.st-h{margin:0;font-size:28px;line-height:1.04;font-weight:780;font-stretch:70%;letter-spacing:-.005em;text-wrap:balance;overflow-wrap:anywhere}
+.st-x{margin:0;font-size:15.5px;line-height:1.6;color:var(--ink);white-space:pre-line;max-width:68ch}
+.st-facts{margin:0;display:flex;align-items:baseline;gap:6px;font-size:14px;color:var(--ink-2)}
+.st-facts b{font-size:24px;line-height:1;font-weight:780;font-stretch:80%;color:var(--ink);font-variant-numeric:tabular-nums}
 .st-fig{margin:0;display:grid;gap:5px}
 .st-fig img{display:block;max-width:100%;max-height:300px;object-fit:contain;border-radius:6px;justify-self:start;background:var(--surface-2)}
 .st-fig figcaption,.st-fig .ed{font-size:13px;color:var(--ink-2)}
@@ -512,18 +518,25 @@ p.ed,h2.ed{display:block}
 .ed:hover{outline-color:var(--line-2)}
 .ed:focus{outline:2px solid var(--focus)}
 .ed:empty::before{content:attr(data-ph);color:var(--muted)}
-.st-nav{flex:none;display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:8px 12px;border-top:1px solid var(--line)}
-@container (max-width:520px){.st-nav .st-scrub{order:5;flex-basis:100%}.st-nav .btn.ghost{margin-left:auto}}
-.st-count{min-width:54px;text-align:center;font-size:13px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.st-nav{flex:none;display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:12px 16px;border-top:1px solid var(--line)}
+.st-btn{flex:none;display:inline-grid;place-items:center;width:38px;height:38px;border-radius:50%;border:1px solid var(--line-2);background:var(--surface);color:var(--ink);cursor:pointer;transition:background .15s,opacity .15s}
+.st-btn:hover:not(:disabled){background:var(--surface-2)}
+.st-btn.pri{background:var(--pri);border-color:var(--pri);color:var(--pri-ink)}
+.st-btn.pri:hover:not(:disabled){background:var(--pri);opacity:.86}
+.st-btn:disabled{opacity:.3;cursor:default}
+.st-start{gap:8px}
+@container (max-width:520px){.st-nav .st-scrub{order:5;flex-basis:100%}.st-nav [data-f=play]{margin-left:auto}}
+.st-count{min-width:64px;text-align:center;font-size:14px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.st-count b{color:var(--ink);font-weight:750}
 .st-scrub{flex:1;min-width:80px}
 .st-scrub svg{display:block;width:100%;height:auto;user-select:none}
-.st-scrub .tk{font-size:11px;fill:var(--muted);font-variant-numeric:tabular-nums}
+.st-scrub .tk{font-size:12px;fill:var(--muted);font-variant-numeric:tabular-nums}
 .st-scrub .mk{cursor:pointer}
-.gx-f{display:flex;flex-wrap:wrap;gap:2px 0;padding:8px 16px 12px;font-size:12.5px;color:var(--muted);border-top:1px solid var(--line)}
+.gx-f{display:flex;flex-wrap:wrap;gap:2px 0;padding:10px 16px 16px;font-size:12.5px;line-height:1.5;color:var(--muted);border-top:1px solid var(--line)}
 .gx-f>*:not(:last-child)::after{content:"·";margin:0 7px;color:var(--muted)}
-.smk b{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--surface);color:#fff;font:700 11.5px/1 var(--sans);text-shadow:0 0 2px rgba(0,0,0,.6);box-shadow:0 1px 3px rgba(0,0,0,.35)}
-.smk.on b{width:30px;height:30px;font-size:13px;border:2.5px solid var(--sel)}
-.smk.dim{opacity:.5}
+.smk b{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;border:1.5px solid #fff;color:#fff;font:750 11.5px/1 var(--sans);font-variant-numeric:tabular-nums;text-shadow:0 0 2px rgba(0,0,0,.55);box-shadow:0 1px 3px rgba(8,17,31,.4)}
+.smk.on b{width:30px;height:30px;font-size:13.5px;border:2.5px solid var(--sel);box-shadow:0 0 0 4px color-mix(in srgb,var(--sel) 18%,transparent),0 2px 6px rgba(8,17,31,.4)}
+.smk.dim{opacity:.62}
 .smk i{position:absolute;left:36px;top:7px;white-space:nowrap;font:600 12.5px var(--sans);font-style:normal;color:var(--ink);text-shadow:0 0 3px var(--halo),0 0 3px var(--halo),0 0 3px var(--halo)}
 @media (max-width:980px){
   #scr-story{overflow:visible}
@@ -2264,27 +2277,36 @@ function renderRail(){
   const on=box.querySelector('.ri.on'); if(on&&box.scrollHeight>box.clientHeight+1){ // scroll the list only, never the page
     const b=box.getBoundingClientRect(), r=on.getBoundingClientRect(); if(r.top<b.top) box.scrollTop-=b.top-r.top+8; else if(r.bottom>b.bottom) box.scrollTop+=r.bottom-b.bottom+8; }
 }
+// Drawn icons for the map timeline controls, in one stroke weight.
+function icon(n){
+  const svg=sv('svg',{viewBox:'0 0 16 16',width:16,height:16,'aria-hidden':'true'});
+  svg.append(n==='play'?sv('path',{d:'M5 3.2v9.6L12.6 8z',fill:'currentColor'}):n==='pause'?sv('path',{d:'M4.5 3.5h2.4v9H4.5zM9.1 3.5h2.4v9H9.1z',fill:'currentColor'})
+    :sv('path',{d:n==='prev'?'M10 3.5 5.5 8l4.5 4.5':'M6 3.5 10.5 8 6 12.5',fill:'none',stroke:'currentColor','stroke-width':1.9,'stroke-linecap':'round','stroke-linejoin':'round'}));
+  return svg;
+}
+const spanText=(a,b)=>{ const x=new Date(a), y=new Date(b); return a===b?fD(a):x.getUTCFullYear()===y.getUTCFullYear()&&x.getUTCMonth()===y.getUTCMonth()?`${x.getUTCDate()} to ${fD(b)}`:`${fD(a)} to ${fD(b)}`; };
 function renderCard(){
   const ds=S.ds, st=S.st, it=st.items[st.i], box=$('#st-card'), E=editing(); box.scrollTop=0;
-  if(!it){ const ev=st.items.filter(x=>x.e), a=ev[0]?.e, z=ev[ev.length-1]?.e;
-    return put(box,ev.length?h('p',{class:'eyebrow'},`${fN(ev.length)} event${ev.length>1?'s':''} · ${a.date===z.date?fD(a.date):fD(a.date)+' – '+fD(z.date)}`):null,
-      ed('p','intro',ds.story.intro,'Introduction: what does the map show, where does the data come from, and what does it leave out?',v=>setStory('intro',v),'st-x'),
-      st.items.length?h('div',{class:'ff-b'},h('button',{type:'button',class:'btn pri','data-f':'start',onclick:()=>stGo(0)},'Start →'))
+  if(!it){ const ev=st.items.filter(x=>x.e);
+    return put(box,ed('p','intro',ds.story.intro,'Introduction: what does the map show, where does the data come from, and what does it leave out?',v=>setStory('intro',v),'st-x'),
+      ev.length?h('p',{class:'st-span'},`${fN(ev.length)} event${ev.length>1?'s':''}, ${spanText(ev[0].e.date,ev[ev.length-1].e.date)}`):null,
+      st.items.length?h('div',{class:'ff-b'},h('button',{type:'button',class:'btn pri lg st-start','data-f':'start',onclick:()=>stGo(0)},'Start',icon('next')))
         :E?h('div',{class:'st-empty'},h('p',null,'Add your first event: search for a town, or click the map where it happened.'),h('button',{type:'button',class:'btn pri',onclick:()=>startPlacing(SM,null,true)},'+ Add an event')):null); }
   if(it.c) return renderTextCard(it.c);
-  const e=it.e, r=e.raw, m=ds.map, v=val1(S.V.colorBy,e), fat=cell(e,'fat'), ctx=uniq([e.adm2,e.adm1,e.country]).filter(x=>x!==e.place).join(', ');
+  const e=it.e, r=e.raw, m=ds.map, v=val1(S.V.colorBy,e), fat=cell(e,'fat'), ctx=uniq([e.adm2,e.adm1,e.country]).filter(x=>x!==e.place).join(', '), catEdit=E&&S.V.colorBy==='cat';
   const extra=ds.cols.filter(c=>ds.colMeta[c]==='card'&&(E||String(r[c]??'').trim()));
   const val=x=>{x=String(x??'').trim(); return /^https?:\/\/\S+$/i.test(x)?ext(x,x.replace(/^https?:\/\/(www\.)?/,'').slice(0,40)+' ↗'):x;};
   put(box,
-    h('div',{class:'st-meta'},v===BLANK&&!(E&&S.V.colorBy==='cat')?h('span'):h('span',{class:'d-tag'},h('i',{class:'dot',style:'background:'+CS.col(v)}),
-        E&&S.V.colorBy==='cat'?[h('input',{type:'text',list:'cat-list','data-f':'cat','aria-label':lab('cat'),value:e.cat,size:Math.max(8,e.cat.length),onkeydown:ev=>ev.stopPropagation(),onchange:ev=>setRoles(r,{cat:ev.target.value.trim()})}),h('datalist',{id:'cat-list'},ordered('cat').filter(x=>x!==BLANK).map(x=>h('option',{value:x})))]:dispV(v)),
-      h('span',{class:'muted'},`${it.n} of ${st.nEv}`)),
-    h('p',{class:'st-date'},E&&(m.date||!m.year)?h('input',{type:'date','data-f':'date','aria-label':'Date',value:iso(e.date),onchange:ev=>{ if(ev.target.value){S.st.want=r; setRoles(r,{date:ev.target.value});} }}):dateText(e),
-      h('span',{'aria-hidden':'true'},'·'),E?[ed('span','place',e.place,'Place',x=>setRoles(r,{place:x}),'st-where'),ctx?h('span',{class:'muted st-ctx'},ctx):null]:h('span',{class:'st-where'},uniq([e.place,ctx]).join(', '))),
     E?ed('h2','title',cell(e,'title'),storyTitle(e),x=>setRoles(r,{title:x}),'st-h'):h('h2',{class:'st-h'},storyTitle(e)),
+    h('p',{class:'st-meta'},
+      v===BLANK&&!catEdit?null:h('span',{class:'st-cat'},h('i',{class:'dot',style:'background:'+CS.col(v)}),
+        catEdit?[h('input',{type:'text',list:'cat-list','data-f':'cat','aria-label':lab('cat'),value:e.cat,size:Math.max(8,e.cat.length),onkeydown:ev=>ev.stopPropagation(),onchange:ev=>setRoles(r,{cat:ev.target.value.trim()})}),h('datalist',{id:'cat-list'},ordered('cat').filter(x=>x!==BLANK).map(x=>h('option',{value:x})))]:dispV(v)),
+      h('span',null,E&&(m.date||!m.year)?h('input',{type:'date','data-f':'date','aria-label':'Date',value:iso(e.date),onchange:ev=>{ if(ev.target.value){S.st.want=r; setRoles(r,{date:ev.target.value});} }}):dateText(e)),
+    ),
+    h('p',{class:'st-where'},E?[ed('span','place',e.place,'Place',x=>setRoles(r,{place:x})),ctx?', '+ctx:'']:uniq([e.place,ctx]).join(', ')),
+    m.fat&&fat!==''?h('p',{class:'st-facts'},h('b',null,fN(num(fat)??0)),ds.kind==='awsd'?'aid workers killed':num(fat)===1?'death':'deaths'):null,
     mediaBlock(e),
     ed('p','notes',e.notes,'What happened, who says so, and what is still disputed',x=>setRoles(r,{notes:x}),'st-x'),
-    m.fat&&fat!==''?h('p',{class:'st-facts'},h('b',null,fN(num(fat)??0)),` ${ds.kind==='awsd'?'aid workers killed':num(fat)===1?'death':'deaths'}`):null,
     extra.length?h('dl',{class:'kv'},extra.flatMap(c=>[h('dt',null,c,E?h('button',{type:'button',class:'x','aria-label':`Take ${c} off the card`,onclick:()=>setMeta(c,'hidden')},'×'):null),
       h('dd',null,E?ed('span','col:'+c,String(r[c]??''),'Empty',x=>edit([[r,c,x]])):val(r[c]))])):null,
     sourcesBlock(e),
@@ -2311,14 +2333,15 @@ async function addImage(r,f){ try{ const id=uid(); S.ds.media[id]=await shrink(f
 function sourcesBlock(e){
   const E=editing(); if(!e.src.length&&!E) return null;
   return h('div',{class:'d-sec'},h('h3',{class:'eyebrow'},'Sources'),
-    e.src.length?h('ul',{class:'st-src'},e.src.map(s=>h('li',null,s.url?ext(s.url,s.name+' ↗'):ext(gq(sourceQuery(s,e)),[s.name,s.headline].filter(Boolean).join(': ')+' ↗')))):null,
+    e.src.length?(()=>{ const li=s=>h('li',null,s.url?ext(s.url,s.name+' ↗'):ext(gq(sourceQuery(s,e)),[s.name,s.headline].filter(Boolean).join(': ')+' ↗')), n=e.src.length;
+      return n<=4?h('ul',{class:'st-src'},e.src.map(li)):[h('ul',{class:'st-src'},e.src.slice(0,3).map(li)),h('details',{class:'st-more'},h('summary',null,`and ${n-3} more sources`),h('ul',{class:'st-src'},e.src.slice(3).map(li)))]; })():null,
     E?h('input',{type:'url','data-f':'addsrc',placeholder:'Add a source link (https://…)','aria-label':'Add a source link',onkeydown:ev=>{ev.stopPropagation(); if(ev.key==='Enter'){ev.preventDefault(); ev.target.blur();}},
       onchange:ev=>{ const x=ev.target.value.trim(); if(!x) return; const cur=cell(e,'source'); setRoles(e.raw,{source:cur?cur+'; '+x:x}); }}):null);
 }
 function renderTextCard(c){
   const E=editing(), upd=p=>setCards(cs=>cs.map(x=>x.id===c.id?{...x,...p}:x));
-  put($('#st-card'),h('p',{class:'eyebrow'},'Text card'),
-    E?ed('h2','ctitle',c.title,'Title',x=>upd({title:x}),'st-h'):c.title?h('h2',{class:'st-h'},c.title):null,
+  put($('#st-card'),
+    E?ed('h2','ctitle',c.title,'Text card title',x=>upd({title:x}),'st-h'):c.title?h('h2',{class:'st-h'},c.title):null,
     ed('p','ctext',c.text,'Context, a turning point, or what the next events have in common',x=>upd({text:x}),'st-x'),
     E?h('div',{class:'st-tools'},h('span',{class:'hint'},c.view?'The map shows the view you saved.':'The map shows all the events.'),
       h('button',{type:'button',class:'btn sm',onclick:()=>{const ce=SM.map.getCenter(); upd({view:[+ce.lat.toFixed(4),+ce.lng.toFixed(4),SM.map.getZoom()]});}},'Use this map view'),
@@ -2332,35 +2355,40 @@ function addTextCard(){
 }
 function renderStNav(){
   const st=S.st, n=st.items.length;
-  put($('#st-nav'),h('button',{type:'button',class:'btn sm','data-f':'prev','aria-label':'Previous',disabled:st.i<0,onclick:()=>stGo(st.i-1)},'←'),
-    h('span',{class:'st-count'},st.i<0?'Start':`${st.i+1} / ${n}`),
-    h('button',{type:'button',class:'btn sm','data-f':'next','aria-label':'Next',disabled:st.i>=n-1,onclick:()=>stGo(st.i+1)},'→'),
+  put($('#st-nav'),h('button',{type:'button',class:'st-btn','data-f':'prev','aria-label':'Previous',disabled:st.i<0,onclick:()=>stGo(st.i-1)},icon('prev')),
+    h('span',{class:'st-count'},st.i<0?'Overview':[h('b',null,String(st.i+1)),` of ${n}`]),
+    h('button',{type:'button',class:'st-btn pri','data-f':'next','aria-label':st.i<0?'Start':'Next',disabled:st.i>=n-1,onclick:()=>stGo(st.i+1)},icon('next')),
     h('div',{class:'st-scrub',id:'st-scrub'}),
-    h('button',{type:'button',class:'btn ghost sm','data-f':'play','aria-pressed':String(!!S.play),disabled:!n,onclick:togglePlay},S.play?'Pause':'Play'));
+    h('button',{type:'button',class:'st-btn','data-f':'play','aria-label':S.play?'Pause':'Play automatically','aria-pressed':String(!!S.play),disabled:!n,onclick:togglePlay},icon(S.play?'pause':'play')));
   renderScrub();
 }
+// The strip under the map: when each step happened, and how far along the reader is.
 function renderScrub(){
   const box=$('#st-scrub'), it=S.st?.items; if(!box||!it?.length) return box&&put(box,);
   const W=Math.max(120,box.clientWidth), p=8; let a=Infinity,b=-Infinity;
   for(const x of it){ a=Math.min(a,x.k); b=Math.max(b,x.e?x.e.end:x.k); } if(b-a<DAY){a-=DAY; b+=DAY;}
   const X=t=>p+(t-a)/(b-a)*(W-2*p), ends=[], lane=it.map(x=>{ const x0=X(x.k)-6; let k=ends.findIndex(v=>v<x0); if(k<0) k=ends.length<3?ends.length:ends.indexOf(Math.min(...ends)); ends[k]=Math.max(X(x.e?x.e.end:x.k),X(x.k))+6; return k; });
-  const LH=9, nL=Math.max(1,ends.length), H=nL*LH+20, Y=k=>5+k*LH, cur=S.st.i;
+  const LH=10, nL=Math.max(1,ends.length), ty=6+nL*LH-LH/2, H=ty+24, cur=S.st.i, xc=cur>=0?X(it[cur].k):p;
   const svg=sv('svg',{viewBox:`0 0 ${W} ${H}`,width:W,height:H,role:'img','aria-label':`${it.length} steps from ${fD(a)} to ${fD(b)}`},
-    sv('line',{x1:p,x2:W-p,y1:H-15,y2:H-15,stroke:PAL.line,'stroke-width':1}),
-    sv('text',{x:p,y:H-2,class:'tk'},fD(a)),sv('text',{x:W-p,y:H-2,'text-anchor':'end',class:'tk'},W<220?'':fD(b)));
-  it.forEach((x,k)=>{ const on=k===cur, y=Y(lane[k]), x0=X(x.k), x1=x.e?X(x.e.end):x0, col=x.e?CS.col(val1(S.V.colorBy,x.e)):PAL.muted;
-    const g=sv('g',{class:'mk'},sv('title',null,`${x.e?dateText(x.e):fD(x.k)}: ${x.e?storyTitle(x.e):x.c.title||'Text card'}`),
-      x.c?sv('rect',{x:x0-3,y:y-3,width:6,height:6,transform:`rotate(45 ${x0} ${y})`,fill:col,stroke:on?PAL.sel:'none','stroke-width':2})
-        :x1-x0>4?sv('rect',{x:x0,y:y-3,width:x1-x0,height:6,rx:3,fill:col,stroke:on?PAL.sel:'none','stroke-width':2}):sv('circle',{cx:x0,cy:y,r:on?5.5:3.5,fill:col,stroke:on?PAL.sel:PAL.surface,'stroke-width':on?2:1}));
+    sv('line',{x1:p,x2:W-p,y1:ty,y2:ty,stroke:PAL.line,'stroke-width':1,opacity:.6}),
+    cur>=0?sv('line',{x1:p,x2:xc,y1:ty,y2:ty,stroke:PAL.ink,'stroke-width':2,'stroke-linecap':'round'}):null,
+    sv('text',{x:p,y:H-3,class:'tk'},fD(a)),sv('text',{x:W-p,y:H-3,'text-anchor':'end',class:'tk'},W<220?'':fD(b)));
+  it.forEach((x,k)=>{ const on=k===cur, y=ty-lane[k]*LH, x0=X(x.k), x1=x.e?X(x.e.end):x0, col=x.e?CS.col(val1(S.V.colorBy,x.e)):PAL.muted, past=cur>=0&&k<cur;
+    const g=sv('g',{class:'mk',opacity:cur<0||on||past?1:.55},sv('title',null,`${x.e?dateText(x.e):fD(x.k)}: ${x.e?storyTitle(x.e):x.c.title||'Text card'}`),
+      x.c?sv('rect',{x:x0-3.5,y:y-3.5,width:7,height:7,transform:`rotate(45 ${x0} ${y})`,fill:col,stroke:on?PAL.sel:PAL.surface,'stroke-width':on?2:1})
+        :x1-x0>5?sv('rect',{x:x0,y:y-3.5,width:x1-x0,height:7,rx:3.5,fill:col,stroke:on?PAL.sel:PAL.surface,'stroke-width':on?2:1})
+        :sv('circle',{cx:x0,cy:y,r:on?6.5:4.2,fill:col,stroke:on?PAL.sel:PAL.surface,'stroke-width':on?2.5:1.2}));
     g.addEventListener('click',()=>stGo(k)); svg.append(g); });
   put(box,svg);
 }
 function renderMarkers(){
-  const st=S.st, cur=st.items[st.i]?.e; SM.data.clearLayers();
-  st.items.forEach((it,k)=>{ if(!it.e) return; const e=it.e, on=e===cur;
+  const st=S.st, cur=st.items[st.i]?.e, at=new Map(), off=new Map(); SM.data.clearLayers();
+  for(const it of st.items) if(it.e){ const k=it.e.lat.toFixed(3)+','+it.e.lon.toFixed(3); if(!at.has(k)) at.set(k,[]); at.get(k).push(it); }
+  for(const g of at.values()) if(g.length>1) g.forEach((it,k)=>{ const a=2*Math.PI*k/g.length-Math.PI/2, rr=Math.max(12,g.length*4)+(g.some(x=>x.e===cur)?8:0); off.set(it,[Math.cos(a)*rr,Math.sin(a)*rr]); }); // events at one place fan out instead of stacking
+  st.items.forEach((it,k)=>{ if(!it.e) return; const e=it.e, on=e===cur, sz=on?30:22, [dx,dy]=on?[0,0]:off.get(it)||[0,0];
     const m=L.marker([e.lat,e.lon],{keyboard:false,riseOnHover:true,zIndexOffset:on?1000:0,
-      icon:L.divIcon({className:'smk'+(on?' on':cur?' dim':''),iconSize:on?[30,30]:[22,22],html:h('span',null,h('b',{style:'background:'+CS.col(val1(S.V.colorBy,e))},String(it.n)),on?h('i',null,uniq([e.place,e.adm1,e.country])[0]||''):null)})});
-    m.on('click',()=>stGo(k)); if(!on) m.bindTooltip(storyTitle(e),{direction:'top',offset:[0,-12]}); SM.data.addLayer(m); });
+      icon:L.divIcon({className:'smk'+(on?' on':cur?' dim':''),iconSize:[sz,sz],iconAnchor:[sz/2-dx,sz/2-dy],html:h('span',null,h('b',{style:'background:'+CS.col(val1(S.V.colorBy,e))},String(it.n)),on?h('i',null,uniq([e.place,e.adm1,e.country])[0]||''):null)})});
+    m.on('click',()=>stGo(k)); if(!on) m.bindTooltip(storyTitle(e),{direction:'top',offset:[dx,dy-12]}); SM.data.addLayer(m); });
 }
 function renderKey(){
   const seen=new Set(S.st.items.filter(x=>x.e).map(x=>CS.bucket(val1(S.V.colorBy,x.e)))), box=$('#st-key');
@@ -2414,6 +2442,13 @@ function sampleStory(){
 // system fonts and, when it can be fetched, Leaflet itself, so readers' browsers load nothing from other sites.
 const LEAF_URL='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';
 let LEAF=null; const leafletCode=()=>LEAF||(LEAF=fetch(LEAF_URL).then(r=>r.ok?r.text():null).catch(()=>null));
+const b64=buf=>{ const u=new Uint8Array(buf); let t=''; for(let i=0;i<u.length;i+=0x8000) t+=String.fromCharCode(...u.subarray(i,i+0x8000)); return btoa(t); };
+let FONT=null; const fontFaces=()=>FONT||(FONT=(async()=>{ try{
+  const link=[...document.querySelectorAll('link[rel=stylesheet]')].find(l=>/fonts\.googleapis\.com\/css2/.test(l.href)); if(!link) return null;
+  const css=await fetch(link.href).then(r=>r.ok?r.text():Promise.reject()), out=[];
+  for(const m of css.matchAll(/\/\*\s*latin\s*\*\/\s*(@font-face\s*\{[^}]*\})/g)){ if(!/Archivo/.test(m[1])) continue; const url=m[1].match(/url\((https:[^)]+)\)/)?.[1]; if(!url) continue;
+    out.push(m[1].replace(url,'data:font/woff2;base64,'+b64(await fetch(url).then(r=>r.arrayBuffer())))); }
+  return out.join('\n')||null; }catch{ return null; } })());
 function embedCols(ds){
   const keep=new Set(['date','dateEnd','year','month','day','lat','lon','cat','sub','fat','country','adm1','adm2','place','notes','source','title','media','caption','credit'].map(k=>ds.map[k]).filter(Boolean));
   for(const c of ds.cols) if(ds.colMeta[c]==='card') keep.add(c); if(S.V.colorBy.startsWith('col:')) keep.add(S.V.colorBy.slice(4));
@@ -2434,9 +2469,9 @@ async function buildEmbed(ds,{blur}={}){
   const geo=`<script type="application/json" id="geo-countries">${JSON.stringify(keep(G.countries),rnd)}<\/script>\n<script type="application/json" id="geo-lakes">${JSON.stringify(keep(G.lakes),rnd)}<\/script>\n<script type="application/json" id="geo-places">${JSON.stringify(G.places.filter(p=>p[1]>=s&&p[1]<=n&&p[2]>=w&&p[2]<=e))}<\/script>`;
   let html=SRC.slice(0,SRC.lastIndexOf('</body>'));
   html=html.replace(/<link[^>]+fonts\.(googleapis|gstatic)\.com[^>]*>/g,'').replace(/<script src="[^"]+(leaflet-heat|papaparse|topojson-client)[^"]*"><\/script>/g,'')
-    .replace('</style>',':root{--sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}</style>').replace('<body>','<body class="embed">');
-  const lf=await leafletCode(); if(lf) html=html.replace(/<script src="[^"]+leaflet\.min\.js"><\/script>/,()=>'<script>'+lf.replace(/<\/script/gi,'<\\/script')+'<\/script>');
-  return {inlined:!!lf,html:'<!doctype html>\n'+html+geo+'\n<script type="application/json" id="export">'+JSON.stringify(x).replace(/</g,'\\u003c')+'<\/script>\n</body></html>'};
+    .replace('<body>','<body class="embed">');
+  const [lf,ff]=await Promise.all([leafletCode(),fontFaces()]); html=html.replace('</style>',(ff||':root{--sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}')+'</style>'); if(lf) html=html.replace(/<script src="[^"]+leaflet\.min\.js"><\/script>/,()=>'<script>'+lf.replace(/<\/script/gi,'<\\/script')+'<\/script>');
+  return {inlined:!!lf&&!!ff,html:'<!doctype html>\n'+html+geo+'\n<script type="application/json" id="export">'+JSON.stringify(x).replace(/</g,'\\u003c')+'<\/script>\n</body></html>'};
 }
 function storyChecks(ds,sx){
   const ev=storyItems(ds).filter(x=>x.e).map(x=>x.e), n=ev.length, out=[], cnt=f=>ev.filter(f).length, pl=(k,a,b)=>k===1?a:b;
@@ -2473,7 +2508,7 @@ function renderShare(){
       checkF('sx-blur','Blur locations to about 1 km',sx.blur,v=>{sx.blur=v; buildShare();}),
       h('p',{class:'hint'},'Rounds the coordinates in the file. Your project keeps the exact ones.'),
       h('button',{type:'button',class:'btn pri',disabled:!res,onclick:()=>saveFile(file,res.html,'text/html')},res?`Download ${file} · ${kb(sx.size)}`:'Preparing…'),
-      res?h('p',{class:'hint'},res.inlined?'One file with everything inside. Readers’ browsers load no fonts, code or map tiles from other websites.':'The map code couldn’t be built in, probably because you’re offline, so the file loads it from cdnjs.cloudflare.com.'):null),
+      res?h('p',{class:'hint'},res.inlined?'One file with everything inside, including the typeface. Readers’ browsers load no fonts, code or map tiles from other websites.':'The typeface or map code couldn’t be built in, probably because you’re offline. Try again when you’re online.'):null),
     h('section',{class:'sx-sec'},h('h3',{class:'eyebrow'},'2. Put it online'),
       h('p',null,'Upload the file to your website, your newsroom’s file storage or GitHub Pages, then paste its address here.'),
       h('input',{type:'url',id:'sx-url',placeholder:`https://…/${file}`,value:sx.url,'aria-label':'Address of the uploaded file',oninput:ev=>{sx.url=ev.target.value.trim(); $('#sx-code').value=embedCode();}})),
