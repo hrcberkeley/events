@@ -1863,7 +1863,7 @@ function openExport(x){
   for(const el of document.querySelectorAll('.sample,.imp-side>h2')) el.remove(); // the samples aren't bundled
   S.viewer=true; S.embed=x.mode==='embed'; S.storyX=S.embed||x.mode==='story'; S.more=x.more||{};
   if(S.embed){ document.body.classList.add('embed');
-    if(parent!==window){ const post=()=>parent.postMessage({'event-explorer-height':Math.ceil(document.documentElement.getBoundingClientRect().height)},'*'); new ResizeObserver(post).observe(document.body); } } // lets the article fit the iframe to the graphic
+    if(parent!==window){ const post=()=>parent.postMessage({'event-explorer-height':Math.ceil(document.documentElement.getBoundingClientRect().height)},'*'); new ResizeObserver(post).observe(document.body); addEventListener('load',post); setTimeout(post,800); setTimeout(post,2500); } } // lets the article fit the iframe to the graphic; repeated in case the article's listener wasn't ready
   const ds=openProject(x,true); Object.assign(ds,{pin:x.pin,applied:x.applied}); ds.F.ex={}; // rows were already filtered on export
   if(S.storyX) openStory(ds); else {openDataset(ds); M.map.fitBounds(x.bounds);}
 }
