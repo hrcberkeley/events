@@ -1990,8 +1990,8 @@ function renderSheet(){
   sh.r=Math.max(0,Math.min(sh.r,sh.vis.length-1)); sh.c=Math.max(0,Math.min(sh.c,ds.cols.length-1));
   const cur=shCur(), b=(id,t,on,dis,title)=>h('button',{type:'button',class:'btn sm',id,onclick:on,disabled:!!dis,title},t);
   put($('#sh-bar'),
-    h('div',{class:'sh-grp'},b('sh-add','+ Row',()=>addRow(cur?ds.raw.indexOf(cur)+1:ds.raw.length),0,'Add a row below the selected one'),b(null,'+ Column',()=>addCol(ds.cols.length)),b('sh-del','Delete row',delRow,!cur)),
-    h('div',{class:'sh-grp'},b('sh-form','Open row',()=>openForm(cur),!cur,'Edit every field of the selected row in a side panel: longer notes, images, placing it on the map')),
+    h('div',{class:'sh-grp'},b('sh-add','+ Row',()=>{const r=shCur(); addRow(r?ds.raw.indexOf(r)+1:ds.raw.length);},0,'Add a row below the selected one'),b(null,'+ Column',()=>addCol(ds.cols.length)),b('sh-del','Delete row',delRow,!cur)),
+    h('div',{class:'sh-grp'},b('sh-form','Open row',()=>openForm(shCur()),!cur,'Edit every field of the selected row in a side panel: longer notes, images, placing it on the map')),
     h('div',{class:'sh-grp'},b('sh-undo','Undo',undo,!sh.undo.length,'Undo (⌘Z or Ctrl+Z)'),b(null,'Redo',redo,!sh.redo.length,'Redo (⇧⌘Z or Ctrl+Y)')),
     h('span',{class:'sp'}),
     h('span',{class:'sh-sum'},`${fN(ds.raw.length)} row${ds.raw.length===1?'':'s'} · `,bad?h('button',{type:'button',class:'lnk',onclick:()=>{sh.bad=!sh.bad; sh.r=0; $('#sh-grid').scrollTop=0; renderSheet();}},sh.bad?'Show all rows':`${fN(bad)} won’t show on the map`):'all show on the map'),
