@@ -963,10 +963,10 @@ body.embed .st-frame{flex:none}
       </ul>
       <h4 class="eyebrow">Put it in an article</h4>
       <ul>
-        <li>Choose <b>Share › Embed the map timeline in an article</b>. The explorer checks what’s missing, shows the graphic at phone, article and wide sizes, and makes one small web page with everything inside: data, map, images and code. Readers’ browsers load nothing from other websites.</li>
-        <li>Only the columns the graphic shows go into that file, and events you left out never do. Tick <b>Blur locations</b> to round coordinates to about 1 km where exact places could lead someone to a home or a hiding place.</li>
-        <li>Upload the file where your publication can link to it: your website’s file storage, or GitHub Pages (create a repository, upload the file, then turn on Pages in the repository’s settings).</li>
-        <li>Paste the file’s address in the Share window, copy the embed code, and paste it into your article where your publishing system accepts HTML. With automatic fitting, the graphic takes the height it needs at every width.</li>
+        <li>Choose <b>Share › Embed the map timeline in an article</b>. The explorer checks what’s missing and shows the graphic at phone, article and wide sizes.</li>
+        <li>Only the columns the graphic shows and the events you included go into the embed. Tick <b>Blur locations</b> to round coordinates to about 1 km where exact places could lead someone to a home or a hiding place.</li>
+        <li>Copy the self-contained code and paste it into your article where your publishing system accepts HTML. It includes the graphic, so there is no separate file to upload. Use the built-in outline map and uploaded images to avoid loading those resources from other websites.</li>
+        <li>If your publishing system cannot accept the large snippet, choose <b>Hosted file</b>, download and upload the graphic, and paste its address to get a shorter embed code. With automatic fitting, the graphic takes the height it needs at every width.</li>
         <li>Open the article on a phone and step through every card before you publish: most readers will see it there.</li>
       </ul>
       <h4 class="eyebrow">Keep your work</h4>
@@ -2450,7 +2450,7 @@ function sampleStory(){
 // The embed is this page in embed mode, holding only the columns the graphic shows, a basemap cut to the area of the events,
 // system fonts and, when it can be fetched, Leaflet itself, so readers' browsers load nothing from other sites.
 const LEAF_URL='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';
-let LEAF=null; const leafletCode=()=>LEAF||(LEAF=fetch(LEAF_URL).then(r=>r.ok?r.text():null).catch(()=>null));
+let LEAF=null; const leafletCode=()=>LEAF||(LEAF=fetch(LEAF_URL).then(r=>r.ok?r.text():null).catch(()=>null).then(code=>{if(!code) LEAF=null; return code;}));
 const b64=buf=>{ const u=new Uint8Array(buf); let t=''; for(let i=0;i<u.length;i+=0x8000) t+=String.fromCharCode(...u.subarray(i,i+0x8000)); return btoa(t); };
 let FONT=null; const fontFaces=()=>FONT||(FONT=(async()=>{ try{
   const link=[...document.querySelectorAll('link[rel=stylesheet]')].find(l=>/fonts\.googleapis\.com\/css2/.test(l.href)); if(!link) return null;
@@ -2480,7 +2480,7 @@ async function buildEmbed(ds,{blur}={}){
   html=html.replace(/<link[^>]+fonts\.(googleapis|gstatic)\.com[^>]*>/g,'').replace(/<script src="[^"]+(leaflet-heat|papaparse|topojson-client)[^"]*"><\/script>/g,'')
     .replace('<body>','<body class="embed">');
   const [lf,ff]=await Promise.all([leafletCode(),fontFaces()]); html=html.replace('</style>',(ff||':root{--sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}')+'</style>'); if(lf) html=html.replace(/<script src="[^"]+leaflet\.min\.js"><\/script>/,()=>'<script>'+lf.replace(/<\/script/gi,'<\\/script')+'<\/script>');
-  return {inlined:!!lf&&!!ff,html:'<!doctype html>\n'+html+geo+'\n<script type="application/json" id="export">'+JSON.stringify(x).replace(/</g,'\\u003c')+'<\/script>\n</body></html>'};
+  return {mapInlined:!!lf,fontInlined:!!ff,html:'<!doctype html>\n'+html+geo+'\n<script type="application/json" id="export">'+JSON.stringify(x).replace(/</g,'\\u003c')+'<\/script>\n</body></html>'};
 }
 function storyChecks(ds,sx){
   const ev=storyItems(ds).filter(x=>x.e).map(x=>x.e), n=ev.length, out=[], cnt=f=>ev.filter(f).length, pl=(k,a,b)=>k===1?a:b;
@@ -2498,34 +2498,43 @@ const slug=t=>String(t).normalize('NFKD').replace(/[^\w\s-]/g,'').trim().replace
 const attr=t=>String(t).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
 const kb=n=>n<1048576?Math.round(n/1024)+' KB':(n/1048576).toFixed(1)+' MB';
 function embedCode(){
-  const sx=S.sx, url=sx.url||`https://example.org/${slug(S.ds.name)}.html`, hh=sx.h[640]||sx.h[sx.w]||600;
-  return `<iframe src="${attr(url)}" title="${attr(S.ds.name)}" style="width:100%;height:${hh}px;border:0"></iframe>`+
+  const sx=S.sx, hh=sx.h[640]||sx.h[sx.w]||600;
+  if(!sx.res||(sx.mode==='inline'&&!sx.res.mapInlined)) return '';
+  const source=sx.mode==='inline'?`srcdoc="${attr(sx.res.html)}"`:`src="${attr(sx.url||`https://example.org/${slug(S.ds.name)}.html`)}"`;
+  return `<iframe ${source} title="${attr(S.ds.name)}" style="width:100%;height:${hh}px;border:0"></iframe>`+
     (sx.auto?`\n<script>addEventListener("message",function(e){var h=e.data&&e.data["event-explorer-height"];if(!h)return;document.querySelectorAll("iframe").forEach(function(f){if(f.contentWindow===e.source)f.style.height=h+"px";});});<\/script>`:'');
 }
-function openShare(){ S.sx={blur:false,auto:true,url:'',w:640,h:{},res:null}; $('#share').showModal(); buildShare(); }
-async function buildShare(){ const sx=S.sx; sx.res=null; renderShare(); const res=await buildEmbed(S.ds,{blur:sx.blur}); if(S.sx!==sx) return; sx.res=res; sx.size=new Blob([res.html]).size; renderShare(); }
+function openShare(){ S.sx={blur:false,auto:true,mode:'inline',url:'',w:640,h:{},res:null,build:0}; $('#share').showModal(); buildShare(); }
+async function buildShare(){ const sx=S.sx, build=++sx.build; sx.res=null; renderShare();
+  try{ const res=await buildEmbed(S.ds,{blur:sx.blur}); if(S.sx!==sx||sx.build!==build) return; sx.res=res; sx.size=new Blob([res.html]).size; }
+  catch{ if(S.sx!==sx||sx.build!==build) return; sx.error=true; }
+  renderShare(); }
 function renderShare(){
-  const ds=S.ds, sx=S.sx, res=sx.res, file=slug(ds.name)+'.html';
+  const ds=S.ds, sx=S.sx, res=sx.res, file=slug(ds.name)+'.html', ready=!!res&&(sx.mode!=='inline'||res.mapInlined);
   const ck=([st,t])=>h('li',{class:'ck '+st},h('span',{class:'ic','aria-hidden':'true'},st==='ok'?'✓':st==='warn'?'!':'✕'),h('span',null,h('span',{class:'sr'},st==='ok'?'Done: ':st==='warn'?'Check: ':'Problem: '),t));
   sx.frame=res?h('iframe',{title:'Preview of the embedded graphic',srcdoc:res.html}):null;
   put($('#sx-pv'),h('div',{class:'sx-pvbar'},seg([['360','Phone'],['640','Article'],['1000','Wide']],String(sx.w),v=>{sx.w=+v; renderShare();},'Preview width'),h('span',{class:'hint',id:'sx-h'})),
-    h('div',{class:'sx-stage',id:'sx-stage'},sx.frame||h('p',{class:'hint'},'Preparing the preview…')));
+    h('div',{class:'sx-stage',id:'sx-stage'},sx.frame||h('p',{class:'hint'},sx.error?'Could not prepare the preview. Try again.':'Preparing the preview…')));
   layoutPv();
   put($('#sx-side'),
-    h('section',{class:'sx-sec'},h('h3',{class:'eyebrow'},'Before you share'),h('ul',{class:'checks'},storyChecks(ds,sx).map(ck))),
-    h('section',{class:'sx-sec'},h('h3',{class:'eyebrow'},'1. Download the graphic'),
-      checkF('sx-blur','Blur locations to about 1 km',sx.blur,v=>{sx.blur=v; buildShare();}),
-      h('p',{class:'hint'},'Rounds the coordinates in the file. Your project keeps the exact ones.'),
+    h('section',{class:'sx-sec'},h('h3',{class:'eyebrow'},'Before you share'),h('ul',{class:'checks'},storyChecks(ds,sx).map(ck)),
+      checkF('sx-blur','Blur locations to about 1 km',sx.blur,v=>{sx.blur=v; sx.error=false; buildShare();}),
+      h('p',{class:'hint'},'Rounds the coordinates in the embed. Your project keeps the exact ones.')),
+    h('section',{class:'sx-sec'},h('h3',{class:'eyebrow'},'How to embed'),
+      seg([['inline','Self-contained code'],['hosted','Hosted file']],sx.mode,v=>{sx.mode=v; renderShare();},'Embed method'),
+      sx.mode==='inline'?h('p',null,'Copy the complete graphic into your article. No separate file needs to be hosted.'):h('p',null,'Use a shorter snippet by uploading the graphic to your website or file storage.')),
+    sx.mode==='hosted'?h('section',{class:'sx-sec'},h('h3',{class:'eyebrow'},'Download and upload the graphic'),
       h('button',{type:'button',class:'btn pri',disabled:!res,onclick:()=>saveFile(file,res.html,'text/html')},res?`Download ${file} · ${kb(sx.size)}`:'Preparing…'),
-      res?h('p',{class:'hint'},res.inlined?'One file with everything inside, including the typeface. Readers’ browsers load no fonts, code or map tiles from other websites.':'The typeface or map code couldn’t be built in, probably because you’re offline. Try again when you’re online.'):null),
-    h('section',{class:'sx-sec'},h('h3',{class:'eyebrow'},'2. Put it online'),
-      h('p',null,'Upload the file to your website, your newsroom’s file storage or GitHub Pages, then paste its address here.'),
-      h('input',{type:'url',id:'sx-url',placeholder:`https://…/${file}`,value:sx.url,'aria-label':'Address of the uploaded file',oninput:ev=>{sx.url=ev.target.value.trim(); $('#sx-code').value=embedCode();}})),
-    h('section',{class:'sx-sec'},h('h3',{class:'eyebrow'},'3. Paste the code in your article'),
+      h('input',{type:'url',id:'sx-url',placeholder:`https://…/${file}`,value:sx.url,'aria-label':'Address of the uploaded file',oninput:ev=>{sx.url=ev.target.value.trim(); $('#sx-code').value=embedCode();}})):null,
+    h('section',{class:'sx-sec'},h('h3',{class:'eyebrow'},'Paste the code in your article'),
+      res&&!res.mapInlined?h('p',{class:'hint'},'The map code could not be included. Check your connection and try again.',h('button',{type:'button',class:'btn sm',onclick:()=>{sx.error=false; buildShare();}},'Try again')):null,
+      sx.error?h('p',{class:'hint'},'The graphic could not be prepared. ',h('button',{type:'button',class:'btn sm',onclick:()=>{sx.error=false; buildShare();}},'Try again')):null,
+      res&&res.mapInlined&&!res.fontInlined?h('p',{class:'hint'},'The typeface could not be included, so the graphic will use a system font.'):null,
       h('textarea',{id:'sx-code',class:'sx-code',rows:6,readOnly:true,value:embedCode(),'aria-label':'Embed code',onfocus:ev=>ev.target.select()}),
-      h('div',{class:'ff-b'},h('button',{type:'button',class:'btn sm',onclick:async ev=>{ const b=ev.currentTarget; try{ await navigator.clipboard.writeText(embedCode()); b.textContent='Copied'; }catch{ $('#sx-code').select(); b.textContent='Press ⌘C or Ctrl+C'; } setTimeout(()=>{b.textContent='Copy the code';},2500); }},'Copy the code'),
+      h('div',{class:'ff-b'},h('button',{type:'button',class:'btn sm',disabled:!ready,onclick:async ev=>{ const b=ev.currentTarget; try{ await navigator.clipboard.writeText(embedCode()); b.textContent='Copied'; }catch{ $('#sx-code').select(); b.textContent='Press ⌘C or Ctrl+C'; } setTimeout(()=>{b.textContent='Copy the code';},2500); }},'Copy the code'),
         checkF('sx-auto','Fit the height automatically',sx.auto,v=>{sx.auto=v; $('#sx-code').value=embedCode();})),
-      h('p',{class:'hint'},'Paste it where your publishing system accepts HTML. Without automatic fitting, the height is the one for an article-wide column.')));
+      h('p',{class:'hint'},sx.mode==='inline'?(res?`The code contains the graphic (${kb(sx.size)} before HTML encoding). Some publishing systems may reject large snippets, iframes or scripts; try the hosted file option if needed.`:'Preparing the code…'):'Paste it where your publishing system accepts HTML. Without automatic fitting, the height is the one for an article-wide column.'),
+      sx.mode==='inline'?h('p',{class:'hint'},'To update a published graphic, copy and paste the code again.'):null));
 }
 function layoutPv(){
   const sx=S.sx, st=$('#sx-stage'), f=sx?.frame; if(!f||!st) return;
